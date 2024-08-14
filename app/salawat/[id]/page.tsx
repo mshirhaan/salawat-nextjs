@@ -9,7 +9,6 @@ import {
   Select,
   Stack,
   Divider,
-  useBreakpointValue,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import Draggable from "react-draggable";
@@ -72,8 +71,6 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
       </Tooltip>
     ));
   };
-
-  const buttonSize = useBreakpointValue({ base: "sm", md: "md" });
 
   return (
     <Box position="relative" minHeight="100vh" overflow="hidden">
@@ -138,6 +135,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
                   fontSize="lg"
                   textAlign="center"
                   color="white"
+                  className="arabic-text"
                 >
                   {renderArabicTextWithTooltips(line.arabic, line.words)}
                 </Text>
@@ -151,29 +149,36 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
             ))}
 
             {/* Draggable Counter Button */}
-
-            <Button
-              onClick={handleCount}
-              size={buttonSize}
-              colorScheme="teal"
-              variant="solid"
-              position="fixed"
-              bottom={'20%'}
-              left={'50%'}
-              transform={"translate(-50%, 0)"}
-              borderRadius="full"
-              width={14}
-              height={14}
-              boxShadow="lg"
-              _hover={{ bg: "teal.600" }}
-              _focus={{ boxShadow: "outline" }}
-              transition="background-color 0.3s ease, transform 0.3s ease"
-              _active={{ transform: "translate(-50%, 0) scale(0.95)" }}
-            >
-              <Text fontSize="lg" fontWeight="bold" color="white">
-                {count}
-              </Text>
-            </Button>
+            <Draggable>
+              <Box
+                position="absolute"
+                bottom="20px"
+                left="50%"
+                transform="translateX(-50%)"
+                textAlign="center"
+                zIndex={1}
+                cursor="move"
+              >
+                <Button
+                  onClick={handleCount}
+                  size="lg"
+                  colorScheme="teal"
+                  variant="solid"
+                  borderRadius="full"
+                  width="80px"
+                  height="80px"
+                  boxShadow="lg"
+                  _hover={{ bg: "teal.600" }}
+                  _focus={{ boxShadow: "outline" }}
+                  transition="background-color 0.3s ease, transform 0.3s ease"
+                  _active={{ transform: "scale(0.95)" }}
+                  fontSize="lg"
+                  fontWeight="bold"
+                >
+                  <Text color="white">{count}</Text>
+                </Button>
+              </Box>
+            </Draggable>
           </>
         ) : (
           <Text textAlign="center" color="white">

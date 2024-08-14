@@ -32,3 +32,11 @@ body {
     text-wrap: balance;
   }
 }
+
+.arabic-text {
+  white-space: normal; /* Prevents breaking the Arabic script */
+  word-spacing: 0; /* Removes additional spacing between words */
+  font-family: "Amiri", serif;
+  direction: rtl; /* Right-to-left text direction */
+  unicode-bidi: isolate; /* Ensures text stays together in Arabic */
+}
