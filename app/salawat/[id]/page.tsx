@@ -149,7 +149,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
             ))}
 
             {/* Draggable Counter Button */}
-            <Draggable>
+            <Draggable cancel="#counter-btn">
               <Box
                 position="absolute"
                 bottom="20px"
@@ -174,6 +174,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
                   _active={{ transform: "scale(0.95)" }}
                   fontSize="lg"
                   fontWeight="bold"
+                  id="counter-btn"
                 >
                   <Text color="white">{count}</Text>
                 </Button>
