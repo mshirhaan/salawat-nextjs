@@ -158,9 +158,9 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
               colorScheme="teal"
               variant="solid"
               position="fixed"
-              bottom={'50%'}
+              bottom={'20%'}
               left={'50%'}
-              transform={"translate(-50%, 50%)"}
+              transform={"translate(-50%, 0)"}
               borderRadius="full"
               width={14}
               height={14}
@@ -168,7 +168,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
               _hover={{ bg: "teal.600" }}
               _focus={{ boxShadow: "outline" }}
               transition="background-color 0.3s ease, transform 0.3s ease"
-              _active={{ transform: "translate(-50%, 50%) scale(0.95)" }}
+              _active={{ transform: "translate(-50%, 0) scale(0.95)" }}
             >
               <Text fontSize="lg" fontWeight="bold" color="white">
                 {count}
