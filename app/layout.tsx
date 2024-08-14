@@ -14,9 +14,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-       <Head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" />
-      </Head>
       <body>
         <Providers>{children}</Providers>
       </body>

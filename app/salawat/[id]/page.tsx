@@ -1,17 +1,8 @@
 "use client";
 
-import {
-  Box,
-  Heading,
-  Text,
-  Button,
-  Tooltip,
-  Select,
-  Stack,
-  Divider,
-} from "@chakra-ui/react";
+import { Box, Heading, Text, Button, Tooltip, Select, Stack, Divider } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import Draggable from "react-draggable";
+import Draggable from 'react-draggable';
 
 interface SalawatWord {
   word: string;
@@ -99,7 +90,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
         left={0}
         width="100%"
         height="100%"
-        background="rgba(0, 0, 0, 0.5)" // Semi-transparent overlay
+        background="rgba(0, 0, 0, 0.5)"  // Semi-transparent overlay
         zIndex={0}
       />
 
@@ -135,21 +126,18 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
                   fontSize="lg"
                   textAlign="center"
                   color="white"
-                  className="arabic-text"
                 >
                   {renderArabicTextWithTooltips(line.arabic, line.words)}
                 </Text>
                 <Text mb={4} fontSize="md" color="gray.200" textAlign="center">
                   {line.translations[language]}
                 </Text>
-                {index < salawat.lines.length - 1 && (
-                  <Divider my={4} borderColor="gray.200" />
-                )}
+                {index < salawat.lines.length - 1 && <Divider my={4} borderColor="gray.200" />}
               </Box>
             ))}
 
             {/* Draggable Counter Button */}
-            <Draggable cancel="#counter-btn">
+            <Draggable>
               <Box
                 position="absolute"
                 bottom="20px"
@@ -174,7 +162,6 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
                   _active={{ transform: "scale(0.95)" }}
                   fontSize="lg"
                   fontWeight="bold"
-                  id="counter-btn"
                 >
                   <Text color="white">{count}</Text>
                 </Button>
@@ -182,9 +169,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
             </Draggable>
           </>
         ) : (
-          <Text textAlign="center" color="white">
-            Loading...
-          </Text>
+          <Text textAlign="center" color="white">Loading...</Text>
         )}
       </Box>
     </Box>
