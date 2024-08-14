@@ -1,4 +1,6 @@
 // app/settings/page.tsx
+"use client";
+
 import { Box, Heading, Switch, FormControl, FormLabel } from "@chakra-ui/react";
 import { useState } from "react";
 
