@@ -59,10 +59,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     let wordMap: Map<string, string>;
     if (words[0].translations) {
       wordMap = new Map(
-        words.map((word) => [
-          word.word,
-          (word.translations && word.translations[language]) || "",
-        ])
+        words.map((word) => [word.word, word.translations &&word.translations[language] || ""])
       );
     } else {
       wordMap = new Map(
@@ -95,8 +92,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
         muted
         loop
         playsInline
-        // src="https://cdn.pixabay.com/video/2022/03/30/112361-694236354_large.mp4"
-        src="https://cdn.pixabay.com/video/2024/01/26/198164-906869460_large.mp4"
+        src="https://cdn.pixabay.com/video/2022/03/30/112361-694236354_large.mp4"
         style={{
           position: "fixed", // Changed to fixed
           top: 0,
@@ -124,8 +120,9 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
         position="relative"
         zIndex={1}
         p={5}
-        height="100vh" // Full viewport height
+        height="calc(100vh - 100px)" // Adjust height to leave space for the button
         overflowY="auto" // Scrollable content
+        pb="100px" // Space for the button
       >
         {salawat ? (
           <>
