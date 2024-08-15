@@ -59,7 +59,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     let wordMap: Map<string, string>;
     if (words[0].translations) {
       wordMap = new Map(
-        words.map((word) => [word.word, word.translations[language] || ""])
+        words.map((word) => [word.word, word.translations &&word.translations[language] || ""])
       );
     } else {
       wordMap = new Map(
