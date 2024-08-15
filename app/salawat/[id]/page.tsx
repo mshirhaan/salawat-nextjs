@@ -73,7 +73,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
           mx={1}
           display="inline"
           fontFamily="'Amiri', serif"
-          fontSize="lg"
+          fontSize="2xl"
           cursor="pointer"
           _hover={{ color: "teal.500" }}
           transition="color 0.3s ease"
