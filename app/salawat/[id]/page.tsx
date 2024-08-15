@@ -116,7 +116,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
       />
 
       {/* Content */}
-      <Box position="relative" zIndex={1} p={5}>
+      <Box position="relative" zIndex={1} p={5} pb={200}> {/* Adjust padding-bottom here */}
         {salawat ? (
           <>
             <Heading as="h2" size="lg" mb={6} textAlign="center" color="white">
