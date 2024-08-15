@@ -668,195 +668,738 @@ async function seed() {
             en: "O Allah, send prayers upon our master and patron Muhammad, the possessor of the crown, the Mi’raj, the Buraq and the flag, the repeller of hardships, epidemics, droughts, diseases and pain. His name is written, exalted, combined and engraved upon the tablet and pen. The master of both Arabs and non-Arabs, whose body is sanctified, fragrant, pure and illuminated in the House and the Sanctuary.\n\nHe is the bright sun, the full moon of the dark night, the foremost in loftiness, the light of guidance, the cave of refuge for mankind, the lantern in darkness. He is of beautiful character, the intercessor for nations, the possessor of graciousness and generosity.\n\nAllah is his protector, Gabriel his servant, the Buraq his mount, the Mi’raj his voyage, the Lote Tree of the Uppermost Limit his station, two bows’ length or nearer the object of his quest; that which is sought is that which he desires and that which he desires is that which he finds.\n\nHe is the master of the Messengers, the Seal of the Prophets, the intercessor of sinners, the comforter of strangers, the mercy for the worlds, the delight of divine lovers, the object of yearning, the sun of the gnostics, the lamp for travellers upon the path to Allah, the lantern of those brought near, the lover of the poor, the strangers and the destitute.\n\nThe master of the two weighty things (humans and Jinn), the Prophet of the two sanctuaries, the Imam of the two Qiblas, our means of salvation in both abodes, the one at two bows length, the beloved of the Lord of the two Easts and the two Wests, the grandfather of Imam Hasan and Imam Husayn, our protector and the protector of the two worlds, the Father of Qasim, Muhammad, the son of Abdullah, a light from the light of Allah.\n\nO you who yearns for the light of his beauty, invoke abundant blessings and peace upon him, his family and Companions.",
           },
           words: [
-            { word: "اللَّهُمَّ", translation: "O Allah" },
-            { word: "صَلِّ", translation: "send prayers" },
-            { word: "عَلَىٰ", translation: "upon" },
-            { word: "سَيِّدِنَا", translation: "our master" },
-            { word: "وَمَوْلَانَا", translation: "and patron" },
-            { word: "مُحَمَّدٍ", translation: "Muhammad" },
-            { word: "❁", translation: "" },
-            { word: "صَاحِبِ", translation: "the possessor of" },
-            { word: "التَّاجِ", translation: "the crown" },
-            { word: "وَالْمِعْرَاجِ", translation: "the Mi’raj" },
-            { word: "وَالْبُرَاقِ", translation: "the Buraq" },
-            { word: "وَالْعَلَمِ", translation: "and the flag" },
-            { word: "❁", translation: "" },
-            { word: "دَافِعِ", translation: "the repeller of" },
-            { word: "الْبَلآءِ", translation: "hardships" },
-            { word: "وَالْوَبَآءِ", translation: "epidemics" },
-            { word: "وَالْقَحْطِ", translation: "droughts" },
-            { word: "وَالْمَرَضِ", translation: "diseases" },
-            { word: "وَالْأَلَمِ", translation: "and pain" },
-            { word: "❁", translation: "" },
-            { word: "اِسْمُهُ", translation: "His name is" },
-            { word: "مَكْتُوبٌ", translation: "written" },
-            { word: "مَرْفُوعٌ", translation: "exalted" },
-            { word: "مَشْفُوعٌ", translation: "combined" },
-            { word: "مَنْقُوشٌ", translation: "and engraved" },
-            { word: "فِي", translation: "upon" },
-            { word: "اللَّوْحِ", translation: "the tablet" },
-            { word: "وَالْقَلَمِ", translation: "and pen" },
-            { word: "❁", translation: "" },
-            { word: "سَيِّدِ", translation: "the master of" },
-            { word: "الْعَرَبِ", translation: "both Arabs" },
-            { word: "وَالْعَجَمِ", translation: "and non-Arabs" },
-            { word: "❁", translation: "" },
-            { word: "جِسْمُهُ", translation: "whose body" },
-            { word: "مُقَدَّسٌ", translation: "is sanctified" },
-            { word: "مُعَطَّرٌ", translation: "fragrant" },
-            { word: "مُطَهَّرٌ", translation: "pure" },
-            { word: "مُنَوَّرٌ", translation: "and illuminated" },
-            { word: "فِي", translation: "in" },
-            { word: "الْبَيْتِ", translation: "the House" },
-            { word: "وَالْحَرَمِ", translation: "and the Sanctuary" },
-            { word: "❁", translation: "" },
-            { word: "شَمْسِ", translation: "He is the bright sun" },
-            { word: "الضُّحَى", translation: "" },
-            { word: "❁", translation: "" },
-            { word: "بَدْرِ", translation: "the full moon of" },
-            { word: "الدُّجَى", translation: "the dark night" },
-            { word: "❁", translation: "" },
-            { word: "صَدْرِ", translation: "the foremost in" },
-            { word: "الْعُلَى", translation: "loftiness" },
-            { word: "❁", translation: "" },
-            { word: "نُورِ", translation: "the light of" },
-            { word: "الْهُدَى", translation: "guidance" },
-            { word: "❁", translation: "" },
-            { word: "كَهْفِ", translation: "the cave of refuge for" },
-            { word: "الْوَرَى", translation: "mankind" },
-            { word: "❁", translation: "" },
-            { word: "مِصْبَاحِ", translation: "the lantern" },
-            { word: "الظُّلَمِ", translation: "in darkness" },
-            { word: "❁", translation: "" },
-            { word: "جَمِيلِ", translation: "He is of beautiful" },
-            { word: "الشِّيَمِ", translation: "character" },
-            { word: "❁", translation: "" },
-            { word: "شَفِيعِ", translation: "the intercessor for" },
-            { word: "الْأُمَمِ", translation: "nations" },
-            { word: "❁", translation: "" },
-            { word: "صَاحِبِ", translation: "the possessor of" },
-            { word: "الْجُودِ", translation: "graciousness" },
-            { word: "وَالْكَرَمِ", translation: "and generosity" },
-            { word: "❁", translation: "" },
-            { word: "وَاللهُ", translation: "Allah is" },
-            { word: "عَاصِمُهُ", translation: "his protector" },
-            { word: "❁", translation: "" },
-            { word: "وَجِبْرِيلُ", translation: "Gabriel" },
-            { word: "خَادِمُهُ", translation: "his servant" },
-            { word: "❁", translation: "" },
-            { word: "وَالْبُرَاقُ", translation: "the Buraq" },
-            { word: "مَرْكَبُهُ", translation: "his mount" },
-            { word: "❁", translation: "" },
-            { word: "وَالْمِعْرَاجُ", translation: "the Mi’raj" },
-            { word: "سَفَرُهُ", translation: "his voyage" },
-            { word: "❁", translation: "" },
-            { word: "وَسِدْرَتُ", translation: "the Lote Tree" },
-            { word: "الْمُنْتَهَى", translation: "of the Uppermost Limit" },
-            { word: "مَقَامُهُ", translation: "his station" },
-            { word: "❁", translation: "" },
-            { word: "وَقَابَ", translation: "two bows’ length" },
-            { word: "قَوْسَيْنِ", translation: "" },
-            { word: "مَطْلُوبُهُ", translation: "the object of his quest" },
-            { word: "❁", translation: "" },
-            { word: "وَالْمَطْلُوبُ", translation: "that which is sought" },
-            { word: "مَقْصُودُهُ", translation: "is that which he desires" },
-            { word: "❁", translation: "" },
-            { word: "وَالْمَقْصُودُ", translation: "that which he desires" },
-            { word: "مَوْجُودُهُ", translation: "is that which he finds" },
-            { word: "❁", translation: "" },
-            { word: "سَيِّدِ", translation: "He is the master of" },
-            { word: "الْمُرْسَلِينَ", translation: "the Messengers" },
-            { word: "❁", translation: "" },
-            { word: "خَاتِمِ", translation: "the Seal of" },
-            { word: "النَّبِيِّينَ", translation: "the Prophets" },
-            { word: "❁", translation: "" },
-            { word: "شَفِيعِ", translation: "the intercessor of" },
-            { word: "الْمُذْنِبِينَ", translation: "sinners" },
-            { word: "❁", translation: "" },
-            { word: "أَنِيسِ", translation: "the comforter of" },
-            { word: "الْغَرِيبِينَ", translation: "strangers" },
-            { word: "❁", translation: "" },
-            { word: "رَحْمَةٍ", translation: "the mercy" },
-            { word: "لِلْعَالَمِينَ", translation: "for the worlds" },
-            { word: "❁", translation: "" },
-            { word: "رَاحَةِ", translation: "the delight of" },
-            { word: "الْعَاشِقِينَ", translation: "divine lovers" },
-            { word: "❁", translation: "" },
-            { word: "مُرَادِ", translation: "the object of" },
-            { word: "الْمُشْتَاقِينَ", translation: "yearning" },
-            { word: "❁", translation: "" },
-            { word: "شَمْسِ", translation: "the sun of" },
-            { word: "الْعَارِفِينَ", translation: "the gnostics" },
-            { word: "❁", translation: "" },
-            { word: "سِرَاجِ", translation: "the lamp" },
             {
-              word: "السَّالِكِينَ",
-              translation: "for travelers upon the path to Allah",
+              word: "اللَّهُمَّ",
+              translations: { en: "O Allah" },
             },
-            { word: "❁", translation: "" },
-            { word: "مِصْبَاحِ", translation: "the lantern of" },
-            { word: "الْمُقَرَّبِينَ", translation: "those brought near" },
-            { word: "❁", translation: "" },
-            { word: "مُحِبِّ", translation: "the lover of" },
-            { word: "الْفُقَرَاءِ", translation: "the poor" },
-            { word: "وَالْغُرَبَاءِ", translation: "the strangers" },
-            { word: "وَالْمَسَاكِينِ", translation: "and the destitute" },
-            { word: "❁", translation: "" },
-            { word: "سَيِّدِ", translation: "the master of" },
             {
-              word: "الثَّقَلَيْنِ",
-              translation: "the two weighty things (humans and Jinn)",
+              word: "صَلِّ",
+              translations: { en: "send prayers" },
             },
-            { word: "❁", translation: "" },
-            { word: "نَبِيِّ", translation: "the Prophet of" },
-            { word: "الْحَرَمَيْنِ", translation: "the two sanctuaries" },
-            { word: "❁", translation: "" },
-            { word: "إِمَامِ", translation: "the Imam of" },
-            { word: "الْقِبْلَتَيْنِ", translation: "the two Qiblas" },
-            { word: "❁", translation: "" },
-            { word: "وَسِيلَتِنَا", translation: "our means of salvation" },
-            { word: "فِي", translation: "in" },
-            { word: "الدَّارَيْنِ", translation: "both abodes" },
-            { word: "❁", translation: "" },
-            { word: "صَاحِبِ", translation: "the one at" },
-            { word: "قَابَ", translation: "two bows’ length" },
-            { word: "قَوْسَيْنِ", translation: "" },
-            { word: "❁", translation: "" },
-            { word: "مَحْبُوبِ", translation: "the beloved of" },
-            { word: "رَبِّ", translation: "the Lord of" },
-            { word: "الْمَشْرِقَيْنِ", translation: "the two Easts" },
-            { word: "وَالْمَغْرِبَيْنِ", translation: "and the two Wests" },
-            { word: "❁", translation: "" },
-            { word: "جَدِّ", translation: "the grandfather of" },
-            { word: "الْحَسَنِ", translation: "Imam Hasan" },
-            { word: "وَالْحُسَيْنِ", translation: "and Imam Husayn" },
-            { word: "❁", translation: "" },
-            { word: "مَوْلَانَا", translation: "our protector" },
-            { word: "وَمَوْلَى", translation: "and the protector of" },
-            { word: "الثَّقَلَيْنِ", translation: "the two worlds" },
-            { word: "❁", translation: "" },
-            { word: "أَبِي", translation: "the Father of" },
-            { word: "الْقَاسِمِ", translation: "Qasim" },
-            { word: "مُحَمَّدِ", translation: "Muhammad" },
-            { word: "بْنِ", translation: "the son of" },
-            { word: "عَبْدِ اللهِ", translation: "Abdullah" },
-            { word: "❁", translation: "" },
-            { word: "نُورٍ", translation: "a light" },
-            { word: "مِنْ", translation: "from" },
-            { word: "نُورِ اللهِ", translation: "the light of Allah" },
-            { word: "❁", translation: "" },
-            { word: "يَا", translation: "O you" },
-            { word: "أَيُّهَا", translation: "who" },
-            { word: "الْمُشْتَاقُونَ", translation: "yearns" },
-            { word: "بِنُورِ", translation: "for the light" },
-            { word: "جَمَالِهِ", translation: "of his beauty" },
-            { word: "❁", translation: "" },
-            { word: "صَلّوُا", translation: "invoke abundant blessings" },
-            { word: "عَلَيْهِ", translation: "upon him" },
-            { word: "وَآلِهِ", translation: "and his family" },
-            { word: "وَأَصْحَابِهِ", translation: "and Companions" },
-            { word: "وَسَلِّمُوا", translation: "and send peace" },
-            { word: "تَسْلِيمًا", translation: "" },
+            {
+              word: "عَلَىٰ",
+              translations: { en: "upon" },
+            },
+            {
+              word: "سَيِّدِنَا",
+              translations: { en: "our master" },
+            },
+            {
+              word: "وَمَوْلَانَا",
+              translations: { en: "and patron" },
+            },
+            {
+              word: "مُحَمَّدٍ",
+              translations: { en: "Muhammad" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "صَاحِبِ",
+              translations: { en: "the possessor of" },
+            },
+            {
+              word: "التَّاجِ",
+              translations: { en: "the crown" },
+            },
+            {
+              word: "وَالْمِعْرَاجِ",
+              translations: { en: "the Mi'raj" },
+            },
+            {
+              word: "وَالْبُرَاقِ",
+              translations: { en: "the Buraq" },
+            },
+            {
+              word: "وَالْعَلَمِ",
+              translations: { en: "and the flag" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "دَافِعِ",
+              translations: { en: "the repeller of" },
+            },
+            {
+              word: "الْبَلآءِ",
+              translations: { en: "hardships" },
+            },
+            {
+              word: "وَالْوَبَآءِ",
+              translations: { en: "epidemics" },
+            },
+            {
+              word: "وَالْقَحْطِ",
+              translations: { en: "droughts" },
+            },
+            {
+              word: "وَالْمَرَضِ",
+              translations: { en: "diseases" },
+            },
+            {
+              word: "وَالْأَلَمِ",
+              translations: { en: "and pain" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "اِسْمُهُ",
+              translations: { en: "His name is" },
+            },
+            {
+              word: "مَكْتُوبٌ",
+              translations: { en: "written" },
+            },
+            {
+              word: "مَرْفُوعٌ",
+              translations: { en: "exalted" },
+            },
+            {
+              word: "مَشْفُوعٌ",
+              translations: { en: "combined" },
+            },
+            {
+              word: "مَنْقُوشٌ",
+              translations: { en: "and engraved" },
+            },
+            {
+              word: "فِي",
+              translations: { en: "upon" },
+            },
+            {
+              word: "اللَّوْحِ",
+              translations: { en: "the tablet" },
+            },
+            {
+              word: "وَالْقَلَمِ",
+              translations: { en: "and pen" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "سَيِّدِ",
+              translations: { en: "the master of" },
+            },
+            {
+              word: "الْعَرَبِ",
+              translations: { en: "both Arabs" },
+            },
+            {
+              word: "وَالْعَجَمِ",
+              translations: { en: "and non-Arabs" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "جِسْمُهُ",
+              translations: { en: "whose body" },
+            },
+            {
+              word: "مُقَدَّسٌ",
+              translations: { en: "is sanctified" },
+            },
+            {
+              word: "مُعَطَّرٌ",
+              translations: { en: "fragrant" },
+            },
+            {
+              word: "مُطَهَّرٌ",
+              translations: { en: "pure" },
+            },
+            {
+              word: "مُنَوَّرٌ",
+              translations: { en: "and illuminated" },
+            },
+            {
+              word: "فِي",
+              translations: { en: "in" },
+            },
+            {
+              word: "الْبَيْتِ",
+              translations: { en: "the House" },
+            },
+            {
+              word: "وَالْحَرَمِ",
+              translations: { en: "and the Sanctuary" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "شَمْسِ",
+              translations: { en: "He is the bright sun" },
+            },
+            {
+              word: "الضُّحَى",
+              translations: { en: "" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "بَدْرِ",
+              translations: { en: "the full moon of" },
+            },
+            {
+              word: "الدُّجَى",
+              translations: { en: "the dark night" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "صَدْرِ",
+              translations: { en: "the foremost in" },
+            },
+            {
+              word: "الْعُلَى",
+              translations: { en: "loftiness" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "نُورِ",
+              translations: { en: "the light of" },
+            },
+            {
+              word: "الْهُدَى",
+              translations: { en: "guidance" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "كَهْفِ",
+              translations: { en: "the cave of refuge for" },
+            },
+            {
+              word: "الْوَرَى",
+              translations: { en: "mankind" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "مِصْبَاحِ",
+              translations: { en: "the lantern" },
+            },
+            {
+              word: "الظُّلَمِ",
+              translations: { en: "in darkness" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "جَمِيلِ",
+              translations: { en: "He is of beautiful" },
+            },
+            {
+              word: "الشِّيَمِ",
+              translations: { en: "character" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "شَفِيعِ",
+              translations: { en: "the intercessor for" },
+            },
+            {
+              word: "الْأُمَمِ",
+              translations: { en: "nations" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "صَاحِبِ",
+              translations: { en: "the possessor of" },
+            },
+            {
+              word: "الْجُودِ",
+              translations: { en: "graciousness" },
+            },
+            {
+              word: "وَالْكَرَمِ",
+              translations: { en: "and generosity" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "وَاللهُ",
+              translations: { en: "Allah is" },
+            },
+            {
+              word: "عَاصِمُهُ",
+              translations: { en: "his protector" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "وَجِبْرِيلُ",
+              translations: { en: "Gabriel" },
+            },
+            {
+              word: "خَادِمُهُ",
+              translations: { en: "his servant" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "وَالْبُرَاقُ",
+              translations: { en: "the Buraq" },
+            },
+            {
+              word: "مَرْكَبُهُ",
+              translations: { en: "his mount" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "وَالْمِعْرَاجُ",
+              translations: { en: "the Mi'raj" },
+            },
+            {
+              word: "سَفَرُهُ",
+              translations: { en: "his voyage" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "وَسِدْرَتُ",
+              translations: { en: "the Lote Tree" },
+            },
+            {
+              word: "الْمُنْتَهَى",
+              translations: { en: "of the Uppermost Limit" },
+            },
+            {
+              word: "مَقَامُهُ",
+              translations: { en: "his station" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "وَقَابَ",
+              translations: { en: "two bows' length" },
+            },
+            {
+              word: "قَوْسَيْنِ",
+              translations: { en: "" },
+            },
+            {
+              word: "مَطْلُوبُهُ",
+              translations: { en: "the object of his quest" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "وَالْمَطْلُوبُ",
+              translations: { en: "that which is sought" },
+            },
+            {
+              word: "مَقْصُودُهُ",
+              translations: { en: "is that which he desires" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "وَالْمَقْصُودُ",
+              translations: { en: "that which he desires" },
+            },
+            {
+              word: "مَوْجُودُهُ",
+              translations: { en: "is that which he finds" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "سَيِّدِ",
+              translations: { en: "He is the master of" },
+            },
+            {
+              word: "الْمُرْسَلِينَ",
+              translations: { en: "the Messengers" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "خَاتِمِ",
+              translations: { en: "the Seal of" },
+            },
+            {
+              word: "النَّبِيِّينَ",
+              translations: { en: "the Prophets" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "شَفِيعِ",
+              translations: { en: "the intercessor of" },
+            },
+            {
+              word: "الْمُذْنِبِينَ",
+              translations: { en: "sinners" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "أَنِيسِ",
+              translations: { en: "the comforter of" },
+            },
+            {
+              word: "الْغَرِيبِينَ",
+              translations: { en: "strangers" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "رَحْمَةٍ",
+              translations: { en: "the mercy" },
+            },
+            {
+              word: "لِلْعَالَمِينَ",
+              translations: { en: "for the worlds" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "رَاحَةِ",
+              translations: { en: "the delight of" },
+            },
+            {
+              word: "الْعَاشِقِينَ",
+              translations: { en: "divine lovers" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "مُرَادِ",
+              translations: { en: "the object of" },
+            },
+            {
+              word: "الْمُشْتَاقِينَ",
+              translations: { en: "yearning" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "شَمْسِ",
+              translations: { en: "the sun of" },
+            },
+            {
+              word: "الْعَارِفِينَ",
+              translations: { en: "the gnostics" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "سِرَاجِ",
+              translations: { en: "the lamp" },
+            },
+            {
+              word: "السَّالِكِينَ",
+              translations: { en: "for travelers upon the path to Allah" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "مِصْبَاحِ",
+              translations: { en: "the lantern of" },
+            },
+            {
+              word: "الْمُقَرَّبِينَ",
+              translations: { en: "those brought near" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "مُحِبِّ",
+              translations: { en: "the lover of" },
+            },
+            {
+              word: "الْفُقَرَاءِ",
+              translations: { en: "the poor" },
+            },
+            {
+              word: "وَالْغُرَبَاءِ",
+              translations: { en: "the strangers" },
+            },
+            {
+              word: "وَالْمَسَاكِينِ",
+              translations: { en: "and the destitute" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "سَيِّدِ",
+              translations: { en: "the master of" },
+            },
+            {
+              word: "الثَّقَلَيْنِ",
+              translations: { en: "the two weighty things (humans and Jinn)" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "نَبِيِّ",
+              translations: { en: "the Prophet of" },
+            },
+            {
+              word: "الْحَرَمَيْنِ",
+              translations: { en: "the two sanctuaries" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "إِمَامِ",
+              translations: { en: "the Imam of" },
+            },
+            {
+              word: "الْقِبْلَتَيْنِ",
+              translations: { en: "the two Qiblas" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "وَسِيلَتِنَا",
+              translations: { en: "our means of salvation" },
+            },
+            {
+              word: "فِي",
+              translations: { en: "in" },
+            },
+            {
+              word: "الدَّارَيْنِ",
+              translations: { en: "both abodes" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "صَاحِبِ",
+              translations: { en: "the one at" },
+            },
+            {
+              word: "قَابَ",
+              translations: { en: "two bows' length" },
+            },
+            {
+              word: "قَوْسَيْنِ",
+              translations: { en: "" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "مَحْبُوبِ",
+              translations: { en: "the beloved of" },
+            },
+            {
+              word: "رَبِّ",
+              translations: { en: "the Lord of" },
+            },
+            {
+              word: "الْمَشْرِقَيْنِ",
+              translations: { en: "the two Easts" },
+            },
+            {
+              word: "وَالْمَغْرِبَيْنِ",
+              translations: { en: "and the two Wests" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "جَدِّ",
+              translations: { en: "the grandfather of" },
+            },
+            {
+              word: "الْحَسَنِ",
+              translations: { en: "Imam Hasan" },
+            },
+            {
+              word: "وَالْحُسَيْنِ",
+              translations: { en: "and Imam Husayn" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "مَوْلَانَا",
+              translations: { en: "our protector" },
+            },
+            {
+              word: "وَمَوْلَى",
+              translations: { en: "and the protector of" },
+            },
+            {
+              word: "الثَّقَلَيْنِ",
+              translations: { en: "the two worlds" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "أَبِي",
+              translations: { en: "the Father of" },
+            },
+            {
+              word: "الْقَاسِمِ",
+              translations: { en: "Qasim" },
+            },
+            {
+              word: "مُحَمَّدِ",
+              translations: { en: "Muhammad" },
+            },
+            {
+              word: "بْنِ",
+              translations: { en: "the son of" },
+            },
+            {
+              word: "عَبْدِ اللهِ",
+              translations: { en: "Abdullah" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "نُورٍ",
+              translations: { en: "a light" },
+            },
+            {
+              word: "مِنْ",
+              translations: { en: "from" },
+            },
+            {
+              word: "نُورِ اللهِ",
+              translations: { en: "the light of Allah" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "يَا",
+              translations: { en: "O you" },
+            },
+            {
+              word: "أَيُّهَا",
+              translations: { en: "who" },
+            },
+            {
+              word: "الْمُشْتَاقُونَ",
+              translations: { en: "yearns" },
+            },
+            {
+              word: "بِنُورِ",
+              translations: { en: "for the light" },
+            },
+            {
+              word: "جَمَالِهِ",
+              translations: { en: "of his beauty" },
+            },
+            {
+              word: "❁",
+              translations: { en: "" },
+            },
+            {
+              word: "صَلّوُا",
+              translations: { en: "invoke abundant blessings" },
+            },
+            {
+              word: "عَلَيْهِ",
+              translations: { en: "upon him" },
+            },
+            {
+              word: "وَآلِهِ",
+              translations: { en: "and his family" },
+            },
+            {
+              word: "وَأَصْحَابِهِ",
+              translations: { en: "and Companions" },
+            },
+            {
+              word: "وَسَلِّمُوا",
+              translations: { en: "and send peace" },
+            },
+            {
+              word: "تَسْلِيمًا",
+              translations: { en: "" },
+            },
           ],
         },
       ],
