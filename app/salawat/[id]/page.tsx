@@ -44,18 +44,19 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   useEffect(() => {
+    debugger;
     const handleKeyDown = (event: KeyboardEvent) => {
       // Check for volume up or volume down key
       // These key codes might vary based on the device and browser
-      if (event.key === 'VolumeUp' || event.key === 'VolumeDown') {
+      if (event.key === "VolumeUp" || event.key === "VolumeDown") {
         handleCount();
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -64,7 +65,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     if (navigator.vibrate) {
       navigator.vibrate(100); // Vibrate for 100 milliseconds
     }
-    setCount(prevCount => prevCount + 1); // Use functional update to avoid stale state
+    setCount((prevCount) => prevCount + 1); // Use functional update to avoid stale state
   };
 
   const renderArabicTextWithTooltips = (
