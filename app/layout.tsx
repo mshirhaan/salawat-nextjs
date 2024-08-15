@@ -2,6 +2,8 @@
 import Head from "next/head";
 import { Providers } from "./providers";
 
+import "./globals.css";
+
 export const metadata = {
   title: "Salawat App",
   description: "App for counting Salawat",
