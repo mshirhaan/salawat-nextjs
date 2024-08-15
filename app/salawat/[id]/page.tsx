@@ -30,6 +30,7 @@ interface SalawatData {
 }
 
 export default function SalawatPage({ params }: { params: { id: string } }) {
+  
   const [salawat, setSalawat] = useState<SalawatData | null>(null);
   const [count, setCount] = useState(0);
   const [language, setLanguage] = useState("en");
@@ -160,6 +161,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
               >
                 <Button
                   onClick={handleCount}
+                  onTouchStart={handleCount}
                   size="lg"
                   colorScheme="teal"
                   variant="solid"
