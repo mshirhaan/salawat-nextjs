@@ -14,7 +14,8 @@ import { useState, useEffect, ReactNode } from "react";
 
 interface SalawatWord {
   word: string;
-  translations: { [key: string]: string };
+  translations?: { [key: string]: string };
+  translation?: string;
 }
 
 interface SalawatLine {
@@ -48,17 +49,23 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     if (navigator.vibrate) {
       navigator.vibrate(100); // Vibrate for 100 milliseconds
     }
-    setCount(prevCount => prevCount + 1); // Use functional update to avoid stale state
+    setCount((prevCount) => prevCount + 1); // Use functional update to avoid stale state
   };
 
   const renderArabicTextWithTooltips = (
     arabicText: string,
     words: SalawatWord[]
   ) => {
-    const wordMap = new Map(
-      words.map((word) => [word.word, word.translations[language] || ""])
-    );
-
+    let wordMap: Map<string, string>;
+    if (words[0].translations) {
+      wordMap = new Map(
+        words.map((word) => [word.word, word.translations[language] || ""])
+      );
+    } else {
+      wordMap = new Map(
+        words.map((word) => [word.word, word.translation || ""])
+      );
+    }
     return arabicText.split(" ").map((word, index) => (
       <TooltipWithTouch key={index} label={wordMap.get(word) || ""} hasArrow>
         <Text
