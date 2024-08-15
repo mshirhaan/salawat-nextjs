@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Heading, Text, Button, Tooltip, Select, Stack, Divider } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import Draggable from 'react-draggable';
 
 interface SalawatWord {
@@ -46,7 +46,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     );
 
     return arabicText.split(" ").map((word, index) => (
-      <Tooltip key={index} label={wordMap.get(word) || ""} hasArrow>
+      <TooltipWithTouch key={index} label={wordMap.get(word) || ""} hasArrow>
         <Text
           as="span"
           mx={1}
@@ -59,7 +59,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
         >
           {word}
         </Text>
-      </Tooltip>
+      </TooltipWithTouch>
     ));
   };
 
@@ -175,3 +175,20 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     </Box>
   );
 }
+
+
+export const TooltipWithTouch = ({ children, ...restToolTipProps }: { children: ReactNode; [key: string]: any })  =>  {
+  const [isLabelOpen, setIsLabelOpen] = useState(false);
+
+  return (
+     <Tooltip isOpen={isLabelOpen} {...restToolTipProps}>
+        <span
+            onMouseEnter={() => setIsLabelOpen(true)}
+            onMouseLeave={() => setIsLabelOpen(false)}
+            onClick={() => setIsLabelOpen(true)}
+        >
+         {children}
+       </span>
+    </Tooltip>
+  );
+};
