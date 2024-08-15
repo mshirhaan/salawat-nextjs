@@ -44,7 +44,13 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     fetchSalawat();
   }, [params.id]);
 
-  const handleCount = () => setCount(count + 1);
+  const handleCount = () => {
+    // Vibration feedback
+    if (navigator.vibrate) {
+      navigator.vibrate(100); // Vibrate for 100 milliseconds
+    }
+    setCount(count + 1);
+  };
 
   const renderArabicTextWithTooltips = (
     arabicText: string,
