@@ -1,6 +1,3 @@
-'use client';
-
-
 import {
   Box,
   Heading,
@@ -11,8 +8,6 @@ import {
   Stack,
   Divider,
 } from "@chakra-ui/react";
-
-
 
 import { ReactNode, Suspense } from "react";
 
@@ -68,7 +63,7 @@ export default async function SalawatPage({
     );
 
     return arabicText.split(" ").map((word, index) => (
-      <Suspense key={index} fallback={<div>Loading counter...</div>}>
+      <Suspense key={index} fallback={<div>Loading tooltip...</div>}>
         <TooltipWithTouch label={wordMap.get(word) || ""} hasArrow>
           <Text
             as="span"
