@@ -44,13 +44,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     fetchSalawat();
   }, [params.id]);
 
-  const handleCount = () => {
-    // Vibration feedback
-    if (navigator.vibrate) {
-      navigator.vibrate(100); // Vibrate for 100 milliseconds
-    }
-    setCount(count + 1);
-  };
+  const handleCount = () => setCount(count + 1);
 
   const renderArabicTextWithTooltips = (
     arabicText: string,
@@ -153,38 +147,38 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
               </Box>
             ))}
 
-            {/* Improved Button */}
-            <Box
-              position="fixed"
-              bottom={{ base: "10%", md: "5%" }}
-              left="50%"
-              transform="translateX(-50%)"
-              textAlign="center"
-              zIndex={1}
-              width="full"
-              display="flex"
-              justifyContent="center"
-            >
-              <Button
-                onClick={handleCount}
-                onTouchStart={handleCount}
-                size="lg"
-                colorScheme="teal"
-                variant="solid"
-                borderRadius="full"
-                width="90px"
-                height="90px"
-                boxShadow="md"
-                _hover={{ bg: "teal.600" }}
-                _focus={{ boxShadow: "outline" }}
-                transition="background-color 0.3s ease, transform 0.3s ease"
-                _active={{ transform: "scale(0.95)" }}
-                fontSize="xl"
-                fontWeight="bold"
+            {/* Draggable Counter Button */}
+            <Draggable>
+              <Box
+                position="absolute"
+                bottom="20px"
+                left="50%"
+                transform="translateX(-50%)"
+                textAlign="center"
+                zIndex={1}
+                cursor="move"
               >
-                <Text color="white">{count}</Text>
-              </Button>
-            </Box>
+                <Button
+                  onClick={handleCount}
+                  onTouchStart={handleCount}
+                  size="lg"
+                  colorScheme="teal"
+                  variant="solid"
+                  borderRadius="full"
+                  width="80px"
+                  height="80px"
+                  boxShadow="lg"
+                  _hover={{ bg: "teal.600" }}
+                  _focus={{ boxShadow: "outline" }}
+                  transition="background-color 0.3s ease, transform 0.3s ease"
+                  _active={{ transform: "scale(0.95)" }}
+                  fontSize="lg"
+                  fontWeight="bold"
+                >
+                  <Text color="white">{count}</Text>
+                </Button>
+              </Box>
+            </Draggable>
           </>
         ) : (
           <Text textAlign="center" color="white">
@@ -206,7 +200,12 @@ const TooltipWithTouch = ({
   const [isLabelOpen, setIsLabelOpen] = useState(false);
 
   return (
-    <Tooltip isOpen={isLabelOpen} {...restToolTipProps} placement="top">
+    <Tooltip
+      isOpen={isLabelOpen}
+      {...restToolTipProps}
+      bg="teal.500"
+      color="white"
+    >
       <span
         onMouseEnter={() => setIsLabelOpen(true)}
         onMouseLeave={() => setIsLabelOpen(false)}
