@@ -94,7 +94,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
         playsInline
         src="https://cdn.pixabay.com/video/2022/03/30/112361-694236354_large.mp4"
         style={{
-          position: "absolute",
+          position: "fixed", // Changed to fixed
           top: 0,
           left: 0,
           width: "100%",
@@ -116,7 +116,13 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
       />
 
       {/* Content */}
-      <Box position="relative" zIndex={1} p={5} pb={200}> {/* Adjust padding-bottom here */}
+      <Box
+        position="relative"
+        zIndex={1}
+        p={5}
+        height="100vh" // Full viewport height
+        overflowY="auto" // Scrollable content
+      >
         {salawat ? (
           <>
             <Heading as="h2" size="lg" mb={6} textAlign="center" color="white">
