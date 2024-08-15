@@ -133,7 +133,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
             <Heading as="h2" size="lg" mb={6} textAlign="center" color="white">
               {salawat.title}
             </Heading>
-            <Stack spacing={4} mb={6} align="center">
+            {/* <Stack spacing={4} mb={6} align="center">
               <Select
                 width="auto"
                 onChange={(e) => setLanguage(e.target.value)}
@@ -149,7 +149,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
                 <option value="fr">French</option>
                 <option value="es">Spanish</option>
               </Select>
-            </Stack>
+            </Stack> */}
             {salawat.lines.map((line, index) => (
               <Box key={index} mb={6}>
                 <Text
