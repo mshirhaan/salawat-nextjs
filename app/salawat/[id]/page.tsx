@@ -43,6 +43,22 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     fetchSalawat();
   }, [params.id]);
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Check for volume up or volume down key
+      // These key codes might vary based on the device and browser
+      if (event.key === 'VolumeUp' || event.key === 'VolumeDown') {
+        handleCount();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   const handleCount = () => {
     // Vibration feedback
     if (navigator.vibrate) {
