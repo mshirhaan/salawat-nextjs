@@ -9,6 +9,8 @@ import {
   Select,
   Stack,
   Divider,
+  Spinner,
+  Flex,
 } from "@chakra-ui/react";
 
 import { ReactNode, Suspense, useEffect, useState } from "react";
@@ -140,7 +142,11 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
   }
 
   if (!salawat) {
-    return <div>Loading...</div>;
+    return (
+      <Flex justify="center" align="center" height="100vh">
+        <Spinner size="lg" color="teal.500" />
+      </Flex>
+    );
   }
 
   return (
