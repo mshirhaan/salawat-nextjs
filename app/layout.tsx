@@ -3,8 +3,8 @@ import { Providers } from "./providers";
 
 import "./globals.css";
 import "./fonts.css";
-import Navbar from "@/components/NavBAr";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/NavBAr";
 
 export const metadata = {
   title: "Salawat App",
