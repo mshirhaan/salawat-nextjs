@@ -67,6 +67,15 @@ export default function Navbar() {
           >
             Salawat
           </Button>
+          <Button
+            as={Link}
+            href="/leaderboard"
+            variant="ghost"
+            mx={2}
+            _hover={{ bg: "green.100" }}
+          >
+            Leaderboard
+          </Button>
           {user && (
             <>
               <Button
@@ -132,6 +141,14 @@ export default function Navbar() {
                 onClick={onClose}
               >
                 Salawat
+              </Button>
+              <Button
+                as={Link}
+                href="/leaderboard"
+                variant="ghost"
+                onClick={onClose}
+              >
+                Leaderboard
               </Button>
               {user && (
                 <>

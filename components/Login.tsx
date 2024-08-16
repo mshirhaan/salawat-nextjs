@@ -12,6 +12,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
+import { FirebaseError } from "firebase/app";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -34,12 +35,34 @@ export default function Login() {
         duration: 3000,
         isClosable: true,
       });
-      router.push('/dashboard');
+      router.push("/dashboard");
     } catch (error) {
-      setError("Failed to log in. Please check your credentials.");
+      let errorMessage = "Failed to log in. Please check your credentials.";
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case "auth/invalid-email":
+            errorMessage = "The email address is invalid.";
+            break;
+          case "auth/user-not-found":
+            errorMessage = "No user found with this email.";
+            break;
+          case "auth/wrong-password":
+            errorMessage = "Incorrect password. Please try again.";
+            break;
+          case "auth/missing-email":
+            errorMessage = "Please provide an email address.";
+            break;
+          case "auth/missing-password":
+            errorMessage = "Please provide a password.";
+            break;
+          default:
+            errorMessage = "An error occurred. Please try again.";
+        }
+      }
+      setError(errorMessage);
       toast({
         title: "Login failed",
-        description: "Invalid email or password. Please try again.",
+        description: errorMessage,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -50,7 +73,15 @@ export default function Login() {
   };
 
   return (
-    <Box maxWidth="400px" margin="auto" mt={8} p={6} borderWidth={1} borderRadius="md" boxShadow="md">
+    <Box
+      maxWidth="400px"
+      margin="auto"
+      mt={8}
+      p={6}
+      borderWidth={1}
+      borderRadius="md"
+      boxShadow="md"
+    >
       <form onSubmit={handleSubmit}>
         <VStack spacing={4}>
           <Input

@@ -14,6 +14,7 @@ import {
 import { createUserDocument } from "@/lib/user";
 import { useRouter } from "next/navigation";
 import { updateProfile } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -44,10 +45,34 @@ export default function SignUp() {
       });
       router.push("/dashboard");
     } catch (error) {
-      setError("Failed to sign up. Please check your details and try again.");
+      let errorMessage =
+        "Failed to sign up. Please check your details and try again.";
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            errorMessage = "This email is already in use.";
+            break;
+          case "auth/invalid-email":
+            errorMessage = "The email address is invalid.";
+            break;
+          case "auth/weak-password":
+            errorMessage =
+              "The password is too weak. It should be at least 6 characters.";
+            break;
+          case "auth/missing-email":
+            errorMessage = "Please provide an email address.";
+            break;
+          case "auth/missing-password":
+            errorMessage = "Please provide a password.";
+            break;
+          default:
+            errorMessage = "An error occurred. Please try again.";
+        }
+      }
+      setError(errorMessage);
       toast({
         title: "Sign up failed",
-        description: "Please try again or use a different email.",
+        description: errorMessage,
         status: "error",
         duration: 3000,
         isClosable: true,
