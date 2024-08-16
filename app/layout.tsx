@@ -5,6 +5,7 @@ import "./globals.css";
 import "./fonts.css";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata = {
   title: "Salawat App",
@@ -20,9 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <Navbar />
-          {children}
-          <Footer />
+          <AuthProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </AuthProvider>
         </Providers>
       </body>
     </html>

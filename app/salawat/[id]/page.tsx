@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Box,
   Heading,
@@ -9,13 +11,24 @@ import {
   Divider,
 } from "@chakra-ui/react";
 
-import { ReactNode, Suspense } from "react";
+import { ReactNode, Suspense, useEffect, useState } from "react";
 
 import { db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
 import ClientSideCounter from "./ClientSideCounter";
 import TooltipWithTouch from "./TooltipWithTouch";
 
+import {
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+  sum,
+} from "firebase/firestore";
+import { useAuth } from "@/contexts/AuthContext";
+import Login from "@/components/Login";
+import { useRouter } from "next/navigation";
 interface SalawatWord {
   word: string;
   translations: { [key: string]: string };
@@ -32,6 +45,10 @@ interface SalawatData {
   lines: SalawatLine[];
 }
 
+async function fetchSalawatData(id: string) {
+  const salawat = await getSalawatData(id);
+  return salawat;
+}
 async function getSalawatData(id: string): Promise<SalawatData> {
   const salawatRef = doc(db, "salawat", id);
   const salawatSnap = await getDoc(salawatRef);
@@ -43,14 +60,43 @@ async function getSalawatData(id: string): Promise<SalawatData> {
   return salawatSnap.data() as SalawatData;
 }
 
-export default async function SalawatPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const salawat = await getSalawatData(params.id);
+export default function SalawatPage({ params }: { params: { id: string } }) {
+  const { user } = useAuth();
+  const router = useRouter();
+  const [salawat, setSalawat] = useState<SalawatData | null>(null);
+  const [totalSubmittedCount, setTotalSubmittedCount] = useState(0);
 
   const language = "en";
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]);
+
+  useEffect(() => {
+    async function loadData() {
+      if (params.id) {
+        const data = await fetchSalawatData(params.id as string);
+        setSalawat(data);
+      }
+    }
+    loadData();
+  }, [params.id]);
+
+  useEffect(() => {
+    async function fetchTotalCount() {
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where(`salawatCounts.${params.id}`, ">", 0));
+      const querySnapshot = await getDocs(q);
+      let total = 0;
+      querySnapshot.forEach((doc) => {
+        total += doc.data().salawatCounts[params.id];
+      });
+      setTotalSubmittedCount(total);
+    }
+    fetchTotalCount();
+  }, [params.id]);
   const renderArabicTextWithTooltips = (
     arabicText: string,
     words: SalawatWord[]
@@ -88,6 +134,14 @@ export default async function SalawatPage({
       </Text>
     );
   };
+
+  if (!user) {
+    return <Login />;
+  }
+
+  if (!salawat) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Box position="relative" minHeight="100vh" overflow="hidden">
@@ -164,7 +218,7 @@ export default async function SalawatPage({
 
         {/* Improved Button with Vibration */}
         <Suspense fallback={<div>Loading counter...</div>}>
-          <ClientSideCounter />
+          <ClientSideCounter salawatId={params.id} />
         </Suspense>
       </Box>
     </Box>
