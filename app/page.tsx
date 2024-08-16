@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FaHeart, FaMosque, FaStar } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 
 const MotionBox = motion(Box);
 
@@ -32,14 +32,6 @@ export default function Home() {
 
   return (
     <Box bg={bgColor} minH="100vh" overflow="hidden" position="relative">
-      {/* Background decorations */}
-      <Box position="absolute" top="5%" left="5%" opacity={0.1}>
-        <Icon as={FaMosque} w={20} h={20} color={accentColor} />
-      </Box>
-      <Box position="absolute" bottom="10%" right="5%" opacity={0.1}>
-        <Icon as={FaStar} w={16} h={16} color={accentColor} />
-      </Box>
-
       <Container maxW="container.xl">
         <Flex
           direction={{ base: "column", md: "row" }}
@@ -138,6 +130,38 @@ export default function Home() {
         animation={`${float} 5s ease-in-out infinite`}
       >
         <Icon as={FaHeart} w={5} h={5} color="red.500" />
+      </Box>
+      <Box
+        position="absolute"
+        top="30%"
+        right="30%"
+        animation={`${float} 6s ease-in-out infinite`}
+      >
+        <Icon as={FaHeart} w={7} h={7} color="red.400" />
+      </Box>
+      <Box
+        position="absolute"
+        top="70%"
+        left="35%"
+        animation={`${float} 4.5s ease-in-out infinite`}
+      >
+        <Icon as={FaHeart} w={5} h={5} color="red.300" />
+      </Box>
+      <Box
+        position="absolute"
+        bottom="25%"
+        right="25%"
+        animation={`${float} 3.5s ease-in-out infinite`}
+      >
+        <Icon as={FaHeart} w={6} h={6} color="red.500" />
+      </Box>
+      <Box
+        position="absolute"
+        top="10%"
+        left="40%"
+        animation={`${float} 7s ease-in-out infinite`}
+      >
+        <Icon as={FaHeart} w={4} h={4} color="red.400" />
       </Box>
     </Box>
   );
