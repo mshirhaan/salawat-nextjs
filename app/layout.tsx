@@ -3,6 +3,8 @@ import { Providers } from "./providers";
 
 import "./globals.css";
 import "./fonts.css";
+import Navbar from "@/components/NavBAr";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Salawat App",
@@ -17,7 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Navbar />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

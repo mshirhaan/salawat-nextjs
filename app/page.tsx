@@ -1,87 +1,106 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { Box, Heading, SimpleGrid, Card, CardBody, Text, useBreakpointValue, useTheme, Stack } from "@chakra-ui/react";
-import { useRouter } from 'next/navigation';
+import { Box, Flex, VStack, Heading, Text, Button, Image, Container, useColorModeValue, keyframes, Icon } from "@chakra-ui/react";
+import Link from 'next/link';
+import { motion } from "framer-motion";
+import { FaHeart, FaMosque, FaStar } from "react-icons/fa";
 
-interface SalawatData {
-  id: string;
-  title: string;
-}
+const MotionBox = motion(Box);
 
-export default function HomePage() {
-  const [salawatList, setSalawatList] = useState<SalawatData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
-  const { colors } = useTheme();
-  const cardSize = useBreakpointValue({ base: 'full', sm: 'md', md: 'lg' });
+const float = keyframes`
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+`;
 
-  useEffect(() => {
-    async function fetchSalawatList() {
-      try {
-        const response = await fetch('/api/salawat');
-        const data = await response.json();
-        setSalawatList(data);
-      } catch (error) {
-        console.error('Error fetching Salawat list:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchSalawatList();
-  }, []);
-
-  const handleCardClick = (id: string) => {
-    router.push(`/salawat/${id}`);
-  };
+export default function Home() {
+  const bgColor = useColorModeValue("green.50", "green.900");
+  const textColor = useColorModeValue("green.800", "green.100");
+  const accentColor = useColorModeValue("green.600", "green.300");
 
   return (
-    <Box p={5} bg="gray.50" minHeight="100vh">
-      <Heading as="h1" size="2xl" mb={8} textAlign="center" color="teal.400">
-        Salawat List
-      </Heading>
-      {loading ? (
-        <Text textAlign="center">Loading...</Text>
-      ) : (
-        <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={5}>
-          {salawatList.map(salawat => (
-            <Card
-              key={salawat.id}
-              borderWidth={1}
-              borderRadius="lg"
-              overflow="hidden"
-              boxShadow="md"
-              cursor="pointer"
-              _hover={{
-                transform: 'scale(1.05)',
-                boxShadow: '2xl',
-                bg: colors.teal[50],
-                transition: 'all 0.3s ease'
-              }}
-              transition="all 0.3s ease"
-              onClick={() => handleCardClick(salawat.id)}
+    <Box bg={bgColor} minH="100vh" overflow="hidden" position="relative">
+      {/* Background decorations */}
+      <Box position="absolute" top="5%" left="5%" opacity={0.1}>
+        <Icon as={FaMosque} w={20} h={20} color={accentColor} />
+      </Box>
+      <Box position="absolute" bottom="10%" right="5%" opacity={0.1}>
+        <Icon as={FaStar} w={16} h={16} color={accentColor} />
+      </Box>
+
+      <Container maxW="container.xl">
+        <Flex direction={{ base: "column", md: "row" }} align="center" justify="center" minH="100vh" py={10}>
+          <VStack spacing={8} align="flex-start" flex={1} pr={{ base: 0, md: 8 }}>
+            <Heading 
+              as={motion.h1} 
+              size="2xl" 
+              color={textColor}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
             >
-              <CardBody
-                p={6}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                textAlign="center"
-                bg="white"
-                borderBottomWidth={1}
-                borderColor="teal.200"
-              >
-                <Stack spacing={4}>
-                  <Heading as="h3" size="lg" color="teal.600" fontWeight="bold">
-                    {salawat.title}
-                  </Heading>
-                </Stack>
-              </CardBody>
-            </Card>
-          ))}
-        </SimpleGrid>
-      )}
+              Welcome to the Salawat App
+            </Heading>
+            <Text 
+              fontSize="xl" 
+              color={textColor}
+              as={motion.p}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              Embrace the love for Prophet Muhammad ﷺ through the blessed practice of reciting Salawat.
+            </Text>
+            <Text 
+              fontSize="lg" 
+              color={accentColor} 
+              fontStyle="italic"
+              as={motion.p}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              "Indeed, Allah and His angels send blessings upon the Prophet. O you who have believed, ask [Allah to confer] blessing upon him and ask [Allah to grant him] peace." [Quran 33:56]
+            </Text>
+            <Button
+              as={Link}
+              href="/salawat"
+              size="lg"
+              colorScheme="green"
+              _hover={{ bg: "green.500", transform: "translateY(-2px)" }}
+              transition="all 0.2s"
+              leftIcon={<FaHeart />}
+            >
+              Start Reciting Salawat
+            </Button>
+          </VStack>
+          <Box flex={1} mt={{ base: 8, md: 0 }}>
+            <MotionBox
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Image
+                src="/images/madinah.jpeg"
+                alt="Masjid al-Nabawi in Madinah"
+                borderRadius="lg"
+                boxShadow="2xl"
+              />
+            </MotionBox>
+          </Box>
+        </Flex>
+      </Container>
+
+      {/* Floating hearts */}
+      <Box position="absolute" top="20%" left="10%" animation={`${float} 3s ease-in-out infinite`}>
+        <Icon as={FaHeart} w={6} h={6} color="red.400" />
+      </Box>
+      <Box position="absolute" top="60%" right="15%" animation={`${float} 4s ease-in-out infinite`}>
+        <Icon as={FaHeart} w={4} h={4} color="red.300" />
+      </Box>
+      <Box position="absolute" bottom="15%" left="20%" animation={`${float} 5s ease-in-out infinite`}>
+        <Icon as={FaHeart} w={5} h={5} color="red.500" />
+      </Box>
     </Box>
   );
 }
