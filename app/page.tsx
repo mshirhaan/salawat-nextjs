@@ -60,7 +60,6 @@ export default function Home() {
               color={textColor}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
             >
               Welcome to the Salawat App
             </Heading>
@@ -70,7 +69,6 @@ export default function Home() {
               as={motion.p}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
             >
               Embrace the love for Prophet Muhammad ﷺ through the blessed
               practice of reciting Salawat.
@@ -82,7 +80,6 @@ export default function Home() {
               as={motion.p}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
             >
               &rdquo;Indeed, Allah and His angels send blessings upon the
               Prophet. O you who have believed, ask [Allah to confer] blessing
