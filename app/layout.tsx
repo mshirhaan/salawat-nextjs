@@ -4,7 +4,7 @@ import { Providers } from "./providers";
 import "./globals.css";
 import "./fonts.css";
 import Footer from "@/components/Footer";
-import Navbar from "@/components/NavBAr";
+import Navbar from "@/components/Navbar";
 
 export const metadata = {
   title: "Salawat App",
