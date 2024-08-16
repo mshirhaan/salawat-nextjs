@@ -62,24 +62,31 @@ export default async function SalawatPage({
       ])
     );
 
-    return arabicText.split(" ").map((word, index) => (
-      <Suspense key={index} fallback={<div>Loading tooltip...</div>}>
-        <TooltipWithTouch label={wordMap.get(word) || ""} hasArrow>
-          <Text
-            as="span"
-            mx={1}
-            display="inline"
-            fontFamily="'Amiri', serif"
-            fontSize="2xl"
-            cursor="pointer"
-            _hover={{ color: "teal.500" }}
-            transition="color 0.3s ease"
-          >
-            {word}
-          </Text>
-        </TooltipWithTouch>
-      </Suspense>
-    ));
+    return (
+      <Text
+        fontFamily="'Uthmanic', 'Amiri', serif"
+        fontSize="2xl"
+        color="white"
+        textAlign="center"
+        lineHeight="1.8"
+      >
+        {arabicText.split(" ").map((word, index) => (
+          <Suspense key={index} fallback={<span>{word} </span>}>
+            <TooltipWithTouch label={wordMap.get(word) || ""} hasArrow>
+              <Text
+                as="span"
+                display="inline"
+                cursor="pointer"
+                _hover={{ color: "teal.500" }}
+                transition="color 0.3s ease"
+              >
+                {word}
+              </Text>
+            </TooltipWithTouch>{" "}
+          </Suspense>
+        ))}
+      </Text>
+    );
   };
 
   return (
@@ -145,15 +152,7 @@ export default async function SalawatPage({
             </Stack> */}
         {salawat.lines.map((line, index) => (
           <Box key={index} mb={6}>
-            <Text
-              mb={4}
-              fontFamily="'Amiri', serif"
-              fontSize="lg"
-              textAlign="center"
-              color="white"
-            >
-              {renderArabicTextWithTooltips(line.arabic, line.words)}
-            </Text>
+            {renderArabicTextWithTooltips(line.arabic, line.words)}
             <Text mb={4} fontSize="md" color="gray.200" textAlign="center">
               {line.translations[language]}
             </Text>

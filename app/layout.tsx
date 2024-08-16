@@ -2,6 +2,7 @@
 import { Providers } from "./providers";
 
 import "./globals.css";
+import "./fonts.css";
 
 export const metadata = {
   title: "Salawat App",
