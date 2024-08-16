@@ -87,6 +87,15 @@ export default function Navbar() {
               >
                 Dashboard
               </Button>
+              <Button
+                as={Link}
+                href="/profile"
+                variant="ghost"
+                mx={2}
+                _hover={{ bg: "green.100" }}
+              >
+                Profile
+              </Button>
               <Avatar
                 name={user.displayName || "User"}
                 src={user.photoURL || undefined}
@@ -159,6 +168,14 @@ export default function Navbar() {
                     onClick={onClose}
                   >
                     Dashboard
+                  </Button>
+                  <Button
+                    as={Link}
+                    href="/profile"
+                    variant="ghost"
+                    onClick={onClose}
+                  >
+                    Profile
                   </Button>
                   <Flex alignItems="center" mt={4}>
                     <Avatar
