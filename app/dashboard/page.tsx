@@ -108,7 +108,7 @@ export default function Dashboard() {
             {/* Streaks Section */}
             <Flex direction="column" align="center" mb={6}>
               <Heading size="lg" color={textColor} mb={4}>
-                <Icon as={FaFire} boxSize={6} color="red.500" /> Streaks
+                <Icon as={FaFire} boxSize={6} color="red.500" /> Streak
               </Heading>
               <HStack spacing={8} mt={4}>
                 <VStack spacing={2} align="center">
