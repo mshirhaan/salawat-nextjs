@@ -1,9 +1,26 @@
 "use client";
 
-import { Box, Button, VStack, Text, Flex, Heading, IconButton, useToast, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  VStack,
+  Text,
+  Flex,
+  Heading,
+  IconButton,
+  useToast,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { RepeatIcon } from "@chakra-ui/icons";
 import { useState, useEffect, useRef } from "react";
-import { AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay } from "@chakra-ui/react";
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+} from "@chakra-ui/react";
 
 export default function SalawatPage({ params }: { params: { id: string } }) {
   const [count, setCount] = useState(0);
@@ -86,13 +103,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
           </Text>
         </VStack>
 
-        <Flex 
-          direction="column" 
-          alignItems="center" 
-          width="full" 
-          marginBottom="8"
-          position="relative"
-        >
+        <Flex direction="column" alignItems="center" width="full" marginBottom="8">
           <Button
             onClick={incrementCount}
             size="lg"
@@ -108,21 +119,25 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
             _active={{ transform: "scale(0.95)" }}
             fontSize={{ base: "xl", md: "2xl" }}
             fontWeight="bold"
-            mb={4}
           >
             Count
           </Button>
-          <IconButton
-            aria-label="Reset counter"
-            icon={<RepeatIcon />}
-            onClick={onOpen}
-            colorScheme="red"
-            variant="solid"
-            size="lg"
-            mt={4}
-          />
         </Flex>
       </Flex>
+
+      {/* Move the reset button to the bottom right corner */}
+      <IconButton
+        aria-label="Reset counter"
+        icon={<RepeatIcon />}
+        onClick={onOpen}
+        colorScheme="red"
+        variant="solid"
+        size="lg"
+        position="fixed"
+        bottom="4"
+        right="4"
+        boxShadow="lg"
+      />
 
       <AlertDialog
         isOpen={isOpen}
@@ -136,7 +151,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Are you sure? You can&apos;t get undo this action.
+              Are you sure? You can&apos;t undo this action.
             </AlertDialogBody>
 
             <AlertDialogFooter>
