@@ -101,7 +101,7 @@ export default function Dashboard() {
                 <Icon as={FaFire} boxSize={5} color="red.500" /> Keep your streak going!
               </Text>
               <Text fontSize="md" color="blue.700">
-                Your streaks are based on daily recitations. Don’t miss a day to keep your streak going strong!
+                Your streak is based on daily recitations. Don’t miss a day to keep your streak going strong!
               </Text>
             </Box>
             
