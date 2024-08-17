@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { Box, Button, Text } from "@chakra-ui/react";
-import { updateUserSalawatCount } from "../../../lib/user";
+import { logRecitation, updateUserSalawatCount } from "../../../lib/user";
 import { useAuth } from "@/contexts/AuthContext";
 import { db } from "@/lib/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -33,18 +33,25 @@ export default function ClientSideCounter({
         try {
           // Set up real-time listener for the user's salawat count
           const userDocRef = doc(db, "users", user.uid);
-          unsubscribe = onSnapshot(userDocRef, (docSnapshot) => {
-            if (docSnapshot.exists()) {
-              const userData = docSnapshot.data();
-              const dbCount = userData.salawatCounts?.[salawatId] || 0;
-              setCount(dbCount);
-              // Update localStorage as a backup
-              localStorage.setItem(`salawatCount_${salawatId}`, dbCount.toString());
+          unsubscribe = onSnapshot(
+            userDocRef,
+            (docSnapshot) => {
+              if (docSnapshot.exists()) {
+                const userData = docSnapshot.data();
+                const dbCount = userData.salawatCounts?.[salawatId] || 0;
+                setCount(dbCount);
+                // Update localStorage as a backup
+                localStorage.setItem(
+                  `salawatCount_${salawatId}`,
+                  dbCount.toString()
+                );
+              }
+            },
+            (error) => {
+              console.error("Error fetching count from Firestore:", error);
+              fallbackToLocalStorage();
             }
-          }, (error) => {
-            console.error("Error fetching count from Firestore:", error);
-            fallbackToLocalStorage();
-          });
+          );
         } catch (error) {
           console.error("Error setting up Firestore listener:", error);
           fallbackToLocalStorage();
@@ -85,6 +92,7 @@ export default function ClientSideCounter({
 
     if (user) {
       await updateUserSalawatCount(user.uid, salawatId, 1);
+      await logRecitation(user.uid); // Log the recitation
     }
   };
 

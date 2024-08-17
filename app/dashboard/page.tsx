@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
-import { Box, Heading, Text, VStack, HStack, Button, Flex, Divider, useColorModeValue, Stack, Grid } from "@chakra-ui/react";
+import { Box, Heading, Text, VStack, HStack, Button, Flex, Divider, useColorModeValue, Stack, Grid, Icon } from "@chakra-ui/react";
 import { useAuth } from "@/contexts/AuthContext";
 import { db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
+import { FaFire } from "react-icons/fa";
 
 interface UserData {
   email: string;
@@ -12,6 +13,8 @@ interface UserData {
   salawatCounts: {
     [key: string]: number;
   };
+  currentStreak: number;
+  highestStreak: number;
 }
 
 interface SalawatData {
@@ -83,17 +86,42 @@ export default function Dashboard() {
           boxShadow="md"
           width="100%"
         >
-          <VStack spacing={4} align="stretch">
-            <Flex justify="space-between" align="center">
+          <VStack spacing={6} align="stretch">
+            <Flex direction="column" align="center" mb={6}>
+              <Heading size="lg" color={textColor}>
+                <Icon as={FaFire} boxSize={6} color="red.500" /> Streaks
+              </Heading>
+              <HStack spacing={8} mt={4}>
+                <VStack spacing={2} align="center">
+                  <Text fontSize="lg" color={textColor} fontWeight="bold">
+                    Current Streak
+                  </Text>
+                  <Box p={4} borderWidth="1px" borderRadius="md" bg="yellow.100">
+                    <Text fontSize="3xl" fontWeight="bold" color="orange.600">
+                      {userData?.currentStreak || 0}
+                    </Text>
+                  </Box>
+                </VStack>
+                <VStack spacing={2} align="center">
+                  <Text fontSize="lg" color={textColor} fontWeight="bold">
+                    Highest Streak
+                  </Text>
+                  <Box p={4} borderWidth="1px" borderRadius="md" bg="yellow.200">
+                    <Text fontSize="3xl" fontWeight="bold" color="orange.600">
+                      {userData?.highestStreak || 0}
+                    </Text>
+                  </Box>
+                </VStack>
+              </HStack>
+            </Flex>
+            <Divider />
+            <Stack spacing={4}>
               <Heading size="md" color={textColor}>
                 Total Salawat Count
               </Heading>
               <Text fontSize="2xl" fontWeight="bold" color={textColor}>
                 {userData?.totalCount || 0}
               </Text>
-            </Flex>
-            <Divider />
-            <Stack spacing={4}>
               <Heading size="md" color={textColor}>
                 Individual Salawat Counts
               </Heading>

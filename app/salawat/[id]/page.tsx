@@ -1,3 +1,5 @@
+//salawat/[id]/page.tsx
+
 "use client";
 
 import {
