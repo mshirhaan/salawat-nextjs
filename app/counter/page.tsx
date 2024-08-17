@@ -101,7 +101,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
           marginTop="8"
           fontSize={{ base: "2xl", md: "4xl" }}
         >
-          Salawat Counter
+          Offline Counter
         </Heading>
 
         <VStack spacing={8}>
