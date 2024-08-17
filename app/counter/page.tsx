@@ -1,14 +1,15 @@
 "use client";
 
-import { Box, Button, VStack, Text, Flex, Heading, IconButton, useToast } from "@chakra-ui/react";
+import { Box, Button, VStack, Text, Flex, Heading, IconButton, useToast, useDisclosure } from "@chakra-ui/react";
 import { RepeatIcon } from "@chakra-ui/icons";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
+import { AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay } from "@chakra-ui/react";
 
 export default function SalawatPage({ params }: { params: { id: string } }) {
   const [count, setCount] = useState(0);
   const toast = useToast();
-  const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const storedCount = localStorage.getItem("salawatCounter");
@@ -25,7 +26,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     setCount((prevCount) => prevCount + 1);
   };
 
-  const resetCount = () => {
+  const confirmReset = () => {
     setCount(0);
     toast({
       title: "Counter Reset",
@@ -34,6 +35,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
       duration: 2000,
       isClosable: true,
     });
+    onClose();
   };
 
   return (
@@ -110,26 +112,44 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
           >
             Count
           </Button>
-          <Flex width="full" justifyContent="space-between" mt={4}>
-            <IconButton
-              aria-label="Reset counter"
-              icon={<RepeatIcon />}
-              onClick={resetCount}
-              colorScheme="red"
-              variant="solid"
-              size="lg"
-            />
-            <Button
-              onClick={() => router.push('/')}
-              colorScheme="gray"
-              variant="solid"
-              size="lg"
-            >
-              Back to Home
-            </Button>
-          </Flex>
+          <IconButton
+            aria-label="Reset counter"
+            icon={<RepeatIcon />}
+            onClick={onOpen}
+            colorScheme="red"
+            variant="solid"
+            size="lg"
+            mt={4}
+          />
         </Flex>
       </Flex>
+
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Reset Counter
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can&apos;t get undo this action.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button colorScheme="red" onClick={confirmReset} ml={3}>
+                Reset
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Box>
   );
 }

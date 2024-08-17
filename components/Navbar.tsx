@@ -76,6 +76,15 @@ export default function Navbar() {
           >
             Leaderboard
           </Button>
+          <Button
+            as={Link}
+            href="/counter"
+            variant="ghost"
+            mx={2}
+            _hover={{ bg: "green.100" }}
+          >
+            Counter
+          </Button>
           {user && (
             <>
               <Button
@@ -158,6 +167,14 @@ export default function Navbar() {
                 onClick={onClose}
               >
                 Leaderboard
+              </Button>
+              <Button
+                as={Link}
+                href="/counter"
+                variant="ghost"
+                onClick={onClose}
+              >
+                Counter
               </Button>
               {user && (
                 <>
