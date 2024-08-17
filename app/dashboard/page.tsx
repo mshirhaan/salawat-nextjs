@@ -11,6 +11,9 @@ import {
   Icon,
   useColorModeValue,
   Avatar,
+  Stack,
+  SimpleGrid,
+  Badge,
 } from "@chakra-ui/react";
 import { useAuth } from "@/contexts/AuthContext";
 import { db } from "@/lib/firebase";
@@ -33,7 +36,7 @@ interface SalawatData {
 }
 
 export default function Dashboard() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [salawatNames, setSalawatNames] = useState<{ [key: string]: string }>(
@@ -82,7 +85,8 @@ export default function Dashboard() {
   return (
     <Box bg={bgColor} minH="100vh" py={12} px={6}>
       <Flex direction="column" align="center" maxW="900px" mx="auto">
-        <VStack spacing={6} align="stretch" width="100%">
+        <VStack spacing={8} align="stretch" width="100%">
+          {/* User Greeting Section */}
           <Flex justify="space-between" align="center" width="100%">
             <HStack spacing={4}>
               <Avatar size="lg" name={user.displayName || "User"} />
@@ -97,14 +101,15 @@ export default function Dashboard() {
             </HStack>
           </Flex>
 
+          {/* Streak Section */}
           <Box
             p={4}
             bg="blue.50"
             borderRadius="md"
-            mb={6}
             textAlign="center"
             borderWidth="1px"
             borderColor="blue.200"
+            boxShadow="md"
           >
             <Text fontSize="lg" color="blue.800" fontWeight="bold" mb={2}>
               <Icon as={FaFire} boxSize={5} color="red.500" /> Keep your streak
@@ -116,8 +121,9 @@ export default function Dashboard() {
             </Text>
           </Box>
 
+          {/* Total Salawat Section */}
           <Box p={6} bg={cardBgColor} borderRadius="lg" boxShadow="2xl">
-            <VStack spacing={6} align="stretch">
+            <VStack spacing={4} align="stretch">
               <HStack justify="space-between" align="center">
                 <Heading color={highlightColor} size="lg" fontWeight="bold">
                   Total Salawat Recited
@@ -127,7 +133,7 @@ export default function Dashboard() {
 
               <Flex direction="column" align="center">
                 <Text
-                  fontSize="5xl"
+                  fontSize="6xl"
                   fontWeight="extrabold"
                   color={highlightColor}
                 >
@@ -141,69 +147,73 @@ export default function Dashboard() {
               <Divider borderColor="gray.400" />
 
               <Text fontSize="lg" color={textColor} textAlign="center">
-                For every Salawat you recite, Allah blesses you 10 times, 10
-                sins forgiven, and raises your rank by 10 levels. Keep the
-                Salawat flowing to Madinah!
+                Every Salawat brings blessings. Keep the Salawat flowing to
+                Madinah!
               </Text>
             </VStack>
           </Box>
 
-          <Box p={6} bg={cardBgColor} borderRadius="md" boxShadow="lg">
-            <VStack spacing={4} align="stretch">
-              <Heading color={textColor} size="md">
-                Your Streak
-              </Heading>
-              <HStack justify="space-between">
-                <VStack>
-                  <Icon as={FaFire} boxSize={8} color="red.500" />
-                  <Text fontSize="xl" fontWeight="bold" color={textColor}>
-                    {userData?.currentStreak || 0}
-                  </Text>
-                  <Text fontSize="sm" color={textColor}>
-                    Current Streak
-                  </Text>
-                </VStack>
-                <VStack>
-                  <Icon as={FaRegStar} boxSize={8} color="yellow.400" />
-                  <Text fontSize="xl" fontWeight="bold" color={textColor}>
-                    {userData?.highestStreak || 0}
-                  </Text>
-                  <Text fontSize="sm" color={textColor}>
-                    Highest Streak
-                  </Text>
-                </VStack>
-              </HStack>
-            </VStack>
-          </Box>
+          {/* Streak Stats Section */}
+          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
+            <Box p={6} bg={cardBgColor} borderRadius="lg" boxShadow="lg">
+              <VStack spacing={4} align="center">
+                <Icon as={FaFire} boxSize={8} color="red.500" />
+                <Text fontSize="3xl" fontWeight="bold" color={highlightColor}>
+                  {userData?.currentStreak || 0}
+                </Text>
+                <Text fontSize="lg" color={textColor}>
+                  Current Streak
+                </Text>
+              </VStack>
+            </Box>
+            <Box p={6} bg={cardBgColor} borderRadius="lg" boxShadow="lg">
+              <VStack spacing={4} align="center">
+                <Icon as={FaRegStar} boxSize={8} color="yellow.400" />
+                <Text fontSize="3xl" fontWeight="bold" color={highlightColor}>
+                  {userData?.highestStreak || 0}
+                </Text>
+                <Text fontSize="lg" color={textColor}>
+                  Highest Streak
+                </Text>
+              </VStack>
+            </Box>
+          </SimpleGrid>
 
-          <Box p={6} bg={cardBgColor} borderRadius="md" boxShadow="lg">
-            <VStack spacing={4} align="stretch">
+          {/* Salawat Progress Section */}
+          <Box p={6} bg={cardBgColor} borderRadius="lg" boxShadow="2xl">
+            <VStack spacing={6} align="stretch">
               <Heading color={textColor} size="md">
                 Your Salawat Progress
               </Heading>
-              {userData?.salawatCounts &&
-                Object.entries(userData.salawatCounts).map(
-                  ([salawatId, count]) => (
-                    <Flex
-                      key={salawatId}
-                      justify="space-between"
-                      p={4}
-                      bg="gray.100"
-                      borderRadius="md"
-                    >
-                      <Text fontSize="lg" color={textColor}>
-                        {salawatNames[salawatId] || salawatId}
-                      </Text>
-                      <Text
-                        fontSize="lg"
-                        fontWeight="bold"
-                        color={highlightColor}
+              <Stack spacing={4}>
+                {userData?.salawatCounts &&
+                  Object.entries(userData.salawatCounts).map(
+                    ([salawatId, count]) => (
+                      <Flex
+                        key={salawatId}
+                        justify="space-between"
+                        align="center"
+                        p={4}
+                        bg="gray.100"
+                        borderRadius="md"
+                        boxShadow="sm"
                       >
-                        {count}
-                      </Text>
-                    </Flex>
-                  )
-                )}
+                        <Text fontSize="lg" color={textColor}>
+                          {salawatNames[salawatId] || salawatId}
+                        </Text>
+                        <Badge
+                          fontSize="lg"
+                          colorScheme="teal"
+                          borderRadius="md"
+                          px={3}
+                          py={1}
+                        >
+                          {count}
+                        </Badge>
+                      </Flex>
+                    )
+                  )}
+              </Stack>
             </VStack>
           </Box>
         </VStack>
