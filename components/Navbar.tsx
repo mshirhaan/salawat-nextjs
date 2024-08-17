@@ -18,6 +18,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { FaSignOutAlt } from "react-icons/fa";
 
 export default function Navbar() {
   const bgColor = "green.50"; // Light mode equivalent
@@ -118,6 +119,7 @@ export default function Navbar() {
                 onClick={handleLogout}
                 colorScheme="red"
                 _hover={{ bg: "red.600" }}
+                leftIcon={<FaSignOutAlt />}
               >
                 Logout
               </Button>
@@ -205,7 +207,12 @@ export default function Navbar() {
                       {user.displayName || "User"}
                     </Text>
                   </Flex>
-                  <Button onClick={handleLogout} colorScheme="red" mt={4}>
+                  <Button
+                    onClick={handleLogout}
+                    colorScheme="red"
+                    mt={4}
+                    leftIcon={<FaSignOutAlt />}
+                  >
                     Logout
                   </Button>
                 </>
