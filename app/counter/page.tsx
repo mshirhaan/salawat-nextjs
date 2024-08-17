@@ -40,6 +40,9 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
   }, [count]);
 
   const incrementCount = () => {
+    if (navigator.vibrate) {
+      navigator.vibrate(100);
+    }
     setCount((prevCount) => prevCount + 1);
   };
 
@@ -93,17 +96,30 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
         alignItems="center"
         padding="4"
       >
-        <Heading color="white" marginTop="8" fontSize={{ base: "2xl", md: "4xl" }}>
+        <Heading
+          color="white"
+          marginTop="8"
+          fontSize={{ base: "2xl", md: "4xl" }}
+        >
           Salawat Counter
         </Heading>
 
         <VStack spacing={8}>
-          <Text fontSize={{ base: "5xl", md: "6xl" }} fontWeight="bold" color="white">
+          <Text
+            fontSize={{ base: "5xl", md: "6xl" }}
+            fontWeight="bold"
+            color="white"
+          >
             {count}
           </Text>
         </VStack>
 
-        <Flex direction="column" alignItems="center" width="full" marginBottom="8">
+        <Flex
+          direction="column"
+          alignItems="center"
+          width="full"
+          marginBottom="8"
+        >
           <Button
             onClick={incrementCount}
             size="lg"
