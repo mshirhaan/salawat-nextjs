@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
-import { Box, Heading, Text, VStack, HStack, Button, Flex, Divider, useColorModeValue, Stack, Grid, Icon } from "@chakra-ui/react";
+import { Box, Heading, Text, VStack, HStack, Button, Flex, Divider, useColorModeValue, Stack, Icon } from "@chakra-ui/react";
 import { useAuth } from "@/contexts/AuthContext";
 import { db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
@@ -87,8 +87,27 @@ export default function Dashboard() {
           width="100%"
         >
           <VStack spacing={6} align="stretch">
+            {/* Streaks Message */}
+            <Box
+              p={4}
+              bg="blue.50"
+              borderRadius="md"
+              mb={6}
+              textAlign="center"
+              borderWidth="1px"
+              borderColor="blue.200"
+            >
+              <Text fontSize="lg" color="blue.800" fontWeight="bold" mb={2}>
+                <Icon as={FaFire} boxSize={5} color="red.500" /> Keep your streak going!
+              </Text>
+              <Text fontSize="md" color="blue.700">
+                Your streaks are based on daily recitations. Don’t miss a day to keep your streak going strong!
+              </Text>
+            </Box>
+            
+            {/* Streaks Section */}
             <Flex direction="column" align="center" mb={6}>
-              <Heading size="lg" color={textColor}>
+              <Heading size="lg" color={textColor} mb={4}>
                 <Icon as={FaFire} boxSize={6} color="red.500" /> Streaks
               </Heading>
               <HStack spacing={8} mt={4}>
