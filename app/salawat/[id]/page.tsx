@@ -115,7 +115,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     return (
       <Text
         fontFamily="'Uthmanic', 'Amiri', serif"
-        fontSize="2xl"
+        fontSize="4xl"
         color="white"
         textAlign="center"
         lineHeight="1.8"

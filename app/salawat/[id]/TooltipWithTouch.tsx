@@ -13,7 +13,7 @@ const TooltipWithTouch = ({
   const [isLabelOpen, setIsLabelOpen] = useState(false);
 
   return (
-    <Tooltip isOpen={isLabelOpen} {...restToolTipProps} placement="top">
+    <Tooltip fontSize={"lg"} isOpen={isLabelOpen} {...restToolTipProps} placement="top">
       <span
         onMouseEnter={() => setIsLabelOpen(true)}
         onMouseLeave={() => setIsLabelOpen(false)}
