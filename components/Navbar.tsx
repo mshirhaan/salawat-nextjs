@@ -5,7 +5,6 @@ import {
   Box,
   Flex,
   Button,
-  Text,
   Avatar,
   useDisclosure,
   Drawer,
@@ -97,24 +96,14 @@ export default function Navbar() {
               >
                 Dashboard
               </Button>
-              <Button
-                as={Link}
-                href="/profile"
-                variant="ghost"
-                mx={2}
-                _hover={{ bg: "green.100" }}
-              >
-                Profile
-              </Button>
               <Avatar
                 name={user.displayName || "User"}
                 src={user.photoURL || undefined}
                 size="sm"
                 mr={4}
+                cursor="pointer"
+                onClick={() => router.push("/profile")}
               />
-              <Text mr={4} color={textColor} fontWeight="medium">
-                {user.displayName || "User"}
-              </Text>
               <Button
                 onClick={handleLogout}
                 colorScheme="red"
@@ -194,19 +183,16 @@ export default function Navbar() {
                     variant="ghost"
                     onClick={onClose}
                   >
-                    Profile
-                  </Button>
-                  <Flex alignItems="center" mt={4}>
                     <Avatar
                       name={user.displayName || "User"}
                       src={user.photoURL || undefined}
                       size="sm"
                       mr={3}
-                    />
-                    <Text color={textColor} fontWeight="medium">
-                      {user.displayName || "User"}
-                    </Text>
-                  </Flex>
+                      cursor="pointer"
+                    />{" "}
+                    Profile
+                  </Button>
+
                   <Button
                     onClick={handleLogout}
                     colorScheme="red"
