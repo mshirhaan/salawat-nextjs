@@ -1,13 +1,12 @@
-// app/salawat/[id]/ClientSideCounter.tsx
-
 "use client";
 
 import { useEffect, useState } from "react";
-import { Box, Button, Text, VStack, HStack } from "@chakra-ui/react";
+import { Box, Button, Text, VStack, HStack, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure, IconButton } from "@chakra-ui/react";
 import { logRecitation, updateUserSalawatCount } from "../../../lib/user";
 import { useAuth } from "@/contexts/AuthContext";
 import { db } from "@/lib/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
+import { InfoIcon } from "@chakra-ui/icons"; // Import the info icon or any other icon you prefer
 
 interface ClientSideCounterProps {
   salawatId: string;
@@ -49,6 +48,7 @@ export default function ClientSideCounter({
   const [weeklyCount, setWeeklyCount] = useState(0);
   const [monthlyCount, setMonthlyCount] = useState(0);
   const { user } = useAuth();
+  const { isOpen, onOpen, onClose } = useDisclosure(); // For managing drawer open/close
 
   useEffect(() => {
     let unsubscribe: () => void;
@@ -166,34 +166,63 @@ export default function ClientSideCounter({
           fontSize="xl"
           fontWeight="bold"
         >
-          <Text color="white">{totalCount}</Text>
+          <Text color="white">{dailyCount}</Text>
         </Button>
-        {/* <HStack spacing={4}>
-          <VStack>
-            <Text color="white" fontSize="sm" fontWeight="bold">
-              Today
-            </Text>
-            <Text color="white" fontSize="md">
-              {dailyCount}
-            </Text>
-          </VStack>
-          <VStack>
-            <Text color="white" fontSize="sm" fontWeight="bold">
-              This Week
-            </Text>
-            <Text color="white" fontSize="md">
-              {weeklyCount}
-            </Text>
-          </VStack>
-          <VStack>
-            <Text color="white" fontSize="sm" fontWeight="bold">
-              This Month
-            </Text>
-            <Text color="white" fontSize="md">
-              {monthlyCount}
-            </Text>
-          </VStack>
-        </HStack> */}
+
+        {/* Info Button */}
+        <Box position="absolute" top="10px" right="10px">
+          <IconButton
+            icon={<InfoIcon />}
+            colorScheme="teal"
+            aria-label="More Info"
+            onClick={onOpen}
+          />
+        </Box>
+
+        {/* Drawer for Count Details */}
+        <Drawer
+          isOpen={isOpen}
+          placement="right"
+          onClose={onClose}
+          size="sm"
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>Salawat Count Details</DrawerHeader>
+
+            <DrawerBody>
+              <VStack spacing={4} align="start">
+                <HStack spacing={4}>
+                  <VStack>
+                    <Text fontSize="sm" fontWeight="bold">
+                      Today
+                    </Text>
+                    <Text fontSize="md">{dailyCount}</Text>
+                  </VStack>
+                  <VStack>
+                    <Text fontSize="sm" fontWeight="bold">
+                      This Week
+                    </Text>
+                    <Text fontSize="md">{weeklyCount}</Text>
+                  </VStack>
+                  <VStack>
+                    <Text fontSize="sm" fontWeight="bold">
+                      This Month
+                    </Text>
+                    <Text fontSize="md">{monthlyCount}</Text>
+                  </VStack>
+                </HStack>
+              </VStack>
+            </DrawerBody>
+
+            <DrawerFooter>
+              <Button variant="outline" mr={3} onClick={onClose}>
+                Close
+              </Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
       </VStack>
     </Box>
   );
