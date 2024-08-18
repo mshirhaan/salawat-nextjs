@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import "./fonts.css";
 import { RegisterSW } from "@/components/RegisterSW";
+import { NotificationProvider } from "@/contexts/NotificationContext";
 
 export const metadata: Metadata = {
   title: "Salawat App",
@@ -51,9 +52,11 @@ export default function RootLayout({
       <body>
         <Providers>
           <AuthProvider>
-            <Navbar />
-            {children}
-            <Footer />
+            <NotificationProvider>
+              <Navbar />
+              {children}
+              <Footer />
+            </NotificationProvider>
           </AuthProvider>
         </Providers>
         <RegisterSW />

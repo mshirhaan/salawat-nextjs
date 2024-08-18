@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { db } from "@/lib/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
 import { InfoIcon } from "@chakra-ui/icons"; // Import the info icon or any other icon you prefer
+import { useNotification } from "@/contexts/NotificationContext";
 
 interface ClientSideCounterProps {
   salawatId: string;
@@ -49,6 +50,8 @@ export default function ClientSideCounter({
   const [monthlyCount, setMonthlyCount] = useState(0);
   const { user } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure(); // For managing drawer open/close
+
+  const { showNotification } = useNotification();
 
   useEffect(() => {
     let unsubscribe: () => void;
@@ -133,7 +136,7 @@ export default function ClientSideCounter({
 
     if (user) {
       await updateUserSalawatCount(user.uid, salawatId, 1);
-      await logRecitation(user.uid); // Log the recitation
+      await logRecitation(user.uid, showNotification); // Log the recitation
     }
   };
 

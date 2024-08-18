@@ -14,7 +14,10 @@ import {
 } from "firebase/firestore";
 
 // Function to log a recitation
-export async function logRecitation(userId: string) {
+export async function logRecitation(
+  userId: string,
+  showNotification: ShowNotificationType
+) {
   const userRef = doc(db, "users", userId);
   const now = Timestamp.now();
 
@@ -25,7 +28,7 @@ export async function logRecitation(userId: string) {
   });
 
   // Check and award badges
-  await checkAndAwardBadges(userRef);
+  await checkAndAwardBadges(userRef, showNotification);
 }
 
 // Function to update streaks
@@ -142,24 +145,38 @@ function getDayId(date: Date): string {
     .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 }
 
+type ShowNotificationType = (message: string) => void;
+
 // Function to check and award badges based on recitations
-async function checkAndAwardBadges(userRef: DocumentReference<DocumentData>) {
+async function checkAndAwardBadges(
+  userRef: DocumentReference<DocumentData>,
+  showNotification: ShowNotificationType
+) {
   const userDoc = await getDoc(userRef);
   if (userDoc.exists()) {
     const data = userDoc.data();
     const badges = data.badges || []; // Change to array of strings
-
+    const newBadges = [];
     // Check and award badges
     for (const badgeKey in badgeConfigs) {
       const badgeConfig = badgeConfigs[badgeKey];
       if (badgeConfig.check(data) && !badges.includes(badgeKey)) {
         badges.push(badgeKey);
+        newBadges.push(badgeKey);
       }
     }
 
-    // Update badges in Firestore
-    await updateDoc(userRef, {
-      badges,
-    });
+    if (newBadges.length > 0) {
+      // Update badges in Firestore
+      await updateDoc(userRef, { badges });
+
+      // Trigger the notification for each new badge
+      newBadges.forEach((badge) => {
+        const badgeInfo = badgeConfigs[badge];
+        if (badgeInfo) {
+          showNotification(`🎉 You've earned the "${badgeInfo.name}" badge!`);
+        }
+      });
+    }
   }
 }
