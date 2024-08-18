@@ -32,17 +32,17 @@ export default function Home() {
 
   return (
     <Box bg={bgColor} minH="100vh" overflow="hidden" position="relative">
-      <Container maxW="container.xl">
+      <Container maxW="container.xl" py={10}>
         <Flex
           direction={{ base: "column", md: "row" }}
           align="center"
           justify="center"
           minH="100vh"
-          py={10}
+          textAlign={{ base: "center", md: "left" }}
         >
           <VStack
             spacing={8}
-            align="flex-start"
+            
             flex={1}
             pr={{ base: 0, md: 8 }}
           >
@@ -56,22 +56,24 @@ export default function Home() {
               Welcome to the Salawat App
             </Heading>
             <Text
-              fontSize="xl"
+              fontSize={{ base: "lg", md: "xl" }}
               color={textColor}
               as={motion.p}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
+              mb={4}
             >
               Embrace the love for Prophet Muhammad ﷺ through the blessed
               practice of reciting Salawat.
             </Text>
             <Text
-              fontSize="lg"
+              fontSize={{ base: "md", md: "lg" }}
               color={accentColor}
               fontStyle="italic"
               as={motion.p}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
+              mb={6}
             >
               &rdquo;Indeed, Allah and His angels send blessings upon the
               Prophet. O you who have believed, ask [Allah to confer] blessing
