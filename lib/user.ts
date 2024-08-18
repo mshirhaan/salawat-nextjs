@@ -1,4 +1,5 @@
 // lib/user.ts
+import { badgeConfigs } from "@/app/badgeConfigs";
 import { db } from "./firebase";
 import {
   doc,
@@ -146,30 +147,14 @@ async function checkAndAwardBadges(userRef: DocumentReference<DocumentData>) {
   const userDoc = await getDoc(userRef);
   if (userDoc.exists()) {
     const data = userDoc.data();
-    const recitationLogs = data.recitationLogs || [];
-    const dailySalawatCounts = data.dailySalawatCounts || {};
-    const weeklySalawatCounts = data.weeklySalawatCounts || {};
-    const monthlySalawatCounts = data.monthlySalawatCounts || {};
-    const currentStreak = data.currentStreak || 0;
-    const highestStreak = data.highestStreak || 0;
     const badges = data.badges || []; // Change to array of strings
 
-    // Example: Award the "100 Salawat" badge
-    if (data.totalCount >= 100 && !badges.includes("100Salawat")) {
-      badges.push("100Salawat");
-    }
-
-    // Example: Award the "Daily Reciter" badge
-    if (
-      Object.keys(dailySalawatCounts).length >= 7 &&
-      !badges.includes("DailyReciter")
-    ) {
-      badges.push("DailyReciter");
-    }
-
-    // Example: Award the "One Week Streak" badge
-    if (currentStreak >= 7 && !badges.includes("OneWeekStreak")) {
-      badges.push("OneWeekStreak");
+    // Check and award badges
+    for (const badgeKey in badgeConfigs) {
+      const badgeConfig = badgeConfigs[badgeKey];
+      if (badgeConfig.check(data) && !badges.includes(badgeKey)) {
+        badges.push(badgeKey);
+      }
     }
 
     // Update badges in Firestore

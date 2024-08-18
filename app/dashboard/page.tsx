@@ -193,11 +193,23 @@ export default function Dashboard() {
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
         {userData?.badges?.map((badgeKey) => {
           const badgeConfig = badgeConfigs[badgeKey];
+          console.log(badgeKey, badgeConfig);
+
           if (badgeConfig) {
             return (
-              <Box key={badgeKey} bg={`${badgeConfig.color}.100`} p={4} borderRadius="md" boxShadow="md">
+              <Box
+                key={badgeKey}
+                bg={`${badgeConfig.color}.100`}
+                p={4}
+                borderRadius="md"
+                boxShadow="md"
+              >
                 <VStack spacing={4} align="center">
-                  <Icon as={badgeConfig.icon} boxSize={12} color={badgeConfig.color} />
+                  <Icon
+                    as={badgeConfig.icon}
+                    boxSize={12}
+                    color={badgeConfig.color}
+                  />
                   <Text fontSize="lg" fontWeight="bold">
                     {badgeConfig.name}
                   </Text>
