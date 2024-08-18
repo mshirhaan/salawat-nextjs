@@ -305,9 +305,15 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
           backgroundSize="cover"
           backgroundPosition="center"
           zIndex={-2}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: imageIndex === index ? 1 : 0 }}
-          transition={{ opacity: { duration: 2, ease: "easeInOut" } }}
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{
+            opacity: imageIndex === index ? 1 : 0,
+            scale: imageIndex === index ? 1 : 1.1,
+          }}
+          transition={{
+            opacity: { duration: 2, ease: "easeInOut" },
+            scale: { duration: 20, ease: "easeInOut" }, // Slow zoom effect
+          }}
         />
       ))}
 
