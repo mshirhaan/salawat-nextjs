@@ -33,6 +33,7 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import Login from "@/components/Login";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 interface SalawatWord {
   word: string;
   translations: { [key: string]: string };
@@ -64,13 +65,21 @@ async function getSalawatData(id: string): Promise<SalawatData> {
   return salawatSnap.data() as SalawatData;
 }
 
+const MotionBox = motion(Box);
 export default function SalawatPage({ params }: { params: { id: string } }) {
   const { user } = useAuth();
   const router = useRouter();
   const [salawat, setSalawat] = useState<SalawatData | null>(null);
   const [totalSubmittedCount, setTotalSubmittedCount] = useState(0);
+  const [imageIndex, setImageIndex] = useState(0);
 
   const language = "en";
+
+  const imageUrls = [
+    "https://images.squarespace-cdn.com/content/v1/538279a0e4b037295d984647/1624442776595-FLQNT4Y1P9WW6X9R4VD7/DJI_0062.jpeg",
+    "https://images.squarespace-cdn.com/content/v1/538279a0e4b037295d984647/1624442608579-7GBAJE6ZC55EC3Z2WDKW/850_4393-HDR.jpeg",
+    "https://images.squarespace-cdn.com/content/v1/538279a0e4b037295d984647/1624442626013-QJOFHH3B2HUOCYN6E0GV/850_5158.jpeg",
+  ];
 
   useEffect(() => {
     if (!user) {
@@ -101,6 +110,15 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     }
     fetchTotalCount();
   }, [params.id]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setImageIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
+    }, 10000); // Change image every 10 seconds
+
+    return () => clearInterval(intervalId);
+  }, [imageUrls.length]);
+
   const renderArabicTextWithTooltips = (
     arabicText: string,
     words: SalawatWord[]
@@ -154,7 +172,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
   return (
     <Box position="relative" minHeight="100vh" overflow="hidden">
       {/* Video Background */}
-      <video
+      {/* <video
         autoPlay
         muted
         loop
@@ -170,7 +188,26 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
           objectFit: "cover",
           zIndex: -1,
         }}
-      />
+      /> */}
+
+       {/* Image Background */}
+       {imageUrls.map((url, index) => (
+        <MotionBox
+          key={index}
+          position="fixed"
+          top={0}
+          left={0}
+          width="100%"
+          height="100%"
+          backgroundImage={`url(${url})`}
+          backgroundSize="cover"
+          backgroundPosition="center"
+          zIndex={-2}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: imageIndex === index ? 1 : 0 }}
+          transition={{ opacity: { duration: 2, ease: "easeInOut" } }}
+        />
+      ))}
 
       {/* Overlay */}
       <Box
