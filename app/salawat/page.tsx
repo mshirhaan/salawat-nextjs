@@ -17,7 +17,8 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { InfoIcon, StarIcon } from "@chakra-ui/icons";
+import { InfoIcon } from "@chakra-ui/icons";
+import { BsPinFill, BsPin } from "react-icons/bs";
 
 interface SalawatData {
   id: string;
@@ -163,7 +164,7 @@ export default function HomePage() {
                     )}
                     <IconButton
                       aria-label={salawat.pinned ? "Unpin" : "Pin"}
-                      icon={<StarIcon />}
+                      icon={salawat.pinned ? <BsPinFill /> : <BsPin />}
                       variant="outline"
                       colorScheme={salawat.pinned ? "yellow" : "gray"}
                       size="sm"
