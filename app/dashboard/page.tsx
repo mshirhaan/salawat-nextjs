@@ -26,11 +26,12 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
-import { FaFire, FaMedal, FaRegStar } from "react-icons/fa";
+import { FaFire, FaMedal, FaRegStar, FaStar, FaTrophy } from "react-icons/fa";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { getDayId, getMonthId, getWeekId } from "@/utils/dateUtils";
 import { Line } from "react-chartjs-2";
 import "chart.js/auto"; // Automatically registers the necessary chart components
+import { badgeConfigs } from "../badgeConfigs";
 
 interface UserData {
   email: string;
@@ -42,6 +43,7 @@ interface UserData {
   weeklySalawatCounts: { [key: string]: any };
   monthlySalawatCounts: { [key: string]: any };
   lastRecitationDate: null;
+  badges: string[]; // New field for badges
 }
 
 interface SalawatData {
@@ -153,7 +155,11 @@ export default function Dashboard() {
         Your Salawat Progress
       </Heading>
       <Grid
-        templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }}
+        templateColumns={{
+          base: "repeat(1, 1fr)",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
+        }}
         gap={{ base: 8, md: 6 }}
       >
         {userData?.salawatCounts &&
@@ -178,7 +184,35 @@ export default function Dashboard() {
       </Grid>
     </VStack>
   );
-  
+
+  const badgesSection = (
+    <Box p={6} bg={cardBgColor} borderRadius="lg" boxShadow="lg">
+      <Heading color={textColor} size="md" mb={4}>
+        Your Badges
+      </Heading>
+      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
+        {userData?.badges?.map((badgeKey) => {
+          const badgeConfig = badgeConfigs[badgeKey];
+          if (badgeConfig) {
+            return (
+              <Box key={badgeKey} bg={`${badgeConfig.color}.100`} p={4} borderRadius="md" boxShadow="md">
+                <VStack spacing={4} align="center">
+                  <Icon as={badgeConfig.icon} boxSize={12} color={badgeConfig.color} />
+                  <Text fontSize="lg" fontWeight="bold">
+                    {badgeConfig.name}
+                  </Text>
+                  <Text fontSize="sm" color="gray.600">
+                    {badgeConfig.description}
+                  </Text>
+                </VStack>
+              </Box>
+            );
+          }
+          return null;
+        })}
+      </SimpleGrid>
+    </Box>
+  );
 
   const chartOptions = {
     responsive: true,
@@ -290,13 +324,17 @@ export default function Dashboard() {
             </VStack>
           </Box>
 
+          {badgesSection}
           {/* Charts Section */}
           <Box p={10} bg={cardBgColor} borderRadius="lg" boxShadow="2xl">
             <VStack spacing={4} align="stretch">
               <Heading color={textColor} size="md">
                 Your Salawat Over Time
               </Heading>
-              <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 16, md: 6 }}>
+              <SimpleGrid
+                columns={{ base: 1, md: 3 }}
+                spacing={{ base: 16, md: 6 }}
+              >
                 <Box h="250px">
                   <Text fontSize="lg" mb={2} color={textColor}>
                     Daily

@@ -8,6 +8,8 @@ import {
   getDoc,
   arrayUnion,
   Timestamp,
+  DocumentReference,
+  DocumentData,
 } from "firebase/firestore";
 
 // Function to log a recitation
@@ -20,6 +22,9 @@ export async function logRecitation(userId: string) {
   await updateDoc(userRef, {
     recitationLogs: arrayUnion(now),
   });
+
+  // Check and award badges
+  await checkAndAwardBadges(userRef);
 }
 
 // Function to update streaks
@@ -81,6 +86,7 @@ export async function createUserDocument(
     weeklySalawatCounts: {}, // New field for weekly Salawat counts
     monthlySalawatCounts: {}, // New field for monthly Salawat counts
     lastRecitationDate: null, // New field to track the last recitation date
+    badges: {},
   });
 }
 
@@ -133,4 +139,42 @@ function getDayId(date: Date): string {
   return `${date.getFullYear()}-${(date.getMonth() + 1)
     .toString()
     .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+}
+
+// Function to check and award badges based on recitations
+async function checkAndAwardBadges(userRef: DocumentReference<DocumentData>) {
+  const userDoc = await getDoc(userRef);
+  if (userDoc.exists()) {
+    const data = userDoc.data();
+    const recitationLogs = data.recitationLogs || [];
+    const dailySalawatCounts = data.dailySalawatCounts || {};
+    const weeklySalawatCounts = data.weeklySalawatCounts || {};
+    const monthlySalawatCounts = data.monthlySalawatCounts || {};
+    const currentStreak = data.currentStreak || 0;
+    const highestStreak = data.highestStreak || 0;
+    const badges = data.badges || []; // Change to array of strings
+
+    // Example: Award the "100 Salawat" badge
+    if (data.totalCount >= 100 && !badges.includes("100Salawat")) {
+      badges.push("100Salawat");
+    }
+
+    // Example: Award the "Daily Reciter" badge
+    if (
+      Object.keys(dailySalawatCounts).length >= 7 &&
+      !badges.includes("DailyReciter")
+    ) {
+      badges.push("DailyReciter");
+    }
+
+    // Example: Award the "One Week Streak" badge
+    if (currentStreak >= 7 && !badges.includes("OneWeekStreak")) {
+      badges.push("OneWeekStreak");
+    }
+
+    // Update badges in Firestore
+    await updateDoc(userRef, {
+      badges,
+    });
+  }
 }
