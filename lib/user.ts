@@ -20,12 +20,33 @@ export async function logRecitation(
 ) {
   const userRef = doc(db, "users", userId);
   const now = Timestamp.now();
+  const xpPerRecitation = 10; // Define how much XP is awarded per recitation
 
   await updateStreak(userId, now);
 
-  await updateDoc(userRef, {
-    recitationLogs: arrayUnion(now),
-  });
+  // Increment XP
+  const userDoc = await getDoc(userRef);
+  if (userDoc.exists()) {
+    const userData = userDoc.data();
+    let newXP = userData.xp + xpPerRecitation;
+    let newLevel = userData.level;
+
+    // Define the XP needed for each level (e.g., level 1 requires 100 XP, level 2 requires 200 XP, etc.)
+    const xpForNextLevel = (newLevel: number) => newLevel * 100;
+
+    // Check if the user has leveled up
+    while (newXP >= xpForNextLevel(newLevel)) {
+      newXP -= xpForNextLevel(newLevel);
+      newLevel += 1;
+      showNotification(`🎉 You've reached Level ${newLevel}!`);
+    }
+
+    await updateDoc(userRef, {
+      recitationLogs: arrayUnion(now),
+      xp: newXP,
+      level: newLevel,
+    });
+  }
 
   // Check and award badges
   await checkAndAwardBadges(userRef, showNotification);
@@ -90,7 +111,9 @@ export async function createUserDocument(
     weeklySalawatCounts: {}, // New field for weekly Salawat counts
     monthlySalawatCounts: {}, // New field for monthly Salawat counts
     lastRecitationDate: null, // New field to track the last recitation date
-    badges: {},
+    badges: [],
+    level: 1, // Starting level
+    xp: 0, // Starting XP
   });
 }
 

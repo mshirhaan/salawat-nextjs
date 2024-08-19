@@ -22,20 +22,32 @@ import {
   StatHelpText,
   StatArrow,
   Progress,
+  CircularProgress,
+  CircularProgressLabel,
 } from "@chakra-ui/react";
 import { useAuth } from "@/contexts/AuthContext";
 import { db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
-import { FaFire, FaMedal, FaRegStar, FaStar, FaTrophy } from "react-icons/fa";
+import {
+  FaFire,
+  FaHeart,
+  FaLevelUpAlt,
+  FaMedal,
+  FaRegStar,
+} from "react-icons/fa";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { getDayId, getMonthId, getWeekId } from "@/utils/dateUtils";
 import { Line } from "react-chartjs-2";
 import "chart.js/auto"; // Automatically registers the necessary chart components
 import { badgeConfigs } from "../badgeConfigs";
+import { calculateXpToNextLevel } from "@/utils/dashboardUtils";
+import { GiLaurelsTrophy } from "react-icons/gi";
 
 interface UserData {
   email: string;
   totalCount: number;
+  level: number; // New field for user level
+  xp: number;
   salawatCounts: { [key: string]: number };
   currentStreak: number;
   highestStreak: number;
@@ -97,6 +109,58 @@ export default function Dashboard() {
     return <Box>Please log in to view your dashboard.</Box>;
   }
 
+  const userLevel = userData?.level || 1;
+  const userXp = userData?.xp || 0;
+  const xpToNextLevel = calculateXpToNextLevel(userLevel);
+  const progressPercent = (userXp / xpToNextLevel) * 100;
+
+  const levelSection = (
+    <Box
+      p={6}
+      bgGradient="linear(to-r, #f7fafc, #edf2f7)"
+      borderRadius="lg"
+      boxShadow="2xl"
+      textAlign="center"
+    >
+      <VStack spacing={5} align="center">
+        <Flex align="center" justify="center" direction="column">
+          <CircularProgress
+            value={progressPercent}
+            size="120px"
+            thickness="12px"
+            color={highlightColor}
+            trackColor="gray.200"
+          >
+            <CircularProgressLabel>
+              <Icon as={FaLevelUpAlt} boxSize={10} color={highlightColor} />
+            </CircularProgressLabel>
+          </CircularProgress>
+          <Text fontSize="2xl" fontWeight="bold" color={highlightColor} mt={4}>
+            Level {userLevel}
+          </Text>
+        </Flex>
+        <HStack spacing={4}>
+          <Icon as={GiLaurelsTrophy} boxSize={6} color={highlightColor} />
+          <Text fontSize="lg" color={textColor}>
+            {userXp} XP / {xpToNextLevel} XP
+          </Text>
+        </HStack>
+        <Progress
+          value={progressPercent}
+          colorScheme="green"
+          size="lg"
+          width="100%"
+          borderRadius="lg"
+          hasStripe
+          isAnimated
+        />
+        <Text fontSize="md" color={textColor} fontStyle="italic">
+          Keep reciting to level up and achieve closeness to Beloved ﷺ{" "}
+          <Icon as={FaHeart} boxSize={5} color="red.500" />
+        </Text>
+      </VStack>
+    </Box>
+  );
   const now = new Date();
   const dayId = getDayId(now);
   const weekId = getWeekId(now);
@@ -302,7 +366,8 @@ export default function Dashboard() {
               </VStack>
             </HStack>
           </Flex>
-
+          {/* Level Section */}
+          {levelSection}
           {/* Streak Section */}
           {streakSection}
 
