@@ -155,7 +155,7 @@ export default function Dashboard() {
           isAnimated
         />
         <Text fontSize="md" color={textColor} fontStyle="italic">
-          Keep reciting to level up and achieve closeness to Beloved ﷺ{" "}
+          Keep reciting to level up and achieve closeness to the Beloved ﷺ{" "}
           <Icon as={FaHeart} boxSize={5} color="red.500" />
         </Text>
       </VStack>
