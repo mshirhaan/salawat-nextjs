@@ -64,9 +64,6 @@ export default function ClientSideCounter({
   const [weeklyCount, setWeeklyCount] = useState(0);
   const [monthlyCount, setMonthlyCount] = useState(0);
 
-  //for voice recognition
-  const [isListening, setIsListening] = useState(false);
-
   const { user } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure(); // For managing drawer open/close
   const { showNotification } = useNotification();
@@ -158,53 +155,6 @@ export default function ClientSideCounter({
     }
   };
 
-  //for voice recognition
-  const startListening = () => {
-    if (
-      !("SpeechRecognition" in window || "webkitSpeechRecognition" in window)
-    ) {
-      console.error("Speech Recognition API not supported.");
-      return;
-    }
-
-    const recognition = new ((window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition)();
-    recognition.continuous = true;
-    recognition.interimResults = false;
-    recognition.lang = "ar-SA"; // Set language to Arabic (Saudi Arabia)
-
-    recognition.onstart = () => {
-      setIsListening(true);
-    };
-
-    recognition.onend = () => {
-      setIsListening(false);
-    };
-
-    recognition.onresult = (event: any) => {
-      if (event.results.length > 0) {
-        const transcript =
-          event.results[event.results.length - 1][0].transcript.trim();
-        if (transcript === "سلام") {
-          handleCount();
-        }
-      }
-    };
-
-    recognition.onerror = (error: any) => {
-      console.error("Speech recognition error:", error);
-    };
-
-    recognition.start();
-  };
-
-  //for voice recognition
-  const stopListening = () => {
-    const recognition = new ((window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition)();
-    recognition.stop();
-  };
-
   return (
     <Box
       position="fixed"
@@ -286,46 +236,6 @@ export default function ClientSideCounter({
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
-
-        {/* //for voice recognition - Start Listening Button */}
-        <Button
-          onClick={startListening}
-          size="sm"
-          colorScheme="teal"
-          variant="solid"
-          borderRadius="full"
-          width="80px"
-          height="80px"
-          boxShadow="md"
-          _hover={{ bg: "teal.600" }}
-          _focus={{ boxShadow: "outline" }}
-          transition="background-color 0.3s ease, transform 0.3s ease"
-          _active={{ transform: "scale(0.95)" }}
-          fontSize="md"
-        >
-          Start Listening
-        </Button>
-
-        {/* //for voice recognition -  Stop Listening Button */}
-        {isListening && (
-          <Button
-            onClick={stopListening}
-            size="sm"
-            colorScheme="red"
-            variant="solid"
-            borderRadius="full"
-            width="80px"
-            height="80px"
-            boxShadow="md"
-            _hover={{ bg: "red.600" }}
-            _focus={{ boxShadow: "outline" }}
-            transition="background-color 0.3s ease, transform 0.3s ease"
-            _active={{ transform: "scale(0.95)" }}
-            fontSize="md"
-          >
-            Stop
-          </Button>
-        )}
       </VStack>
     </Box>
   );
