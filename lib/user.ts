@@ -19,6 +19,22 @@ export async function logRecitation(
   showNotification: ShowNotificationType
 ) {
   const userRef = doc(db, "users", userId);
+
+  //Group related start
+  const userDoc = await getDoc(userRef);
+  const userData = userDoc.data();
+  const userGroups = userData?.groups || [];
+
+  for (const groupId of userGroups) {
+    const groupRef = doc(db, "groups", groupId);
+
+    await updateDoc(groupRef, {
+      totalSalawatCount: increment(1),
+      [`leaderboard.${userId}`]: increment(1),
+    });
+  }
+  //end
+
   const now = Timestamp.now();
 
   await updateStreak(userId, now);
