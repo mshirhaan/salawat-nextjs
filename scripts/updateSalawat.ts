@@ -5,152 +5,60 @@ async function seed() {
   try {
     const salawatCollection = collection(db, "salawat");
 
+
     await addDoc(salawatCollection, {
-      "title": "Salawat Uli 'l-'Azam",
-      "lines": [
+      title: "Friday After Asr Salawat for 80 YEARS OF WORSHIP & FORGIVENESS OF 80 YEARS OF SIN",
+      lines: [
         {
-          "arabic": "اللَّهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ وَ سَيِّدِنَا آدَمَ وَ سَيِّدِنَا نُوْحٍ وَسَيِّدِنَا إِبْرَاهِيمَ وَ سَيِّدِنَا مُوسَى وَسَيِّدِنَا عِيسَى وَمَا بَيْنَهُمْ مِنَ النَّبِيِّينَ وَالْمُرْسَلِينَ صَلَوَاتُ اللَّهِ وَسَلَامُهُ عَلَيْهِمْ أَجْمَعِينَ",
-          "translations": {
-            "en": "O Allah, send prayers upon our masters; Muhammad, Adam, Nuh, Ibrahim, Musa, Isa and upon all the Prophets and Messengers that came amongst them. May the prayers and salutations of Allah be upon them all."
+          arabic: "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدِنِ النَّبِيِّ الْأُمِّيِّ وَعَلَى آلِهِ وَسَلَّمْ تَسْلِيمًا",
+          translations: {
+            en: "O Allah shower your mercy upon Muhammad, the unlettered Prophet, and upon his family and grant them best of peace."
           },
-          "words": [
+          words: [
             {
-              "word": "اللَّهُمَّ",
-              "translations": { "en": "O Allah" }
+              word: "اللَّهُمَّ",
+              translations: { en: "O Allah" }
             },
             {
-              "word": "صَلِّ",
-              "translations": { "en": "send prayers" }
+              word: "صَلِّ",
+              translations: { en: "shower your mercy" }
             },
             {
-              "word": "عَلَى",
-              "translations": { "en": "upon" }
+              word: "عَلَى",
+              translations: { en: "upon" }
             },
             {
-              "word": "سَيِّدِنَا",
-              "translations": { "en": "our master" }
+              word: "مُحَمَّدِنِ",
+              translations: { en: "Muhammad" }
             },
             {
-              "word": "مُحَمَّدٍ",
-              "translations": { "en": "Muhammad" }
+              word: "النَّبِيِّ",
+              translations: { en: "the Prophet" }
             },
             {
-              "word": "و",
-              "translations": { "en": "and" }
+              word: "الْأُمِّيِّ",
+              translations: { en: "the unlettered" }
             },
             {
-              "word": "سَيِّدِنَا",
-              "translations": { "en": "our master" }
+              word: "وَعَلَى",
+              translations: { en: "and upon" }
             },
             {
-              "word": "آدَمَ",
-              "translations": { "en": "Adam" }
+              word: "آلِهِ",
+              translations: { en: "his family" }
             },
             {
-              "word": "و",
-              "translations": { "en": "and" }
+              word: "وَسَلَّمْ",
+              translations: { en: "and grant them peace" }
             },
             {
-              "word": "سَيِّدِنَا",
-              "translations": { "en": "our master" }
-            },
-            {
-              "word": "نُوْحٍ",
-              "translations": { "en": "Nuh" }
-            },
-            {
-              "word": "و",
-              "translations": { "en": "and" }
-            },
-            {
-              "word": "سَيِّدِنَا",
-              "translations": { "en": "our master" }
-            },
-            {
-              "word": "إِبْرَاهِيمَ",
-              "translations": { "en": "Ibrahim" }
-            },
-            {
-              "word": "و",
-              "translations": { "en": "and" }
-            },
-            {
-              "word": "سَيِّدِنَا",
-              "translations": { "en": "our master" }
-            },
-            {
-              "word": "مُوسَى",
-              "translations": { "en": "Musa" }
-            },
-            {
-              "word": "و",
-              "translations": { "en": "and" }
-            },
-            {
-              "word": "سَيِّدِنَا",
-              "translations": { "en": "our master" }
-            },
-            {
-              "word": "عِيسَى",
-              "translations": { "en": "Isa" }
-            },
-            {
-              "word": "و",
-              "translations": { "en": "and" }
-            },
-            {
-              "word": "مَا",
-              "translations": { "en": "all that" }
-            },
-            {
-              "word": "بَيْنَهُمْ",
-              "translations": { "en": "between them" }
-            },
-            {
-              "word": "مِنَ",
-              "translations": { "en": "from" }
-            },
-            {
-              "word": "النَّبِيِّينَ",
-              "translations": { "en": "the Prophets" }
-            },
-            {
-              "word": "و",
-              "translations": { "en": "and" }
-            },
-            {
-              "word": "الْمُرْسَلِينَ",
-              "translations": { "en": "the Messengers" }
-            },
-            {
-              "word": "صَلَوَاتُ",
-              "translations": { "en": "prayers" }
-            },
-            {
-              "word": "اللَّهِ",
-              "translations": { "en": "of Allah" }
-            },
-            {
-              "word": "و",
-              "translations": { "en": "and" }
-            },
-            {
-              "word": "سَلَامُهُ",
-              "translations": { "en": "salutations" }
-            },
-            {
-              "word": "عَلَيْهِمْ",
-              "translations": { "en": "upon them" }
-            },
-            {
-              "word": "أَجْمَعِينَ",
-              "translations": { "en": "all" }
+              word: "تَسْلِيمًا",
+              translations: { en: "best of peace" }
             }
           ]
         }
       ]
-    }
-    );
+    });
     console.log("Salawat added successfully!");
   } catch (error) {
     console.error("Error adding Salawat: ", error);
