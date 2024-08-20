@@ -18,7 +18,7 @@ async function clearCollection(collectionRef: CollectionReference) {
 async function seed() {
   try {
     const salawatCollection = collection(db, "salawat");
-
+ 
     // Clear existing data
     await clearCollection(salawatCollection);
 
