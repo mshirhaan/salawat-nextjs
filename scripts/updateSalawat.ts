@@ -10,9 +10,9 @@ async function seed() {
       title: "Friday After Asr Salawat for 80 YEARS OF WORSHIP & FORGIVENESS OF 80 YEARS OF SIN",
       lines: [
         {
-          arabic: "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدِنِ النَّبِيِّ الْأُمِّيِّ وَعَلَى آلِهِ وَسَلَّمْ تَسْلِيمًا",
+          arabic: "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدِنِ النَّبِيِّ الْأُمِّيِّ وَعَلَى آلِهِ وَسَلِّمْ تَسْلِيمًا",
           translations: {
-            en: "O Allah shower your mercy upon Muhammad, the unlettered Prophet, and upon his family and grant them best of peace."
+            en: "O Allah, shower Your mercy upon Muhammad, the unlettered Prophet, and upon his family and grant them the best of peace."
           },
           words: [
             {
@@ -21,7 +21,7 @@ async function seed() {
             },
             {
               word: "صَلِّ",
-              translations: { en: "shower your mercy" }
+              translations: { en: "shower Your mercy" }
             },
             {
               word: "عَلَى",
@@ -48,12 +48,12 @@ async function seed() {
               translations: { en: "his family" }
             },
             {
-              word: "وَسَلَّمْ",
+              word: "وَسَلِّمْ",
               translations: { en: "and grant them peace" }
             },
             {
               word: "تَسْلِيمًا",
-              translations: { en: "best of peace" }
+              translations: { en: "the best of peace" }
             }
           ]
         }
