@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Box,
   Button,
@@ -16,6 +16,7 @@ import {
   DrawerCloseButton,
   IconButton,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { logRecitation, updateUserSalawatCount } from "../../../lib/user";
 import { useAuth } from "@/contexts/AuthContext";
@@ -67,6 +68,10 @@ export default function ClientSideCounter({
   const { user } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure(); // For managing drawer open/close
   const { showNotification } = useNotification();
+  const toast = useToast(); // Chakra UI toast for notifications
+
+  const lastClickTime = useRef<number>(0);
+  const debounceDelay = 1000; // 1 second debounce delay
 
   useEffect(() => {
     let unsubscribe: () => void;
@@ -137,21 +142,35 @@ export default function ClientSideCounter({
   }, [salawatId, user]);
 
   const handleCount = async () => {
-    if (navigator.vibrate) {
-      navigator.vibrate(100);
-    }
+    const currentTime = Date.now();
 
-    const newTotalCount = totalCount + 1;
-    setTotalCount(newTotalCount);
-    setDailyCount(dailyCount + 1);
-    setWeeklyCount(weeklyCount + 1);
-    setMonthlyCount(monthlyCount + 1);
+    if (currentTime - lastClickTime.current > debounceDelay) {
+      lastClickTime.current = currentTime;
 
-    localStorage.setItem(`salawatCount_${salawatId}`, newTotalCount.toString());
+      if (navigator.vibrate) {
+        navigator.vibrate(100);
+      }
 
-    if (user) {
-      await updateUserSalawatCount(user.uid, salawatId, 1);
-      await logRecitation(user.uid, showNotification); // Log the recitation
+      const newTotalCount = totalCount + 1;
+      setTotalCount(newTotalCount);
+      setDailyCount(dailyCount + 1);
+      setWeeklyCount(weeklyCount + 1);
+      setMonthlyCount(monthlyCount + 1);
+
+      localStorage.setItem(`salawatCount_${salawatId}`, newTotalCount.toString());
+
+      if (user) {
+        await updateUserSalawatCount(user.uid, salawatId, 1);
+        await logRecitation(user.uid, showNotification); // Log the recitation
+      }
+    } else {
+      toast({
+        title: "Please wait",
+        description: "You can click again after 1 second.",
+        status: "info",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
 
