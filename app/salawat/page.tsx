@@ -17,27 +17,56 @@ import {
   IconButton,
   Tooltip,
   Input,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+  NumberInput,
+  NumberInputField,
+  useDisclosure,
+  useToast,
+  Progress,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { InfoIcon } from "@chakra-ui/icons";
+import { InfoIcon, EditIcon } from "@chakra-ui/icons";
 import { BsPinFill, BsPin } from "react-icons/bs";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase"; // Adjust the import path as needed
+import { useAuth } from "@/contexts/AuthContext";
 
 interface SalawatData {
   id: string;
   title: string;
   description?: string; // Optional description
   pinned?: boolean; // Add pinned property
+  target?: number; // Add target property
+  progress?: number; // Add progress property
 }
 
 export default function HomePage() {
+  const { user } = useAuth();
   const [salawatList, setSalawatList] = useState<SalawatData[]>([]);
   const [filteredSalawatList, setFilteredSalawatList] = useState<SalawatData[]>(
     []
   );
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedSalawat, setSelectedSalawat] = useState<SalawatData | null>(
+    null
+  );
+  const [dailyTarget, setDailyTarget] = useState(0);
+  const [userTargets, setUserTargets] = useState<{
+    [key: string]: { target: number; progress: { [date: string]: number } };
+  }>({});
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track user authentication
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const { colors } = useTheme();
+  const toast = useToast();
   const headingSize = useBreakpointValue({ base: "xl", md: "2xl" });
   const itemPadding = useBreakpointValue({ base: 4, md: 6 });
   const itemBorderRadius = useBreakpointValue({ base: "md", md: "lg" });
@@ -53,7 +82,7 @@ export default function HomePage() {
           localStorage.getItem("pinnedSalawat") || "[]"
         );
 
-        // Mark pinned items
+        // Update salawatList with pinned state
         const updatedData = data.map((item: SalawatData) => ({
           ...item,
           pinned: pinnedItems.includes(item.id),
@@ -82,8 +111,36 @@ export default function HomePage() {
     setFilteredSalawatList(filtered);
   }, [searchQuery, salawatList]);
 
-  const handleItemClick = (id: string) => {
-    router.push(`/salawat/${id}`);
+  useEffect(() => {
+    if (user) {
+      setIsLoggedIn(true);
+      // Fetch user's targets from Firebase
+      const fetchUserTargets = async () => {
+        try {
+          const userId = user.uid;
+          const userRef = doc(db, "users", userId);
+          const userDoc = await getDoc(userRef);
+          const userData = userDoc.data();
+          setUserTargets(userData?.dailySalawatTargets || {});
+        } catch (error) {
+          console.error("Error fetching user targets:", error);
+        }
+      };
+
+      fetchUserTargets();
+    } else {
+      setIsLoggedIn(false);
+      setUserTargets({});
+    }
+  }, [user]);
+
+  const handleReadClick = (salawat: SalawatData) => {
+    router.push(`/salawat/${salawat.id}`);
+  };
+
+  const handleSetTargetClick = (salawat: SalawatData) => {
+    setSelectedSalawat(salawat);
+    onOpen();
   };
 
   const togglePin = (id: string) => {
@@ -101,6 +158,69 @@ export default function HomePage() {
       return updatedList;
     });
   };
+
+  const handleSetTarget = async () => {
+    if (!selectedSalawat || dailyTarget <= 0) {
+      toast({
+        title: "Invalid target.",
+        description: "Please set a valid daily target.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    try {
+      const userId = auth.currentUser?.uid; // Use currentUser from auth
+      if (!userId) {
+        toast({
+          title: "Error.",
+          description: "No user logged in.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
+      }
+
+      const userRef = doc(db, "users", userId);
+
+      // Update the user's dailySalawatTargets in Firebase
+      await updateDoc(userRef, {
+        [`dailySalawatTargets.${selectedSalawat.id}`]: {
+          target: dailyTarget,
+          progress: {}, // Initialize progress
+        },
+      });
+
+      toast({
+        title: "Daily target set.",
+        description: `Your daily target for ${selectedSalawat.title} has been set to ${dailyTarget}.`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+
+      setUserTargets((prevTargets) => ({
+        ...prevTargets,
+        [selectedSalawat.id]: { target: dailyTarget, progress: {} },
+      }));
+
+      onClose();
+    } catch (error) {
+      console.error("Error setting daily target:", error);
+      toast({
+        title: "Error.",
+        description: "There was an error setting the daily target.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const today = new Date().toISOString().split("T")[0]; // Format as YYYY-MM-DD
 
   return (
     <Box p={5} bg="gray.50" minHeight="100vh">
@@ -131,61 +251,117 @@ export default function HomePage() {
         <VStack spacing={4} align="stretch">
           {filteredSalawatList
             .sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0)) // Pin items to the top
-            .map((salawat) => (
-              <Box
-                key={salawat.id}
-                p={itemPadding}
-                borderWidth={1}
-                borderRadius={itemBorderRadius}
-                bg="white"
-                boxShadow="md"
-                cursor="pointer"
-                _hover={{
-                  boxShadow: "xl",
-                  bg: colors.teal[50],
-                  transform: "scale(1.02)",
-                  transition: "all 0.3s ease",
-                }}
-                onClick={() => handleItemClick(salawat.id)}
-              >
-                <VStack spacing={2} align="start">
-                  <HStack justify="space-between" w="full">
-                    <Heading as="h3" size="lg" color="teal.600">
-                      {salawat.title}
-                    </Heading>
-                    {salawat.description && (
-                      <Tooltip label={salawat.description} placement="top">
+            .map((salawat) => {
+              const progress = userTargets[salawat.id]?.progress[today] || 0;
+              const target = userTargets[salawat.id]?.target || 0;
+              const progressPercentage =
+                target > 0 ? (progress / target) * 100 : 0;
+
+              return (
+                <Box
+                  key={salawat.id}
+                  p={itemPadding}
+                  borderWidth={1}
+                  borderRadius={itemBorderRadius}
+                  bg="white"
+                  boxShadow="md"
+                  _hover={{
+                    boxShadow: "xl",
+                    bg: colors.teal[50],
+                    transform: "scale(1.02)",
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  <HStack justify="space-between">
+                    <Box>
+                      <Heading size="md" mb={1}>
+                        {salawat.title}
+                      </Heading>
+                      {salawat.description && (
+                        <Text fontSize="sm" color="gray.600">
+                          {salawat.description}
+                        </Text>
+                      )}
+                    </Box>
+                    <HStack spacing={2}>
+                      {isLoggedIn && (
                         <IconButton
-                          aria-label="More info"
-                          icon={<InfoIcon />}
-                          variant="outline"
-                          colorScheme="teal"
-                          size="sm"
+                          aria-label="Edit target"
+                          icon={<EditIcon />}
+                          colorScheme="blue"
+                          onClick={() => handleSetTargetClick(salawat)}
                         />
-                      </Tooltip>
-                    )}
-                    <IconButton
-                      aria-label={salawat.pinned ? "Unpin" : "Pin"}
-                      icon={salawat.pinned ? <BsPinFill /> : <BsPin />}
-                      variant="outline"
-                      colorScheme={salawat.pinned ? "yellow" : "gray"}
-                      size="sm"
-                      onClick={(e) => {
-                        e.stopPropagation(); // Prevent triggering item click
-                        togglePin(salawat.id);
-                      }}
-                    />
+                      )}
+                      <IconButton
+                        aria-label={salawat.pinned ? "Unpin" : "Pin"}
+                        icon={salawat.pinned ? <BsPinFill /> : <BsPin />}
+                        colorScheme="teal"
+                        onClick={() => togglePin(salawat.id)}
+                      />
+                    </HStack>
                   </HStack>
-                  <Divider />
-                  <Text color="gray.600">
-                    {salawat.description ||
-                      "Tap to start reciting this Salawat!"}
-                  </Text>
-                </VStack>
-              </Box>
-            ))}
+
+                  <Box mt={4}>
+                    {isLoggedIn && target > 0 && (
+                      <>
+                        <Text fontSize="sm" mb={2}>
+                          Progress
+                        </Text>
+                        <Progress
+                          value={progressPercentage}
+                          colorScheme="teal"
+                          hasStripe
+                          isAnimated
+                        />
+                      </>
+                    )}
+                    <HStack justify="space-between" mt={2}>
+                      {isLoggedIn && (
+                        <Text fontSize="sm">
+                          {progress} / {target}
+                        </Text>
+                      )}
+                      <Button
+                        variant="link"
+                        colorScheme="teal"
+                        onClick={() => handleReadClick(salawat)}
+                      >
+                        Read
+                      </Button>
+                    </HStack>
+                  </Box>
+                </Box>
+              );
+            })}
         </VStack>
       )}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Set Daily Target</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <VStack spacing={4} align="stretch">
+              <Text fontSize="lg">{selectedSalawat?.title}</Text>
+              <NumberInput
+                value={dailyTarget}
+                min={0}
+                onChange={(value) => setDailyTarget(Number(value))}
+              >
+                <NumberInputField placeholder="Set daily target" />
+              </NumberInput>
+            </VStack>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleSetTarget}>
+              Set Target
+            </Button>
+            <Button variant="ghost" onClick={onClose}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }

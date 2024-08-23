@@ -129,6 +129,28 @@ export async function updateUserSalawatCount(
   const weekId = getWeekId(now);
   const monthId = getMonthId(now);
 
+  // Start: code for updating daily target
+  const userDoc = await getDoc(userRef);
+  if (!userDoc.exists()) {
+    console.error("User not found");
+    return;
+  }
+
+  const userData = userDoc.data();
+  const dailyTargetObj = userData?.dailySalawatTargets?.[salawatId];
+  const dailyTarget = dailyTargetObj?.target || 0;
+  const currentDayProgress = dailyTargetObj?.progress?.[dayId] || 0;
+
+  // Calculate the new progress for the day
+  const newDayProgress = Math.min(currentDayProgress + count, dailyTarget);
+
+  // Prepare the updated progress object
+  const updatedProgress = {
+    ...dailyTargetObj?.progress,
+    [dayId]: newDayProgress,
+  };
+  // End: code for updating daily target
+
   await updateDoc(userRef, {
     [`salawatCounts.${salawatId}`]: increment(count),
     totalCount: increment(count),
@@ -138,6 +160,8 @@ export async function updateUserSalawatCount(
     [`weeklySalawatCounts.${weekId}.totalCount`]: increment(count),
     [`monthlySalawatCounts.${monthId}.${salawatId}`]: increment(count),
     [`monthlySalawatCounts.${monthId}.totalCount`]: increment(count),
+    // Update the target progress day-wise
+    [`dailySalawatTargets.${salawatId}.progress`]: updatedProgress,
   });
 }
 
