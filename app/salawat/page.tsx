@@ -316,7 +316,7 @@ export default function HomePage() {
                       </>
                     )}
                     <HStack justify="space-between" mt={2}>
-                      {isLoggedIn && (
+                      {isLoggedIn && target > 0 && (
                         <Text fontSize="sm">
                           {progress} / {target}
                         </Text>
