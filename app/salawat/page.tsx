@@ -272,14 +272,15 @@ export default function HomePage() {
 
         <Text
           textAlign="center"
-          color="#795548"
+          color="#ffffff"
           mt={4} // Adjusted margin top for spacing
           fontSize="lg"
           fontWeight="medium"
           position="relative"
           zIndex={1}
+          textShadow="1px 1px 2px rgba(0, 0, 0, 0.6)"
         >
-          Explore Salawat: Blessings from the City of Light
+          Blessings from The Enlightened City
         </Text>
       </Box>
 
