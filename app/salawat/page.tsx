@@ -294,9 +294,10 @@ export default function HomePage() {
                       {isLoggedIn && (
                         <Tooltip label="Edit target">
                           <IconButton
+                            variant="ghost"
                             aria-label="Edit target"
                             icon={<EditIcon />}
-                            colorScheme="blue"
+                            colorScheme="teal"
                             onClick={(e) => {
                               e.stopPropagation(); // Prevents click event from propagating to the Box
                               handleSetTargetClick(salawat);
@@ -306,6 +307,7 @@ export default function HomePage() {
                       )}
                       <Tooltip label={salawat.pinned ? "Unpin" : "Pin"}>
                         <IconButton
+                          variant="ghost"
                           aria-label={salawat.pinned ? "Unpin" : "Pin"}
                           icon={salawat.pinned ? <BsPinFill /> : <BsPin />}
                           colorScheme="teal"
