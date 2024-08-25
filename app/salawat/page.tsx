@@ -30,6 +30,7 @@ import {
   useDisclosure,
   useToast,
   Progress,
+  Badge,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { InfoIcon, EditIcon } from "@chakra-ui/icons";
@@ -320,22 +321,39 @@ export default function HomePage() {
                   {isLoggedIn && target > 0 && (
                     <>
                       <Divider my={3} />
-                      <Flex align="center" justify="space-between">
-                        <Text fontSize="sm" color="gray.600">
-                          Progress
-                        </Text>
-                        <Text fontSize="sm" color="gray.600">
-                          {progress} / {target}
-                        </Text>
-                      </Flex>
-                      <Progress
-                        value={progressPercentage}
-                        size="sm"
-                        colorScheme="teal"
-                        mt={2}
-                        hasStripe
-                        isAnimated
-                      />
+                      {progressPercentage >= 100 ? (
+                        <Flex
+                          align="center"
+                          justify="center"
+                          direction="column"
+                        >
+                          <Badge colorScheme="green" fontSize="md" mb={2}>
+                            Completed
+                          </Badge>
+                          <Text fontSize="sm" color="gray.600">
+                            You have completed your target for today!
+                          </Text>
+                        </Flex>
+                      ) : (
+                        <>
+                          <Flex align="center" justify="space-between">
+                            <Text fontSize="sm" color="gray.600">
+                              Progress
+                            </Text>
+                            <Text fontSize="sm" color="gray.600">
+                              {progress} / {target}
+                            </Text>
+                          </Flex>
+                          <Progress
+                            value={progressPercentage}
+                            size="sm"
+                            colorScheme="teal"
+                            mt={2}
+                            hasStripe
+                            isAnimated
+                          />
+                        </>
+                      )}
                     </>
                   )}
                 </Box>
