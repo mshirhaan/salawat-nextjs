@@ -13,6 +13,9 @@ import {
   DrawerCloseButton,
   DrawerBody,
   VStack,
+  IconButton,
+  HStack,
+  Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -20,8 +23,6 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import { FaSignOutAlt } from "react-icons/fa";
 
 export default function Navbar() {
-  const bgColor = "green.50"; // Light mode equivalent
-  const textColor = "green.800"; // Light mode text color
   const { user, logout } = useAuth();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -36,111 +37,126 @@ export default function Navbar() {
   };
 
   return (
-    <Box bg={bgColor} px={4} boxShadow="md">
+    <Box bg="green.500" color="white" px={4} py={2} boxShadow="lg">
       <Flex h={16} alignItems="center" justifyContent="space-between">
-        <Link href="/" passHref>
-          <Box
-            fontWeight="bold"
-            fontSize="xl"
-            color={textColor}
-            cursor="pointer"
-          >
-            Salawat App
-          </Box>
-        </Link>
-        <Flex alignItems="center" display={{ base: "none", md: "flex" }}>
-          <Button
-            as={Link}
-            href="/"
-            variant="ghost"
-            mx={2}
-            _hover={{ bg: "green.100" }}
-          >
-            Home
-          </Button>
-          <Button
-            as={Link}
-            href="/salawat"
-            variant="ghost"
-            mx={2}
-            _hover={{ bg: "green.100" }}
-          >
-            Salawat
-          </Button>
-          <Button
-            as={Link}
-            href="/leaderboard"
-            variant="ghost"
-            mx={2}
-            _hover={{ bg: "green.100" }}
-          >
-            Leaderboard
-          </Button>
-          <Button
-            as={Link}
-            href="/counter"
-            variant="ghost"
-            mx={2}
-            _hover={{ bg: "green.100" }}
-          >
-            Counter
-          </Button>
-          {user && (
-            <>
+        <HStack spacing={8} alignItems="center">
+          <Link href="/" passHref>
+            <Button
+              variant="ghost"
+              fontSize="2xl"
+              fontWeight="bold"
+              color="white"
+              _hover={{ bg: "green.700" }}
+              _active={{ bg: "green.800" }}
+            >
+              Salawat App
+            </Button>
+          </Link>
+          <HStack as="nav" spacing={4} display={{ base: "none", md: "flex" }}>
+            <Link href="/" passHref>
               <Button
-                as={Link}
-                href="/dashboard"
                 variant="ghost"
-                mx={2}
-                _hover={{ bg: "green.100" }}
+                color="white"
+                _hover={{ bg: "green.700" }}
               >
-                Dashboard
+                Home
               </Button>
+            </Link>
+            <Link href="/salawat" passHref>
+              <Button
+                variant="ghost"
+                color="white"
+                _hover={{ bg: "green.700" }}
+              >
+                Salawat
+              </Button>
+            </Link>
+            <Link href="/leaderboard" passHref>
+              <Button
+                variant="ghost"
+                color="white"
+                _hover={{ bg: "green.700" }}
+              >
+                Leaderboard
+              </Button>
+            </Link>
+            <Link href="/counter" passHref>
+              <Button
+                variant="ghost"
+                color="white"
+                _hover={{ bg: "green.700" }}
+              >
+                Counter
+              </Button>
+            </Link>
+          </HStack>
+        </HStack>
+        <Flex alignItems="center">
+          {user ? (
+            <HStack spacing={4}>
               <Avatar
                 name={user.displayName || "User"}
                 src={user.photoURL || undefined}
                 size="sm"
-                mr={4}
                 cursor="pointer"
                 onClick={() => router.push("/profile")}
               />
+              <Link href="/dashboard" passHref>
+                <Button
+                  variant="ghost"
+                  color="white"
+                  _hover={{ bg: "green.700" }}
+                >
+                  Dashboard
+                </Button>
+              </Link>
               <Button
                 onClick={handleLogout}
                 colorScheme="red"
-                _hover={{ bg: "red.600" }}
+                variant="solid"
+                size="sm"
                 leftIcon={<FaSignOutAlt />}
               >
                 Logout
               </Button>
-            </>
+            </HStack>
+          ) : (
+            <Link href="/login" passHref>
+              <Button colorScheme="blue" variant="solid">
+                Login
+              </Button>
+            </Link>
           )}
-          {!user && (
-            <Button
-              as={Link}
-              href="/login"
-              colorScheme="blue"
-              _hover={{ bg: "blue.600" }}
-            >
-              Login
-            </Button>
-          )}
+          <IconButton
+            icon={<HamburgerIcon />}
+            display={{ base: "flex", md: "none" }}
+            onClick={onOpen}
+            aria-label="Open Menu"
+            color="white"
+            variant="ghost"
+            _hover={{ bg: "green.700" }}
+            _active={{ bg: "green.800" }}
+            ml={2}
+          />
         </Flex>
-        <Button
-          display={{ base: "flex", md: "none" }}
-          onClick={onOpen}
-          aria-label="Open Menu"
-        >
-          <HamburgerIcon boxSize={6} color={textColor} />
-        </Button>
       </Flex>
 
+      {/* Mobile Drawer */}
       <Drawer isOpen={isOpen} onClose={onClose} placement="right">
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerBody>
-            <VStack spacing={4} align="start" mt={4}>
-              <Button as={Link} href="/" variant="ghost" onClick={onClose}>
+            <VStack spacing={4} align="start" mt={4} color="white">
+              <Button
+                as={Link}
+                href="/"
+                variant="ghost"
+                onClick={onClose}
+                justifyContent="flex-start"
+                color="green"
+                _hover={{ bg: "green.500", color: "white" }}
+              >
                 Home
               </Button>
               <Button
@@ -148,6 +164,9 @@ export default function Navbar() {
                 href="/salawat"
                 variant="ghost"
                 onClick={onClose}
+                justifyContent="flex-start"
+                color="green"
+                _hover={{ bg: "green.500", color: "white" }}
               >
                 Salawat
               </Button>
@@ -156,6 +175,9 @@ export default function Navbar() {
                 href="/leaderboard"
                 variant="ghost"
                 onClick={onClose}
+                justifyContent="flex-start"
+                color="green"
+                _hover={{ bg: "green.500", color: "white" }}
               >
                 Leaderboard
               </Button>
@@ -164,6 +186,9 @@ export default function Navbar() {
                 href="/counter"
                 variant="ghost"
                 onClick={onClose}
+                justifyContent="flex-start"
+                color="green"
+                _hover={{ bg: "green.500", color: "white" }}
               >
                 Counter
               </Button>
@@ -174,6 +199,9 @@ export default function Navbar() {
                     href="/dashboard"
                     variant="ghost"
                     onClick={onClose}
+                    justifyContent="flex-start"
+                    color="green"
+                    _hover={{ bg: "green.500", color: "white" }}
                   >
                     Dashboard
                   </Button>
@@ -182,17 +210,12 @@ export default function Navbar() {
                     href="/profile"
                     variant="ghost"
                     onClick={onClose}
+                    justifyContent="flex-start"
+                    color="green"
+                    _hover={{ bg: "green.500", color: "white" }}
                   >
-                    <Avatar
-                      name={user.displayName || "User"}
-                      src={user.photoURL || undefined}
-                      size="sm"
-                      mr={3}
-                      cursor="pointer"
-                    />{" "}
                     Profile
                   </Button>
-
                   <Button
                     onClick={handleLogout}
                     colorScheme="red"
