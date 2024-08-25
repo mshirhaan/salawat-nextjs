@@ -229,15 +229,56 @@ export default function HomePage() {
 
   return (
     <Box p={5} bg="gray.50" minHeight="100vh">
-      <Heading
-        as="h1"
-        size={headingSize}
+      <Box
+        bg="linear-gradient(to right, #f2e6d9, #e6ccb3)"
+        py={8}
         mb={8}
-        textAlign="center"
-        color="teal.400"
+        borderRadius="lg"
+        boxShadow="lg"
+        position="relative"
+        overflow="hidden"
       >
-        Explore Salawat
-      </Heading>
+        <Box
+          position="absolute"
+          top={0}
+          left={0}
+          right={0}
+          bottom={0}
+          opacity={0.5}
+          bgImage="url('https://images.squarespace-cdn.com/content/v1/538279a0e4b037295d984647/1624442474443-LCPHZCHS0V92RKB6O8W3/850_0662-HDR.jpeg')"
+          bgRepeat="repeat"
+          bgPosition={"center"}
+          bgSize={"cover"}
+        />
+        <Heading
+          as="h1"
+          size={headingSize}
+          textAlign="center"
+          color="#5d4037"
+          fontWeight="bold"
+          fontFamily="'Amiri', serif"
+          position="relative"
+          zIndex={1}
+        >
+          
+          صلو ا علی الحبیب صلی اللہ علیہ وسلم
+          <Text as="span" fontSize="1.2em" ml={2}>
+            📿
+          </Text>
+        </Heading>
+        <Text
+          textAlign="center"
+          color="#795548"
+          mt={2}
+          fontSize="lg"
+          fontWeight="medium"
+          position="relative"
+          zIndex={1}
+        >
+          Explore Salawat: Blessings from the City of Light
+        </Text>
+        
+      </Box>
       <Box mb={6}>
         <Input
           placeholder="Search Salawat..."
