@@ -222,6 +222,11 @@ export default function HomePage() {
 
   const today = new Date().toISOString().split("T")[0]; // Format as YYYY-MM-DD
 
+
+  const handleCardClick = (salawatId: string) => {
+    router.push(`/salawat/${salawatId}`);
+  };
+
   return (
     <Box p={5} bg="gray.50" minHeight="100vh">
       <Heading
@@ -271,6 +276,8 @@ export default function HomePage() {
                     transform: "scale(1.02)",
                     transition: "all 0.3s ease",
                   }}
+                  cursor="pointer"
+                  onClick={() => handleCardClick(salawat.id)}
                 >
                   <HStack justify="space-between">
                     <Box>
@@ -289,14 +296,20 @@ export default function HomePage() {
                           aria-label="Edit target"
                           icon={<EditIcon />}
                           colorScheme="blue"
-                          onClick={() => handleSetTargetClick(salawat)}
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevents click event from propagating to the Box
+                            handleSetTargetClick(salawat);
+                          }}
                         />
                       )}
                       <IconButton
                         aria-label={salawat.pinned ? "Unpin" : "Pin"}
                         icon={salawat.pinned ? <BsPinFill /> : <BsPin />}
                         colorScheme="teal"
-                        onClick={() => togglePin(salawat.id)}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevents click event from propagating to the Box
+                          togglePin(salawat.id);
+                        }}
                       />
                     </HStack>
                   </HStack>
@@ -321,13 +334,9 @@ export default function HomePage() {
                           {progress} / {target}
                         </Text>
                       )}
-                      <Button
-                        variant="link"
-                        colorScheme="teal"
-                        onClick={() => handleReadClick(salawat)}
-                      >
+                      <Text fontSize="sm" color="teal.500">
                         Read
-                      </Button>
+                      </Text>
                     </HStack>
                   </Box>
                 </Box>
