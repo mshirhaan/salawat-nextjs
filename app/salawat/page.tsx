@@ -222,7 +222,6 @@ export default function HomePage() {
 
   const today = new Date().toISOString().split("T")[0]; // Format as YYYY-MM-DD
 
-
   const handleCardClick = (salawatId: string) => {
     router.push(`/salawat/${salawatId}`);
   };
@@ -250,7 +249,7 @@ export default function HomePage() {
       </Box>
       {loading ? (
         <Flex justify="center" align="center" height="100vh">
-          <Spinner size="lg" color="teal.500" />
+          <Spinner size="xl" color="teal.500" />
         </Flex>
       ) : (
         <VStack spacing={4} align="stretch">
@@ -271,7 +270,7 @@ export default function HomePage() {
                   bg="white"
                   boxShadow="md"
                   _hover={{
-                    boxShadow: "xl",
+                    boxShadow: "lg",
                     bg: colors.teal[50],
                     transform: "scale(1.02)",
                     transition: "all 0.3s ease",
@@ -292,80 +291,84 @@ export default function HomePage() {
                     </Box>
                     <HStack spacing={2}>
                       {isLoggedIn && (
+                        <Tooltip label="Edit target">
+                          <IconButton
+                            aria-label="Edit target"
+                            icon={<EditIcon />}
+                            colorScheme="blue"
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevents click event from propagating to the Box
+                              handleSetTargetClick(salawat);
+                            }}
+                          />
+                        </Tooltip>
+                      )}
+                      <Tooltip label={salawat.pinned ? "Unpin" : "Pin"}>
                         <IconButton
-                          aria-label="Edit target"
-                          icon={<EditIcon />}
-                          colorScheme="blue"
+                          aria-label={salawat.pinned ? "Unpin" : "Pin"}
+                          icon={salawat.pinned ? <BsPinFill /> : <BsPin />}
+                          colorScheme="teal"
                           onClick={(e) => {
                             e.stopPropagation(); // Prevents click event from propagating to the Box
-                            handleSetTargetClick(salawat);
+                            togglePin(salawat.id);
                           }}
                         />
-                      )}
-                      <IconButton
-                        aria-label={salawat.pinned ? "Unpin" : "Pin"}
-                        icon={salawat.pinned ? <BsPinFill /> : <BsPin />}
-                        colorScheme="teal"
-                        onClick={(e) => {
-                          e.stopPropagation(); // Prevents click event from propagating to the Box
-                          togglePin(salawat.id);
-                        }}
-                      />
+                      </Tooltip>
                     </HStack>
                   </HStack>
 
-                  <Box mt={4}>
-                    {isLoggedIn && target > 0 && (
-                      <>
-                        <Text fontSize="sm" mb={2}>
+                  {isLoggedIn && target > 0 && (
+                    <>
+                      <Divider my={3} />
+                      <Flex align="center" justify="space-between">
+                        <Text fontSize="sm" color="gray.600">
                           Progress
                         </Text>
-                        <Progress
-                          value={progressPercentage}
-                          colorScheme="teal"
-                          hasStripe
-                          isAnimated
-                        />
-                      </>
-                    )}
-                    <HStack justify="space-between" mt={2}>
-                      {isLoggedIn && target > 0 && (
-                        <Text fontSize="sm">
+                        <Text fontSize="sm" color="gray.600">
                           {progress} / {target}
                         </Text>
-                      )}
-                      <Text fontSize="sm" color="teal.500">
-                        Read
-                      </Text>
-                    </HStack>
-                  </Box>
+                      </Flex>
+                      <Progress
+                        value={progressPercentage}
+                        size="sm"
+                        colorScheme="teal"
+                        mt={2}
+                        hasStripe
+                        isAnimated
+                      />
+                    </>
+                  )}
                 </Box>
               );
             })}
         </VStack>
       )}
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size="md">
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Set Daily Target</ModalHeader>
+          <ModalHeader>
+            Set Daily Target for {selectedSalawat?.title}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <VStack spacing={4} align="stretch">
-              <Text fontSize="lg">{selectedSalawat?.title}</Text>
-              <NumberInput
-                value={dailyTarget}
-                min={0}
-                onChange={(value) => setDailyTarget(Number(value))}
-              >
-                <NumberInputField placeholder="Set daily target" />
-              </NumberInput>
-            </VStack>
+            <NumberInput
+              value={dailyTarget}
+              min={0}
+              onChange={(value) => setDailyTarget(Number(value))}
+              mb={4}
+            >
+              <NumberInputField placeholder="Daily Target" />
+            </NumberInput>
+            <Text fontSize="sm" color="gray.500">
+              Set a daily target for {selectedSalawat?.title}. This will help
+              track your progress.
+            </Text>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleSetTarget}>
+            <Button colorScheme="teal" mr={3} onClick={handleSetTarget}>
               Set Target
             </Button>
-            <Button variant="ghost" onClick={onClose}>
+            <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
           </ModalFooter>
