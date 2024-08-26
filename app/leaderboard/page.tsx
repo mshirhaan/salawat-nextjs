@@ -38,39 +38,12 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { FaTrophy } from "react-icons/fa";
+import { getDayId, getMonthId, getWeekId } from "@/utils/dateUtils";
 
 interface UserData {
   id: string;
   name: string;
   totalCount: number;
-}
-
-function getDayId(date: Date): string {
-  return `${date.getFullYear()}-${(date.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-}
-
-function getWeekId(date: Date): string {
-  const year = date.getFullYear();
-  const weekNumber = getWeekNumber(date);
-  return `${year}-W${weekNumber.toString().padStart(2, "0")}`;
-}
-
-function getMonthId(date: Date): string {
-  return `${date.getFullYear()}-${(date.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}`;
-}
-
-function getWeekNumber(date: Date): number {
-  const d = new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-  );
-  const dayNum = d.getUTCDay() || 7;
-  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
 }
 
 export default function LeaderboardPage() {
@@ -83,9 +56,7 @@ export default function LeaderboardPage() {
 
   useEffect(() => {
     async function fetchData() {
-      debugger
       try {
-       
         const usersCollection = collection(db, "users");
         let q;
 
@@ -128,7 +99,6 @@ export default function LeaderboardPage() {
 
         const usersList: UserData[] = [];
         querySnapshot.forEach((doc) => {
-          debugger
           const data = doc.data();
           let count;
           switch (timeFrame) {
@@ -240,7 +210,7 @@ function LeaderboardTable({
   return (
     <Box bg="white" borderRadius="lg" boxShadow="md" overflow="hidden">
       <Table variant="simple">
-        <TableCaption>Top users by {timeFrame} Salawat count</TableCaption>
+        <TableCaption>Top reciters by {timeFrame} Salawat count</TableCaption>
         <Thead bg="teal.500">
           <Tr>
             <Th color="white">Rank</Th>
