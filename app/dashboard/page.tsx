@@ -152,7 +152,10 @@ export default function Dashboard() {
       <Heading color={textColor} size="md">
         Your Salawat Progress
       </Heading>
-      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+      <Grid
+        templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }}
+        gap={{ base: 8, md: 6 }}
+      >
         {userData?.salawatCounts &&
           Object.entries(userData.salawatCounts).map(([salawatId, count]) => (
             <GridItem key={salawatId} bg="gray.100" p={4} borderRadius="lg">
@@ -175,6 +178,7 @@ export default function Dashboard() {
       </Grid>
     </VStack>
   );
+  
 
   const chartOptions = {
     responsive: true,
@@ -292,7 +296,7 @@ export default function Dashboard() {
               <Heading color={textColor} size="md">
                 Your Salawat Over Time
               </Heading>
-              <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
+              <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 16, md: 6 }}>
                 <Box h="250px">
                   <Text fontSize="lg" mb={2} color={textColor}>
                     Daily
