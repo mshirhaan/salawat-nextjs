@@ -1,8 +1,9 @@
 // app/salawat/[id]/ClientSideCounter.tsx
+
 "use client";
 
 import { useEffect, useState } from "react";
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, Text, VStack, HStack } from "@chakra-ui/react";
 import { logRecitation, updateUserSalawatCount } from "../../../lib/user";
 import { useAuth } from "@/contexts/AuthContext";
 import { db } from "@/lib/firebase";
@@ -12,38 +13,69 @@ interface ClientSideCounterProps {
   salawatId: string;
 }
 
+function getDayId(date: Date): string {
+  return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+}
+
+function getWeekId(date: Date): string {
+  const year = date.getFullYear();
+  const weekNumber = getWeekNumber(date);
+  return `${year}-W${weekNumber.toString().padStart(2, '0')}`;
+}
+
+function getMonthId(date: Date): string {
+  return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+}
+
+function getWeekNumber(date: Date): number {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1)/7);
+}
+
 export default function ClientSideCounter({
   salawatId,
 }: ClientSideCounterProps) {
-  const [count, setCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+  const [dailyCount, setDailyCount] = useState(0);
+  const [weeklyCount, setWeeklyCount] = useState(0);
+  const [monthlyCount, setMonthlyCount] = useState(0);
   const { user } = useAuth();
-
-  useEffect(() => {
-    const storedCount = localStorage.getItem(`salawatCount_${salawatId}`);
-    if (storedCount) {
-      setCount(parseInt(storedCount, 10));
-    }
-  }, [salawatId]);
 
   useEffect(() => {
     let unsubscribe: () => void;
 
-    const fetchCount = async () => {
+    const fetchCounts = async () => {
       if (user) {
         try {
-          // Set up real-time listener for the user's salawat count
           const userDocRef = doc(db, "users", user.uid);
           unsubscribe = onSnapshot(
             userDocRef,
             (docSnapshot) => {
               if (docSnapshot.exists()) {
                 const userData = docSnapshot.data();
-                const dbCount = userData.salawatCounts?.[salawatId] || 0;
-                setCount(dbCount);
-                // Update localStorage as a backup
+                const dbTotalCount = userData.salawatCounts?.[salawatId] || 0;
+                setTotalCount(dbTotalCount);
+
+                const now = new Date();
+                const dayId = getDayId(now);
+                const weekId = getWeekId(now);
+                const monthId = getMonthId(now);
+
+                const dbDailyCount = userData.dailySalawatCounts?.[dayId]?.[salawatId] || 0;
+                setDailyCount(dbDailyCount);
+
+                const dbWeeklyCount = userData.weeklySalawatCounts?.[weekId]?.[salawatId] || 0;
+                setWeeklyCount(dbWeeklyCount);
+
+                const dbMonthlyCount = userData.monthlySalawatCounts?.[monthId]?.[salawatId] || 0;
+                setMonthlyCount(dbMonthlyCount);
+
                 localStorage.setItem(
                   `salawatCount_${salawatId}`,
-                  dbCount.toString()
+                  dbTotalCount.toString()
                 );
               }
             },
@@ -64,13 +96,12 @@ export default function ClientSideCounter({
     const fallbackToLocalStorage = () => {
       const storedCount = localStorage.getItem(`salawatCount_${salawatId}`);
       if (storedCount) {
-        setCount(parseInt(storedCount, 10));
+        setTotalCount(parseInt(storedCount, 10));
       }
     };
 
-    fetchCount();
+    fetchCounts();
 
-    // Cleanup function
     return () => {
       if (unsubscribe) {
         unsubscribe();
@@ -82,13 +113,17 @@ export default function ClientSideCounter({
     if (navigator.vibrate) {
       navigator.vibrate(100);
     }
-    setCount((prevCount) => {
-      localStorage.setItem(
-        `salawatCount_${salawatId}`,
-        (prevCount + 1).toString()
-      );
-      return prevCount + 1;
-    });
+    
+    const newTotalCount = totalCount + 1;
+    setTotalCount(newTotalCount);
+    setDailyCount(dailyCount + 1);
+    setWeeklyCount(weeklyCount + 1);
+    setMonthlyCount(monthlyCount + 1);
+
+    localStorage.setItem(
+      `salawatCount_${salawatId}`,
+      newTotalCount.toString()
+    );
 
     if (user) {
       await updateUserSalawatCount(user.uid, salawatId, 1);
@@ -108,24 +143,52 @@ export default function ClientSideCounter({
       display="flex"
       justifyContent="center"
     >
-      <Button
-        onClick={handleCount}
-        size="lg"
-        colorScheme="teal"
-        variant="solid"
-        borderRadius="full"
-        width="90px"
-        height="90px"
-        boxShadow="md"
-        _hover={{ bg: "teal.600" }}
-        _focus={{ boxShadow: "outline" }}
-        transition="background-color 0.3s ease, transform 0.3s ease"
-        _active={{ transform: "scale(0.95)" }}
-        fontSize="xl"
-        fontWeight="bold"
-      >
-        <Text color="white">{count}</Text>
-      </Button>
+      <VStack spacing={2}>
+        <Button
+          onClick={handleCount}
+          size="lg"
+          colorScheme="teal"
+          variant="solid"
+          borderRadius="full"
+          width="90px"
+          height="90px"
+          boxShadow="md"
+          _hover={{ bg: "teal.600" }}
+          _focus={{ boxShadow: "outline" }}
+          transition="background-color 0.3s ease, transform 0.3s ease"
+          _active={{ transform: "scale(0.95)" }}
+          fontSize="xl"
+          fontWeight="bold"
+        >
+          <Text color="white">{totalCount}</Text>
+        </Button>
+        <HStack spacing={4}>
+          <VStack>
+            <Text color="white" fontSize="sm" fontWeight="bold">
+              Today
+            </Text>
+            <Text color="white" fontSize="md">
+              {dailyCount}
+            </Text>
+          </VStack>
+          <VStack>
+            <Text color="white" fontSize="sm" fontWeight="bold">
+              This Week
+            </Text>
+            <Text color="white" fontSize="md">
+              {weeklyCount}
+            </Text>
+          </VStack>
+          <VStack>
+            <Text color="white" fontSize="sm" fontWeight="bold">
+              This Month
+            </Text>
+            <Text color="white" fontSize="md">
+              {monthlyCount}
+            </Text>
+          </VStack>
+        </HStack>
+      </VStack>
     </Box>
   );
 }

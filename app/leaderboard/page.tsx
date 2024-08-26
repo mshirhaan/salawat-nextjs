@@ -1,3 +1,5 @@
+// app/leaderboard/page.tsx
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -13,38 +15,139 @@ import {
   TableCaption,
   Spinner,
   useToast,
-  IconButton,
   Text,
   Flex,
   Badge,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Container,
+  VStack,
+  Avatar,
 } from "@chakra-ui/react";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  limit,
+  where,
+  Timestamp,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { FaSortAmountDownAlt } from "react-icons/fa";
+import { FaTrophy } from "react-icons/fa";
 
 interface UserData {
+  id: string;
   name: string;
   totalCount: number;
+}
+
+function getDayId(date: Date): string {
+  return `${date.getFullYear()}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+}
+
+function getWeekId(date: Date): string {
+  const year = date.getFullYear();
+  const weekNumber = getWeekNumber(date);
+  return `${year}-W${weekNumber.toString().padStart(2, "0")}`;
+}
+
+function getMonthId(date: Date): string {
+  return `${date.getFullYear()}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}`;
+}
+
+function getWeekNumber(date: Date): number {
+  const d = new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+  );
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
 }
 
 export default function LeaderboardPage() {
   const [users, setUsers] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [timeFrame, setTimeFrame] = useState<
+    "daily" | "weekly" | "monthly" | "allTime"
+  >("allTime");
   const toast = useToast();
 
   useEffect(() => {
     async function fetchData() {
+      debugger
       try {
+       
         const usersCollection = collection(db, "users");
-        const q = query(usersCollection, orderBy("totalCount", "desc"));
+        let q;
+
+        const now = new Date();
+        const dayId = getDayId(now);
+        const weekId = getWeekId(now);
+        const monthId = getMonthId(now);
+
+        switch (timeFrame) {
+          case "daily":
+            q = query(
+              usersCollection,
+              orderBy(`dailySalawatCounts.${dayId}.totalCount`, "desc"),
+              limit(100)
+            );
+            break;
+          case "weekly":
+            q = query(
+              usersCollection,
+              orderBy(`weeklySalawatCounts.${weekId}.totalCount`, "desc"),
+              limit(100)
+            );
+            break;
+          case "monthly":
+            q = query(
+              usersCollection,
+              orderBy(`monthlySalawatCounts.${monthId}.totalCount`, "desc"),
+              limit(100)
+            );
+            break;
+          default:
+            q = query(
+              usersCollection,
+              orderBy("totalCount", "desc"),
+              limit(100)
+            );
+        }
+
         const querySnapshot = await getDocs(q);
 
         const usersList: UserData[] = [];
         querySnapshot.forEach((doc) => {
+          debugger
           const data = doc.data();
+          let count;
+          switch (timeFrame) {
+            case "daily":
+              count = data.dailySalawatCounts?.[dayId]?.totalCount || 0;
+              break;
+            case "weekly":
+              count = data.weeklySalawatCounts?.[weekId]?.totalCount || 0;
+              break;
+            case "monthly":
+              count = data.monthlySalawatCounts?.[monthId]?.totalCount || 0;
+              break;
+            default:
+              count = data.totalCount || 0;
+          }
           usersList.push({
+            id: doc.id,
             name: data.name || "Unknown",
-            totalCount: data.totalCount || 0,
+            totalCount: count,
           });
         });
 
@@ -64,101 +167,125 @@ export default function LeaderboardPage() {
     }
 
     fetchData();
-  }, [toast]);
+  }, [timeFrame, toast]);
 
   if (loading) {
     return (
-      <Box p={5} textAlign="center">
+      <Flex height="100vh" alignItems="center" justifyContent="center">
         <Spinner size="xl" color="teal.500" />
-        <Text mt={4} color="teal.500" fontSize="lg">
-          Loading leaderboard...
-        </Text>
-      </Box>
+      </Flex>
     );
   }
 
   return (
-    <Box p={5} bg="gray.50" minHeight="100vh">
-      <Flex direction="column" align="center" mb={6}>
-        <Heading as="h1" size="2xl" color="teal.400" mb={4}>
-          Leaderboard
-        </Heading>
-      </Flex>
-      <Box bg="white" borderRadius="md" shadow="md">
-        <Table variant="simple" colorScheme="teal">
-          <TableCaption>Top users by total Salawat count</TableCaption>
-          <Thead>
-            <Tr>
-              <Th>Name</Th>
-              <Th isNumeric>
-                Total Count
-                <IconButton
-                  aria-label="Sort by total count"
-                  icon={<FaSortAmountDownAlt />}
-                  variant="link"
-                  color="teal.500"
-                  ml={2}
-                />
-              </Th>
+    <Box bg="gray.50" minHeight="100vh" py={10}>
+      <Container maxW="4xl">
+        <VStack spacing={8}>
+          <Heading as="h1" size="2xl" color="teal.600" textAlign="center">
+            Salawat Leaderboard
+          </Heading>
+          <Tabs isFitted variant="enclosed" colorScheme="teal" width="100%">
+            <TabList mb="1em">
+              <Tab onClick={() => setTimeFrame("daily")}>Daily</Tab>
+              <Tab onClick={() => setTimeFrame("weekly")}>Weekly</Tab>
+              <Tab onClick={() => setTimeFrame("monthly")}>Monthly</Tab>
+              <Tab onClick={() => setTimeFrame("allTime")}>All Time</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <LeaderboardTable users={users} timeFrame="Daily" />
+              </TabPanel>
+              <TabPanel>
+                <LeaderboardTable users={users} timeFrame="Weekly" />
+              </TabPanel>
+              <TabPanel>
+                <LeaderboardTable users={users} timeFrame="Monthly" />
+              </TabPanel>
+              <TabPanel>
+                <LeaderboardTable users={users} timeFrame="All Time" />
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </VStack>
+      </Container>
+    </Box>
+  );
+}
+
+const getRankIcon = (index: number) => {
+  if (index === 0) return <FaTrophy color="gold" />;
+  if (index === 1) return <FaTrophy color="silver" />;
+  if (index === 2) return <FaTrophy color="#CD7F32" />;
+  return null;
+};
+
+const getAvatarColor = (index: number) => {
+  const colors = [
+    "yellow.400",
+    "gray.400",
+    "orange.400",
+    "teal.400",
+    "purple.400",
+    "pink.400",
+  ];
+  return colors[index] || "teal.400";
+};
+function LeaderboardTable({
+  users,
+  timeFrame,
+}: {
+  users: UserData[];
+  timeFrame: string;
+}) {
+  return (
+    <Box bg="white" borderRadius="lg" boxShadow="md" overflow="hidden">
+      <Table variant="simple">
+        <TableCaption>Top users by {timeFrame} Salawat count</TableCaption>
+        <Thead bg="teal.500">
+          <Tr>
+            <Th color="white">Rank</Th>
+            <Th color="white">Name</Th>
+            <Th color="white" isNumeric>
+              Count
+            </Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {users.map((user, index) => (
+            <Tr key={user.id} _hover={{ bg: "gray.50" }}>
+              <Td>
+                <Flex align="center">
+                  <Text fontWeight="bold" mr={2}>
+                    {index + 1}
+                  </Text>
+                  {getRankIcon(index)}
+                </Flex>
+              </Td>
+              <Td>
+                <Flex align="center">
+                  <Avatar
+                    name={user.name}
+                    bg={getAvatarColor(index)}
+                    size="sm"
+                    mr={2}
+                  />
+                  <Text fontWeight="medium">{user.name}</Text>
+                </Flex>
+              </Td>
+              <Td isNumeric>
+                <Badge
+                  colorScheme="teal"
+                  fontSize="0.8em"
+                  borderRadius="full"
+                  px={2}
+                >
+                  {user.totalCount.toLocaleString()}
+                </Badge>
+              </Td>
             </Tr>
-          </Thead>
-          <Tbody>
-            {users.map((user, index) => {
-              let backgroundColor = "white"; // Default color for all rows
-              let badgeColor;
-              let badgeText;
-              let badgeStyle = {};
-
-              if (index === 0) {
-                backgroundColor = "yellow.50"; // Light Gold
-                badgeColor = "yellow.400";
-                badgeText = "🥇 Gold";
-                badgeStyle = {
-                  border: "2px solid gold",
-                  boxShadow: "0 0 5px rgba(255, 215, 0, 0.5)",
-                };
-              } else if (index === 1) {
-                backgroundColor = "gray.50"; // Light Silver
-                badgeColor = "gray.400";
-                badgeText = "🥈 Silver";
-                badgeStyle = {
-                  border: "2px solid silver",
-                  boxShadow: "0 0 5px rgba(192, 192, 192, 0.5)",
-                };
-              } else if (index === 2) {
-                backgroundColor = "orange.50"; // Light Bronze
-                badgeColor = "orange.400";
-                badgeText = "🥉 Bronze";
-                badgeStyle = {
-                  border: "2px solid bronze",
-                  boxShadow: "0 0 5px rgba(205, 127, 50, 0.5)",
-                };
-              }
-
-              return (
-                <Tr key={index} bg={backgroundColor}>
-                  <Td>
-                    {user.name}
-                    {index < 3 && (
-                      <Badge
-                        colorScheme={badgeColor}
-                        ml={2}
-                        fontSize="0.9em"
-                        p={2}
-                        borderRadius="md"
-                        style={badgeStyle}
-                      >
-                        {badgeText}
-                      </Badge>
-                    )}
-                  </Td>
-                  <Td isNumeric>{user.totalCount}</Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
-      </Box>
+          ))}
+        </Tbody>
+      </Table>
     </Box>
   );
 }
