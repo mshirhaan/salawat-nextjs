@@ -267,7 +267,7 @@ export default function HomePage() {
           <Text as="span" fontSize="1.2em" mr={2}>
             📿
           </Text>
-          صلو ا علی الحبیب ﷺ
+          صلوا علی الحبیب ﷺ
         </Heading>
 
         <Text
