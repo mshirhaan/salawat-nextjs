@@ -62,7 +62,7 @@ export default function Home() {
               practice of reciting Salawat.
             </Text>
             <Text
-              fontSize={{ base: "md", md: "x-large" }}
+              fontSize={{ base: "md", md: "large" }}
               color={accentColor}
               as={motion.p}
               initial={{ opacity: 0, y: -10 }}
