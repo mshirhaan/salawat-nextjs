@@ -40,12 +40,7 @@ export default function Home() {
           minH="100vh"
           textAlign={{ base: "center", md: "left" }}
         >
-          <VStack
-            spacing={8}
-            
-            flex={1}
-            pr={{ base: 0, md: 8 }}
-          >
+          <VStack spacing={8} flex={1} pr={{ base: 0, md: 8 }}>
             <Heading
               as={motion.h1}
               size="2xl"
@@ -65,6 +60,18 @@ export default function Home() {
             >
               Embrace the love for Prophet Muhammad ﷺ through the blessed
               practice of reciting Salawat.
+            </Text>
+            <Text
+              fontSize={{ base: "md", md: "x-large" }}
+              color={accentColor}
+              as={motion.p}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              mb={6}
+            >
+              إِنَّ ٱللَّهَ وَمَلَـٰٓئِكَتَهُۥ يُصَلُّونَ عَلَى ٱلنَّبِىِّ ۚ
+              يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ صَلُّوا۟ عَلَيْهِ وَسَلِّمُوا۟
+              تَسْلِيمًا
             </Text>
             <Text
               fontSize={{ base: "md", md: "lg" }}
