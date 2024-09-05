@@ -9,6 +9,9 @@ export default function Footer() {
       <Text textAlign="center">
         © {new Date().getFullYear()} Salawat App. All rights reserved.
       </Text>
+      <Text textAlign="center">
+        by Asswuffah Foundation
+      </Text>
     </Box>
   );
 }
