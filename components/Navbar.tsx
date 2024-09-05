@@ -85,6 +85,15 @@ export default function Navbar() {
           >
             Counter
           </Button>
+          <Button
+            as={Link}
+            href="/contact-us"
+            variant="ghost"
+            mx={2}
+            _hover={{ bg: "green.100" }}
+          >
+            Contact Us
+          </Button>
           {user && (
             <>
               <Button
@@ -166,6 +175,14 @@ export default function Navbar() {
                 onClick={onClose}
               >
                 Counter
+              </Button>
+              <Button
+                as={Link}
+                href="/contact-us"
+                variant="ghost"
+                onClick={onClose}
+              >
+                Contact Us
               </Button>
               {user && (
                 <>
