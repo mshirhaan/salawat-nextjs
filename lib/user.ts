@@ -98,11 +98,13 @@ async function updateStreak(userId: string, now: Timestamp) {
 export async function createUserDocument(
   userId: string,
   email: string,
-  name: string
+  name: string,
+  emailVerified: boolean
 ) {
   await setDoc(doc(db, "users", userId), {
     email,
     name,
+    emailVerified,
     totalCount: 0,
     salawatCounts: {},
     recitationLogs: [], // Field for recitation logs
@@ -116,6 +118,25 @@ export async function createUserDocument(
     level: 1, // Starting level
     xp: 0, // Starting XP
   });
+}
+
+export async function updateEmailVerificationStatus(
+  userId: string,
+  isVerified: boolean
+) {
+  const userRef = doc(db, "users", userId);
+  await updateDoc(userRef, {
+    emailVerified: isVerified,
+  });
+}
+
+export async function isEmailVerified(userId: string): Promise<boolean> {
+  const userRef = doc(db, "users", userId);
+  const userDoc = await getDoc(userRef);
+  if (userDoc.exists()) {
+    return userDoc.data().emailVerified;
+  }
+  return false;
 }
 
 export async function updateUserSalawatCount(

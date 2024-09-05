@@ -78,6 +78,8 @@ export default function Dashboard() {
   useEffect(() => {
     if (!user) {
       router.push("/login");
+    } else if (!user.emailVerified) {
+      router.push("/verify-email");
     } else {
       const fetchUserData = async () => {
         if (user) {

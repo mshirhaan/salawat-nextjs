@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { createUserDocument } from "@/lib/user";
 import { useRouter } from "next/navigation";
-import { updateProfile } from "firebase/auth";
+import { updateProfile, sendEmailVerification } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 
 export default function SignUp() {
@@ -34,16 +34,21 @@ export default function SignUp() {
       const userCredential = await signup(email, password);
       const user = userCredential.user;
       await updateProfile(user, { displayName: name });
-      await createUserDocument(userCredential.user.uid, email, name);
+
+      // Send verification email
+      await sendEmailVerification(user);
+
+      // Create user document with 'emailVerified' field set to false
+      await createUserDocument(user.uid, email, name, false);
 
       toast({
         title: "Sign up successful",
-        description: "Welcome to Salawat App!",
+        description: "Please check your email to verify your account.",
         status: "success",
-        duration: 3000,
+        duration: 5000,
         isClosable: true,
       });
-      router.push("/dashboard");
+      router.push("/verify-email");
     } catch (error) {
       let errorMessage =
         "Failed to sign up. Please check your details and try again.";

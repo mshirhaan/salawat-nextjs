@@ -186,6 +186,8 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     if (!user) {
       router.push("/login");
+    } else if(!user.emailVerified) {
+      router.push("/verify-email");
     }
   }, [user, router]);
 
