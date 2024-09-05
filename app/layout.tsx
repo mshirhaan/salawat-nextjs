@@ -8,6 +8,7 @@ import "./globals.css";
 import "./fonts.css";
 import { RegisterSW } from "@/components/RegisterSW";
 import { NotificationProvider } from "@/contexts/NotificationContext";
+import { GoogleTagManager } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
   title: "Salawat App",
@@ -61,6 +62,7 @@ export default function RootLayout({
         </Providers>
         <RegisterSW />
       </body>
+      <GoogleTagManager gtmId="GTM-TGG3R93G" />
     </html>
   );
 }
