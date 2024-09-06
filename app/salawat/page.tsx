@@ -38,6 +38,7 @@ import { BsPinFill, BsPin } from "react-icons/bs";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase"; // Adjust the import path as needed
 import { useAuth } from "@/contexts/AuthContext";
+import Joyride, { CallBackProps, STATUS, Step } from "react-joyride"; // Import Joyride
 
 interface SalawatData {
   id: string;
@@ -47,6 +48,39 @@ interface SalawatData {
   target?: number; // Add target property
   progress?: number; // Add progress property
 }
+
+const tourSteps: Step[] = [
+  {
+    target: "body",
+    content: "Are you ready for a tour?",
+    placement: "center",
+  },
+  {
+    target: ".search-input",
+    content: "Search for Salawat here to filter the list.",
+    placement: "bottom",
+  },
+  {
+    target: ".salawat-card",
+    content: "Click on a Salawat card to view more details.",
+    placement: "top",
+  },
+  {
+    target: ".edit-target-button",
+    content: "Click here to set or edit the daily target for this Salawat.",
+    placement: "top",
+  },
+  {
+    target: ".pin-button",
+    content: "Pin your favorite Salawat for quick access.",
+    placement: "top",
+  },
+  {
+    target: ".progress-bar",
+    content: "Track your progress towards your daily target here.",
+    placement: "top",
+  },
+];
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -227,8 +261,41 @@ export default function HomePage() {
     router.push(`/salawat/${salawatId}`);
   };
 
+  const [isTourOpen, setIsTourOpen] = useState(false);
+
+  useEffect(() => {
+    // Check local storage for tour status
+    const hasSeenTour = localStorage.getItem("hasSeenTour");
+    if (!hasSeenTour) {
+      // If not present, show the tour
+      setIsTourOpen(true);
+    }
+  }, []);
+
+  const handleTourCallback = (data: CallBackProps) => {
+    const { status } = data;
+    if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
+      localStorage.setItem("hasSeenTour", "true");
+      setIsTourOpen(false);
+    }
+  };
+
   return (
     <Box p={5} bg="gray.50" minHeight="100vh">
+      <Joyride
+        steps={tourSteps}
+        continuous
+        showSkipButton
+        scrollToFirstStep
+        run={isTourOpen}
+        callback={handleTourCallback}
+        styles={{
+          beacon: {
+            display: "none", // Hide the beacon completely
+          },
+        }}
+      />
+
       <Box
         bg="linear-gradient(to right, #f2e6d9, #e6ccb3)"
         py={12} // Increased vertical padding
@@ -292,6 +359,7 @@ export default function HomePage() {
           size="lg"
           variant="outline"
           bg="white"
+          className="search-input"
         />
       </Box>
       {loading ? (
@@ -324,6 +392,7 @@ export default function HomePage() {
                   }}
                   cursor="pointer"
                   onClick={() => handleCardClick(salawat.id)}
+                  className="salawat-card"
                 >
                   <HStack justify="space-between">
                     <Box>
@@ -348,6 +417,7 @@ export default function HomePage() {
                               e.stopPropagation(); // Prevents click event from propagating to the Box
                               handleSetTargetClick(salawat);
                             }}
+                            className="edit-target-button"
                           />
                         </Tooltip>
                       )}
@@ -361,6 +431,7 @@ export default function HomePage() {
                             e.stopPropagation(); // Prevents click event from propagating to the Box
                             togglePin(salawat.id);
                           }}
+                          className="pin-button"
                         />
                       </Tooltip>
                     </HStack>
@@ -399,6 +470,7 @@ export default function HomePage() {
                             mt={2}
                             hasStripe
                             isAnimated
+                            className="progress-bar"
                           />
                         </>
                       )}
