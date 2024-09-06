@@ -26,6 +26,8 @@ import {
   Container,
   VStack,
   Avatar,
+  useBreakpointValue,
+  Grid,
 } from "@chakra-ui/react";
 import {
   collection,
@@ -207,55 +209,107 @@ function LeaderboardTable({
   users: UserData[];
   timeFrame: string;
 }) {
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
   return (
     <Box bg="white" borderRadius="lg" boxShadow="md" overflow="hidden">
-      <Table variant="simple">
-        <TableCaption>Top reciters by {timeFrame} Salawat count</TableCaption>
-        <Thead bg="teal.500">
-          <Tr>
-            <Th color="white">Rank</Th>
-            <Th color="white">Name</Th>
-            <Th color="white" isNumeric>
-              Count
-            </Th>
-          </Tr>
-        </Thead>
-        <Tbody>
+      {isMobile ? (
+        <Grid templateColumns="repeat(1, 1fr)" gap={4} p={4}>
           {users.map((user, index) => (
-            <Tr key={user.id} _hover={{ bg: "gray.50" }}>
-              <Td>
-                <Flex align="center">
-                  <Text fontWeight="bold" mr={2}>
-                    {index + 1}
+            <Box
+              key={user.id}
+              p={4}
+              borderWidth={1}
+              borderRadius="md"
+              boxShadow="sm"
+            >
+              <Flex justify="space-between" align="center" mb={2}>
+                <Flex direction="column" align="flex-start">
+                  <Text fontSize="xs" color="gray.500" mb={1}>
+                    Rank
                   </Text>
-                  {getRankIcon(index)}
+                  <Flex align="center">
+                    <Text fontWeight="bold" mr={2}>
+                      {index + 1}
+                    </Text>
+                    {getRankIcon(index)}
+                  </Flex>
                 </Flex>
-              </Td>
-              <Td>
-                <Flex align="center">
-                  <Avatar
-                    name={user.name}
-                    bg={getAvatarColor(index)}
-                    size="sm"
-                    mr={2}
-                  />
-                  <Text fontWeight="medium">{user.name}</Text>
+                <Flex direction="column" align="flex-end">
+                  <Text fontSize="xs" color="gray.500" mb={1}>
+                    Salawat Count
+                  </Text>
+                  <Badge
+                    colorScheme="teal"
+                    fontSize="0.8em"
+                    borderRadius="full"
+                    px={2}
+                  >
+                    {user.totalCount.toLocaleString()}
+                  </Badge>
                 </Flex>
-              </Td>
-              <Td isNumeric>
-                <Badge
-                  colorScheme="teal"
-                  fontSize="0.8em"
-                  borderRadius="full"
-                  px={2}
-                >
-                  {user.totalCount.toLocaleString()}
-                </Badge>
-              </Td>
-            </Tr>
+              </Flex>
+              <Flex align="center" mt={2}>
+                <Avatar
+                  name={user.name}
+                  bg={getAvatarColor(index)}
+                  size="sm"
+                  mr={2}
+                />
+                <Text fontWeight="medium">{user.name}</Text>
+              </Flex>
+            </Box>
           ))}
-        </Tbody>
-      </Table>
+        </Grid>
+      ) : (
+        <Table variant="simple">
+          <TableCaption>Top reciters by {timeFrame} Salawat count</TableCaption>
+          <Thead bg="teal.500">
+            <Tr>
+              <Th color="white">Rank</Th>
+              <Th color="white">Name</Th>
+              <Th color="white" isNumeric>
+                Salawat Count
+              </Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {users.map((user, index) => (
+              <Tr key={user.id} _hover={{ bg: "gray.50" }}>
+                <Td>
+                  <Flex align="center">
+                    <Text fontWeight="bold" mr={2}>
+                      {index + 1}
+                    </Text>
+                    {getRankIcon(index)}
+                  </Flex>
+                </Td>
+                <Td>
+                  <Flex align="center">
+                    <Avatar
+                      name={user.name}
+                      bg={getAvatarColor(index)}
+                      size="sm"
+                      mr={2}
+                    />
+                    <Text fontWeight="medium">{user.name}</Text>
+                  </Flex>
+                </Td>
+                <Td isNumeric>
+                  <Badge
+                    colorScheme="teal"
+                    fontSize="0.8em"
+                    borderRadius="full"
+                    px={2}
+                  >
+                    {user.totalCount.toLocaleString()}
+                  </Badge>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      )}
     </Box>
   );
 }
