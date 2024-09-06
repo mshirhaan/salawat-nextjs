@@ -76,7 +76,7 @@ const tourSteps: Step[] = [
   },
   {
     target: ".counter-button",
-    content: "Click here to count the Salawat.",
+    content: "Click here to count the Salawat. Every click will be saved to your profile.",
     placement: "top",
   },
 ];
