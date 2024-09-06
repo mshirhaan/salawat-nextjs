@@ -265,7 +265,7 @@ export default function HomePage() {
 
   useEffect(() => {
     // Check local storage for tour status
-    const hasSeenTour = localStorage.getItem("hasSeenTour");
+    const hasSeenTour = localStorage.getItem("hasSeenSalawatsTour");
     if (!hasSeenTour) {
       // If not present, show the tour
       setIsTourOpen(true);
@@ -275,7 +275,7 @@ export default function HomePage() {
   const handleTourCallback = (data: CallBackProps) => {
     const { status } = data;
     if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
-      localStorage.setItem("hasSeenTour", "true");
+      localStorage.setItem("hasSeenSalawatsTour", "true");
       setIsTourOpen(false);
     }
   };
@@ -286,6 +286,7 @@ export default function HomePage() {
         steps={tourSteps}
         continuous
         showSkipButton
+        showProgress
         scrollToFirstStep
         run={isTourOpen}
         callback={handleTourCallback}

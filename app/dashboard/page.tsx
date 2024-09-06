@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Joyride, { CallBackProps, STATUS, Step } from "react-joyride";
 import {
   Box,
   Heading,
@@ -62,6 +63,41 @@ interface SalawatData {
   title: string;
 }
 
+const tourSteps: Step[] = [
+  {
+    target: "body",
+    content: "Are you ready for a tour?",
+    placement: "center",
+  },
+  {
+    target: ".level-section",
+    content: "This is your level and XP progress. Keep reciting to level up!",
+    placement: "bottom",
+  },
+  {
+    target: ".streak-section",
+    content:
+      "Here you can see your current and highest streaks. Keep up the good work!",
+    placement: "bottom",
+  },
+  {
+    target: ".progress-section",
+    content:
+      "Track your Salawat progress here. Each Salawat's count is displayed.",
+    placement: "top",
+  },
+  {
+    target: ".badges-section",
+    content: "Check out your earned badges and achievements!",
+    placement: "top",
+  },
+  {
+    target: ".charts-section",
+    content: "Visualize your Salawat counts over time in these charts.",
+    placement: "top",
+  },
+];
+
 export default function Dashboard() {
   const { user } = useAuth();
   const router = useRouter();
@@ -69,6 +105,8 @@ export default function Dashboard() {
   const [salawatNames, setSalawatNames] = useState<{ [key: string]: string }>(
     {}
   );
+
+  const [isTourOpen, setIsTourOpen] = useState(false);
 
   const bgColor = useColorModeValue("gray.50", "gray.900");
   const cardBgColor = useColorModeValue("white", "gray.700");
@@ -105,7 +143,23 @@ export default function Dashboard() {
       fetchUserData();
       fetchSalawatNames();
     }
+
+    // Check local storage for tour status
+    const hasSeenTour = localStorage.getItem("hasSeenDashboardTour");
+    if (!hasSeenTour) {
+      setIsTourOpen(true);
+    }
   }, [user, router]);
+
+  const handleTourCallback = (data: CallBackProps) => {
+    const { status } = data;
+
+    if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
+      // Set local storage flag to true after tour is completed or skipped
+      localStorage.setItem("hasSeenDashboardTour", "true");
+      setIsTourOpen(false); // Close the tour
+    }
+  };
 
   if (!user) {
     return <Box>Please log in to view your dashboard.</Box>;
@@ -123,6 +177,7 @@ export default function Dashboard() {
       borderRadius="lg"
       boxShadow="2xl"
       textAlign="center"
+      className="level-section"
     >
       <VStack spacing={5} align="center">
         <Flex align="center" justify="center" direction="column">
@@ -178,6 +233,7 @@ export default function Dashboard() {
         borderWidth="1px"
         borderColor="blue.200"
         boxShadow="md"
+        className="streak-section"
       >
         <Text fontSize="lg" color="blue.800" fontWeight="bold" mb={2}>
           <Icon as={FaFire} boxSize={5} color="red.500" /> Keep your streak
@@ -216,7 +272,7 @@ export default function Dashboard() {
   );
 
   const progressSection = (
-    <VStack spacing={6} align="stretch">
+    <VStack spacing={6} align="stretch" className="progress-section">
       <Heading color={textColor} size="md">
         Your Salawat Progress
       </Heading>
@@ -252,7 +308,13 @@ export default function Dashboard() {
   );
 
   const badgesSection = (
-    <Box p={6} bg={cardBgColor} borderRadius="lg" boxShadow="lg">
+    <Box
+      className="badges-section"
+      p={6}
+      bg={cardBgColor}
+      borderRadius="lg"
+      boxShadow="lg"
+    >
       <Heading color={textColor} size="md" mb={4}>
         Your Badges
       </Heading>
@@ -351,92 +413,113 @@ export default function Dashboard() {
   };
 
   return (
-    <Box bg={bgColor} minH="100vh" py={12} px={6}>
-      <Flex direction="column" align="center" maxW="1200px" mx="auto">
-        <VStack spacing={8} align="stretch" width="100%">
-          {/* User Greeting Section */}
-          <Flex justify="space-between" align="center" width="100%">
-            <HStack spacing={4}>
-              <Avatar size="lg" name={user.displayName || "User"} />
-              <VStack align="flex-start" spacing={0}>
-                <Heading color={textColor} size="lg">
-                  Welcome, {user.displayName}
-                </Heading>
-                <Text color={highlightColor}>
-                  Your personal Salawat dashboard
-                </Text>
-              </VStack>
-            </HStack>
-          </Flex>
-          {/* Level Section */}
-          {levelSection}
-          {/* Streak Section */}
-          {streakSection}
-
-          {/* Total Salawat Section */}
-          <Box p={6} bg={cardBgColor} borderRadius="lg" boxShadow="2xl">
-            <VStack spacing={4} align="stretch">
-              <HStack justify="space-between" align="center">
-                <Heading color={highlightColor} size="lg" fontWeight="bold">
-                  Total Salawat Recited
-                </Heading>
-                <Icon as={FaMedal} boxSize={10} color={highlightColor} />
+    <>
+      <Joyride
+        steps={tourSteps}
+        continuous
+        showSkipButton
+        showProgress
+        run={isTourOpen}
+        callback={handleTourCallback}
+        styles={{
+          beacon: {
+            display: "none", // Hide the beacon completely
+          },
+        }}
+      />
+      <Box bg={bgColor} minH="100vh" py={12} px={6}>
+        <Flex direction="column" align="center" maxW="1200px" mx="auto">
+          <VStack spacing={8} align="stretch" width="100%">
+            {/* User Greeting Section */}
+            <Flex justify="space-between" align="center" width="100%">
+              <HStack spacing={4}>
+                <Avatar size="lg" name={user.displayName || "User"} />
+                <VStack align="flex-start" spacing={0}>
+                  <Heading color={textColor} size="lg">
+                    Welcome, {user.displayName}
+                  </Heading>
+                  <Text color={highlightColor}>
+                    Your personal Salawat dashboard
+                  </Text>
+                </VStack>
               </HStack>
+            </Flex>
+            {/* Level Section */}
+            {levelSection}
+            {/* Streak Section */}
+            {streakSection}
 
-              <Flex direction="column" align="center">
-                <Text
-                  fontSize="6xl"
-                  fontWeight="extrabold"
-                  color={highlightColor}
+            {/* Total Salawat Section */}
+            <Box p={6} bg={cardBgColor} borderRadius="lg" boxShadow="2xl">
+              <VStack spacing={4} align="stretch">
+                <HStack justify="space-between" align="center">
+                  <Heading color={highlightColor} size="lg" fontWeight="bold">
+                    Total Salawat Recited
+                  </Heading>
+                  <Icon as={FaMedal} boxSize={10} color={highlightColor} />
+                </HStack>
+
+                <Flex direction="column" align="center">
+                  <Text
+                    fontSize="6xl"
+                    fontWeight="extrabold"
+                    color={highlightColor}
+                  >
+                    {userData?.totalCount || 0}
+                  </Text>
+                  <Text fontSize="xl" color={textColor} mt={2}>
+                    Salawat and counting...
+                  </Text>
+                </Flex>
+
+                <Divider my={4} />
+
+                {/* Salawat Progress Section */}
+                {progressSection}
+              </VStack>
+            </Box>
+
+            {badgesSection}
+            {/* Charts Section */}
+            <Box
+              className="charts-section"
+              p={10}
+              bg={cardBgColor}
+              borderRadius="lg"
+              boxShadow="2xl"
+            >
+              <VStack spacing={4} align="stretch">
+                <Heading color={textColor} size="md">
+                  Your Salawat Over Time
+                </Heading>
+                <SimpleGrid
+                  columns={{ base: 1, md: 3 }}
+                  spacing={{ base: 16, md: 6 }}
                 >
-                  {userData?.totalCount || 0}
-                </Text>
-                <Text fontSize="xl" color={textColor} mt={2}>
-                  Salawat and counting...
-                </Text>
-              </Flex>
-
-              <Divider my={4} />
-
-              {/* Salawat Progress Section */}
-              {progressSection}
-            </VStack>
-          </Box>
-
-          {badgesSection}
-          {/* Charts Section */}
-          <Box p={10} bg={cardBgColor} borderRadius="lg" boxShadow="2xl">
-            <VStack spacing={4} align="stretch">
-              <Heading color={textColor} size="md">
-                Your Salawat Over Time
-              </Heading>
-              <SimpleGrid
-                columns={{ base: 1, md: 3 }}
-                spacing={{ base: 16, md: 6 }}
-              >
-                <Box h="250px">
-                  <Text fontSize="lg" mb={2} color={textColor}>
-                    Daily
-                  </Text>
-                  <Line data={dailyData} options={chartOptions} />
-                </Box>
-                <Box h="250px">
-                  <Text fontSize="lg" mb={2} color={textColor}>
-                    Weekly
-                  </Text>
-                  <Line data={weeklyData} options={chartOptions} />
-                </Box>
-                <Box h="250px">
-                  <Text fontSize="lg" mb={2} color={textColor}>
-                    Monthly
-                  </Text>
-                  <Line data={monthlyData} options={chartOptions} />
-                </Box>
-              </SimpleGrid>
-            </VStack>
-          </Box>
-        </VStack>
-      </Flex>
-    </Box>
+                  <Box h="250px">
+                    <Text fontSize="lg" mb={2} color={textColor}>
+                      Daily
+                    </Text>
+                    <Line data={dailyData} options={chartOptions} />
+                  </Box>
+                  <Box h="250px">
+                    <Text fontSize="lg" mb={2} color={textColor}>
+                      Weekly
+                    </Text>
+                    <Line data={weeklyData} options={chartOptions} />
+                  </Box>
+                  <Box h="250px">
+                    <Text fontSize="lg" mb={2} color={textColor}>
+                      Monthly
+                    </Text>
+                    <Line data={monthlyData} options={chartOptions} />
+                  </Box>
+                </SimpleGrid>
+              </VStack>
+            </Box>
+          </VStack>
+        </Flex>
+      </Box>
+    </>
   );
 }
