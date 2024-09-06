@@ -66,7 +66,7 @@ interface SalawatData {
 const tourSteps: Step[] = [
   {
     target: "body",
-    content: "Are you ready for a tour?",
+    content: "Are you ready for a quick tour?",
     placement: "center",
   },
   {

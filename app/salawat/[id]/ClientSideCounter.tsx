@@ -202,6 +202,7 @@ export default function ClientSideCounter({
           _active={{ transform: "scale(0.95)" }}
           fontSize="xl"
           fontWeight="bold"
+          className="counter-button"
         >
           <Text color="white">{dailyCount}</Text>
         </Button>

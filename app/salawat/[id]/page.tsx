@@ -17,6 +17,8 @@ import {
 
 import { ReactNode, Suspense, useEffect, useState } from "react";
 
+import Joyride, { CallBackProps, STATUS, Step } from "react-joyride"; // Import Joyride
+
 import { db } from "@/lib/firebase";
 import ClientSideCounter from "./ClientSideCounter";
 import TooltipWithTouch from "./TooltipWithTouch";
@@ -50,6 +52,35 @@ interface SalawatData {
   lines: SalawatLine[];
 }
 
+// Define your tour steps
+const tourSteps: Step[] = [
+  {
+    target: "body",
+    content: "Are you ready for a quick tour?",
+    placement: "center",
+  },
+  {
+    target: ".salawat-title",
+    content: "This is the title of the Salawat.",
+    placement: "top",
+  },
+  {
+    target: ".salawat-text",
+    content: "Here is the Arabic text with tooltips.",
+    placement: "top",
+  },
+  {
+    target: ".salawat-translation",
+    content: "This is the translation of the Arabic text.",
+    placement: "top",
+  },
+  {
+    target: ".counter-button",
+    content: "Click here to count the Salawat.",
+    placement: "top",
+  },
+];
+
 async function fetchSalawatData(id: string) {
   const salawat = await getSalawatData(id);
   return salawat;
@@ -72,6 +103,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
   const [salawat, setSalawat] = useState<SalawatData | null>(null);
   const [totalSubmittedCount, setTotalSubmittedCount] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
+  const [isTourOpen, setIsTourOpen] = useState(false); // State to control the tour
 
   const language = "en";
 
@@ -186,7 +218,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     if (!user) {
       router.push("/login");
-    } else if(!user.emailVerified) {
+    } else if (!user.emailVerified) {
       router.push("/verify-email");
     }
   }, [user, router]);
@@ -223,6 +255,21 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     return () => clearInterval(intervalId);
   }, [imageUrls.length]);
 
+  useEffect(() => {
+    const hasSeenTour = localStorage.getItem("hasSeenSalawatTour");
+    if (!hasSeenTour) {
+      setIsTourOpen(true);
+    }
+  }, []);
+
+  const handleTourCallback = (data: CallBackProps) => {
+    debugger;
+    const { status } = data;
+    if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
+      localStorage.setItem("hasSeenSalawatTour", "true");
+      setIsTourOpen(false);
+    }
+  };
   const renderArabicTextWithTooltips = (
     arabicText: string,
     words: SalawatWord[]
@@ -241,6 +288,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
         color="white"
         textAlign="center"
         lineHeight="1.8"
+        className="salawat-text"
       >
         {arabicText.split(" ").map((word, index) => (
           <Suspense key={index} fallback={<span>{word} </span>}>
@@ -339,7 +387,14 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
         overflowY="auto" // Scrollable content
         pb="100px" // Space for the button
       >
-        <Heading as="h2" size="lg" mb={6} textAlign="center" color="white">
+        <Heading
+          as="h2"
+          size="lg"
+          mb={6}
+          textAlign="center"
+          color="white"
+          className="salawat-title"
+        >
           {salawat.title}
         </Heading>
         {/* <Stack spacing={4} mb={6} align="center">
@@ -362,7 +417,13 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
         {salawat.lines.map((line, index) => (
           <Box key={index} mb={6}>
             {renderArabicTextWithTooltips(line.arabic, line.words)}
-            <Text mb={4} fontSize="md" color="gray.200" textAlign="center">
+            <Text
+              mb={4}
+              fontSize="md"
+              color="gray.200"
+              textAlign="center"
+              className="salawat-translation"
+            >
               {line.translations[language]}
             </Text>
             {index < salawat.lines.length - 1 && (
@@ -376,6 +437,21 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
           <ClientSideCounter salawatId={params.id} />
         </Suspense>
       </Box>
+
+      <Joyride
+        steps={tourSteps}
+        continuous
+        showSkipButton
+        showProgress
+        scrollToFirstStep
+        run={isTourOpen}
+        callback={handleTourCallback}
+        styles={{
+          beacon: {
+            display: "none", // Hide the beacon completely
+          },
+        }}
+      />
     </Box>
   );
 }
