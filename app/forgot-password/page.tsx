@@ -30,7 +30,10 @@ export default function ForgotPassword() {
         duration: 3000,
         isClosable: true,
       });
-      //router.push("/login");
+      // Delay the redirection to allow user to read the message
+      setTimeout(() => {
+        router.push("/login");
+      }, 3000); // Adjust the timeout duration as needed
     } catch (error) {
       let errorMessage =
         "Failed to send password reset email. Please try again.";
