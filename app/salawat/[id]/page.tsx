@@ -36,6 +36,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import Login from "@/components/Login";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { withAuth } from "@/components/withAuth";
 interface SalawatWord {
   word: string;
   translations: { [key: string]: string };
@@ -76,7 +77,8 @@ const tourSteps: Step[] = [
   },
   {
     target: ".counter-button",
-    content: "Click here to count the Salawat. Every click will be saved to your profile.",
+    content:
+      "Click here to count the Salawat. Every click will be saved to your profile.",
     placement: "top",
   },
 ];
@@ -97,7 +99,7 @@ async function getSalawatData(id: string): Promise<SalawatData> {
 }
 
 const MotionBox = motion(Box);
-export default function SalawatPage({ params }: { params: { id: string } }) {
+ function SalawatPage({ params }: { params: { id: string } }) {
   const { user } = useAuth();
   const router = useRouter();
   const [salawat, setSalawat] = useState<SalawatData | null>(null);
@@ -216,9 +218,7 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
   ];
 
   useEffect(() => {
-    if (!user) {
-      router.push("/login");
-    } else if (!user.emailVerified) {
+    if (user && !user.emailVerified) {
       router.push("/verify-email");
     }
   }, [user, router]);
@@ -455,3 +455,5 @@ export default function SalawatPage({ params }: { params: { id: string } }) {
     </Box>
   );
 }
+
+export default withAuth(SalawatPage);

@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { db } from "@/lib/firebase";
+import { withAuth } from "@/components/withAuth";
 
 const ContactUs = () => {
   const [subject, setSubject] = useState("");
@@ -26,9 +27,7 @@ const ContactUs = () => {
   const toast = useToast();
 
   useEffect(() => {
-    if (!user) {
-      router.push("/login");
-    } else if (!user.emailVerified) {
+    if (user && !user.emailVerified) {
       router.push("/verify-email");
     }
   }, [user, router]);
@@ -131,4 +130,4 @@ const ContactUs = () => {
   );
 };
 
-export default ContactUs;
+export default withAuth(ContactUs);

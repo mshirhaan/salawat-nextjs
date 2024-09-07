@@ -43,6 +43,7 @@ import "chart.js/auto"; // Automatically registers the necessary chart component
 import { badgeConfigs } from "../badgeConfigs";
 import { calculateXpToNextLevel } from "@/utils/dashboardUtils";
 import { GiLaurelsTrophy } from "react-icons/gi";
+import { withAuth } from "@/components/withAuth";
 
 interface UserData {
   email: string;
@@ -98,7 +99,7 @@ const tourSteps: Step[] = [
   },
 ];
 
-export default function Dashboard() {
+ function Dashboard() {
   const { user } = useAuth();
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
@@ -114,9 +115,7 @@ export default function Dashboard() {
   const highlightColor = useColorModeValue("teal.500", "teal.300");
 
   useEffect(() => {
-    if (!user) {
-      router.push("/login");
-    } else if (!user.emailVerified) {
+    if (user && !user.emailVerified) {
       router.push("/verify-email");
     } else {
       const fetchUserData = async () => {
@@ -523,3 +522,5 @@ export default function Dashboard() {
     </>
   );
 }
+
+export default withAuth(Dashboard);
