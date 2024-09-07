@@ -40,6 +40,9 @@ export default function Login() {
       let errorMessage = "Failed to log in. Please check your credentials.";
       if (error instanceof FirebaseError) {
         switch (error.code) {
+          case "auth/invalid-credential":
+            errorMessage = "The email or password is incorrect.";
+            break;
           case "auth/invalid-email":
             errorMessage = "The email address is invalid.";
             break;
