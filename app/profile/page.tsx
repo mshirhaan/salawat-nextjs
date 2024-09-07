@@ -5,8 +5,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
+import { withAuth } from "@/components/withAuth";
 
-export default function Settings() {
+function Settings() {
   const { user } = useAuth();
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -57,13 +58,11 @@ export default function Settings() {
         onChange={(e) => setName(e.target.value)}
         mb={4}
       />
-      <Button
-        colorScheme="teal"
-        isLoading={loading}
-        onClick={handleUpdateName}
-      >
+      <Button colorScheme="teal" isLoading={loading} onClick={handleUpdateName}>
         Update Name
       </Button>
     </Box>
   );
 }
+
+export default withAuth(Settings);
