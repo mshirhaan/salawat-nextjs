@@ -53,7 +53,7 @@ export default function LeaderboardPage() {
   const [loading, setLoading] = useState(true);
   const [timeFrame, setTimeFrame] = useState<
     "daily" | "weekly" | "monthly" | "allTime"
-  >("allTime");
+  >("daily"); // Set default to "daily"
   const toast = useToast();
 
   useEffect(() => {
@@ -156,7 +156,13 @@ export default function LeaderboardPage() {
           <Heading as="h1" size="2xl" color="teal.600" textAlign="center">
             Salawat Leaderboard
           </Heading>
-          <Tabs isFitted variant="enclosed" colorScheme="teal" width="100%">
+          <Tabs
+            isFitted
+            variant="enclosed"
+            colorScheme="teal"
+            width="100%"
+            defaultIndex={0} // Set default tab to "daily"
+          >
             <TabList mb="1em">
               <Tab onClick={() => setTimeFrame("daily")}>Daily</Tab>
               <Tab onClick={() => setTimeFrame("weekly")}>Weekly</Tab>
