@@ -124,6 +124,11 @@ export default function Login() {
           Sign up
         </Link>
       </Text>
+      <Text mt={4} textAlign="center">
+        <Link color="teal.500" href="/forgot-password">
+          Forgot Password?
+        </Link>
+      </Text>
     </Box>
   );
 }
