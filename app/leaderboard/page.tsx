@@ -72,28 +72,28 @@ export default function LeaderboardPage() {
             q = query(
               usersCollection,
               orderBy(`dailySalawatCounts.${dayId}.totalCount`, "desc"),
-              limit(100)
+              limit(500)
             );
             break;
           case "weekly":
             q = query(
               usersCollection,
               orderBy(`weeklySalawatCounts.${weekId}.totalCount`, "desc"),
-              limit(100)
+              limit(500)
             );
             break;
           case "monthly":
             q = query(
               usersCollection,
               orderBy(`monthlySalawatCounts.${monthId}.totalCount`, "desc"),
-              limit(100)
+              limit(500)
             );
             break;
           default:
             q = query(
               usersCollection,
               orderBy("totalCount", "desc"),
-              limit(100)
+              limit(500)
             );
         }
 
