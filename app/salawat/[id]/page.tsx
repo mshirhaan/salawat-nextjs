@@ -96,6 +96,11 @@ const tourSteps: Step[] = [
       "Click here to count the Salawat. Every click will be saved to your profile.",
     placement: "top",
   },
+  {
+    target: ".salawat-settings",
+    content: "Click here to change the settings like font size.",
+    placement: "top",
+  },
 ];
 
 async function fetchSalawatData(id: string) {
@@ -392,6 +397,7 @@ function SalawatPage({ params }: { params: { id: string } }) {
         onClick={onOpen}
         zIndex={10}
         colorScheme="teal"
+        className="salawat-settings"
       />
 
       {/* Settings Drawer */}
