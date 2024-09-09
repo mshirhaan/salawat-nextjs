@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Box, Heading, Input, Button, useToast } from "@chakra-ui/react";
+import { Box, Heading, Input, Button, Text, useToast } from "@chakra-ui/react";
 import { useAuth } from "@/contexts/AuthContext";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -51,6 +51,9 @@ function Settings() {
   return (
     <Box p={6} maxW="400px" mx="auto">
       <Heading mb={6}>Update Name</Heading>
+      <Text mb={4} color="gray.600">
+        This name will be used only to hide your real name on the leaderboard.
+      </Text>
       <Input
         type="text"
         placeholder="New Name"
