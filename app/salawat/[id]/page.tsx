@@ -13,6 +13,20 @@ import {
   Divider,
   Spinner,
   Flex,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  FormLabel,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  Switch,
+  IconButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import { ReactNode, Suspense, useEffect, useState } from "react";
@@ -37,6 +51,7 @@ import Login from "@/components/Login";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { withAuth } from "@/components/withAuth";
+import { SettingsIcon } from "@chakra-ui/icons";
 interface SalawatWord {
   word: string;
   translations: { [key: string]: string };
@@ -99,13 +114,38 @@ async function getSalawatData(id: string): Promise<SalawatData> {
 }
 
 const MotionBox = motion(Box);
- function SalawatPage({ params }: { params: { id: string } }) {
+function SalawatPage({ params }: { params: { id: string } }) {
   const { user } = useAuth();
   const router = useRouter();
   const [salawat, setSalawat] = useState<SalawatData | null>(null);
+  const { isOpen, onOpen, onClose } = useDisclosure(); // Controls for Drawer
   const [totalSubmittedCount, setTotalSubmittedCount] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
   const [isTourOpen, setIsTourOpen] = useState(false); // State to control the tour
+  const [showTranslation, setShowTranslation] = useState(true); // Controls translation visibility
+  const [arabicFontSize, setArabicFontSize] = useState(24); // Arabic font size
+  const [translationFontSize, setTranslationFontSize] = useState(16); // Translation font size
+
+  // Load settings from localStorage on page load
+  useEffect(() => {
+    const savedArabicFontSize = localStorage.getItem("arabicFontSize");
+    const savedTranslationFontSize = localStorage.getItem(
+      "translationFontSize"
+    );
+    const savedShowTranslation = localStorage.getItem("showTranslation");
+
+    if (savedArabicFontSize) {
+      console.log("$setting arabicFontSize", parseInt(savedArabicFontSize));
+
+      setArabicFontSize(parseInt(savedArabicFontSize));
+    }
+    if (savedTranslationFontSize) {
+      setTranslationFontSize(parseInt(savedTranslationFontSize));
+    }
+    if (savedShowTranslation) {
+      setShowTranslation(savedShowTranslation === "true");
+    }
+  }, []);
 
   const language = "en";
 
@@ -263,7 +303,6 @@ const MotionBox = motion(Box);
   }, []);
 
   const handleTourCallback = (data: CallBackProps) => {
-    debugger;
     const { status } = data;
     if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
       localStorage.setItem("hasSeenSalawatTour", "true");
@@ -284,7 +323,7 @@ const MotionBox = motion(Box);
     return (
       <Text
         fontFamily="'Uthmanic', 'Amiri', serif"
-        fontSize="3xl"
+        fontSize={`${arabicFontSize}px`}
         color="white"
         textAlign="center"
         lineHeight="1.8"
@@ -342,6 +381,86 @@ const MotionBox = motion(Box);
         }}
       /> */}
 
+      {/* Settings Gear Icon */}
+      <IconButton
+        aria-label="Settings"
+        icon={<SettingsIcon />}
+        position="fixed"
+        top={"4.5rem"}
+        right={5}
+        size="lg"
+        onClick={onOpen}
+        zIndex={10}
+        colorScheme="teal"
+      />
+
+      {/* Settings Drawer */}
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Settings</DrawerHeader>
+
+          <DrawerBody>
+            <Stack spacing={4}>
+              {/* Arabic Font Size Slider */}
+              <Box>
+                <FormLabel>Arabic Font Size</FormLabel>
+                <Slider
+                  defaultValue={arabicFontSize}
+                  min={16}
+                  max={48}
+                  step={1}
+                  onChange={(val) => {
+                    setArabicFontSize(val);
+                    localStorage.setItem("arabicFontSize", val.toString());
+                  }}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+              </Box>
+
+              {/* Translation Font Size Slider */}
+              <Box>
+                <FormLabel>Translation Font Size</FormLabel>
+                <Slider
+                  defaultValue={translationFontSize}
+                  min={12}
+                  max={32}
+                  step={1}
+                  onChange={(val) => {
+                    setTranslationFontSize(val);
+                    localStorage.setItem("translationFontSize", val.toString());
+                  }}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+              </Box>
+
+              {/* Toggle Translation Visibility */}
+              <Box>
+                <FormLabel>Show Translation</FormLabel>
+                <Switch
+                  isChecked={showTranslation}
+                  onChange={(e) => {
+                    setShowTranslation(e.target.checked);
+                    localStorage.setItem(
+                      "showTranslation",
+                      e.target.checked.toString()
+                    );
+                  }}
+                />
+              </Box>
+            </Stack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
       {/* Image Background */}
       {imageUrls.map((url, index) => (
         <MotionBox
@@ -417,15 +536,17 @@ const MotionBox = motion(Box);
         {salawat.lines.map((line, index) => (
           <Box key={index} mb={6}>
             {renderArabicTextWithTooltips(line.arabic, line.words)}
-            <Text
-              mb={4}
-              fontSize="md"
-              color="gray.200"
-              textAlign="center"
-              className="salawat-translation"
-            >
-              {line.translations[language]}
-            </Text>
+            {showTranslation && (
+              <Text
+                mb={4}
+                fontSize={`${translationFontSize}px`}
+                color="gray.200"
+                textAlign="center"
+                className="salawat-translation"
+              >
+                {line.translations[language]}
+              </Text>
+            )}
             {index < salawat.lines.length - 1 && (
               <Divider my={4} borderColor="gray.200" />
             )}
