@@ -98,7 +98,7 @@ export default function Home() {
               Start Reciting Salawat
             </Button>
           </VStack>
-          <Box flex={1} mt={{ base: 8, md: 0 }}>
+          <Box flex={1} mt={{ base: 12, lg: 0 }} maxW="400px">
             <MotionBox
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
