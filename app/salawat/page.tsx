@@ -40,9 +40,14 @@ import { auth, db } from "@/lib/firebase"; // Adjust the import path as needed
 import { useAuth } from "@/contexts/AuthContext";
 import Joyride, { CallBackProps, STATUS, Step } from "react-joyride"; // Import Joyride
 
+interface SalawatLine {
+  arabic: string;
+}
+
 interface SalawatData {
   id: string;
   title: string;
+  lines: SalawatLine[];
   description?: string; // Optional description
   pinned?: boolean; // Add pinned property
   target?: number; // Add target property
@@ -111,6 +116,7 @@ export default function HomePage() {
       try {
         const response = await fetch("/api/salawat");
         const data = await response.json();
+        console.log("Salawat data:", data);
 
         // Load pinned state from localStorage
         const pinnedItems = JSON.parse(
@@ -377,6 +383,9 @@ export default function HomePage() {
               const progressPercentage =
                 target > 0 ? (progress / target) * 100 : 0;
 
+              // Get the first line of Arabic text
+              const firstLineArabic = salawat.lines[0]?.arabic || "";
+
               return (
                 <Box
                   key={salawat.id}
@@ -405,6 +414,17 @@ export default function HomePage() {
                           {salawat.description}
                         </Text>
                       )}
+                      <Text
+                        fontSize="md"
+                        color="gray.800"
+                        fontFamily="'Uthmanic', 'Amiri', serif"
+                        dir="rtl"
+                        noOfLines={1}
+                        textAlign={"right"}
+                        title={firstLineArabic}
+                      >
+                        {firstLineArabic}
+                      </Text>
                     </Box>
                     <HStack spacing={2}>
                       {isLoggedIn && (
