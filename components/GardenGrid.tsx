@@ -81,7 +81,7 @@ export default function GardenGrid({ userId }: GardenGridProps) {
         className={styles["garden-grid"]}
         style={{ gridTemplateColumns: `repeat(auto-fit, minmax(120px, 1fr))` }}
       >
-        {[...Array(gridSize * gridSize)].map((_, index) => (
+        {[...Array(gridSize)].map((_, index) => (
           <div key={index} className={styles["garden-cell"]}>
             {/* Check if there's a plant at this position */}
             {plants.find((plant) => plant.position === index) ? (
