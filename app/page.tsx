@@ -16,6 +16,7 @@ import {
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaHeart } from "react-icons/fa";
+import SalawatGardenAnnouncement from "@/components/SalawatGardenAnnouncement";
 
 const MotionBox = motion(Box);
 
@@ -32,6 +33,7 @@ export default function Home() {
 
   return (
     <Box bg={bgColor} minH="100vh" overflow="hidden" position="relative">
+      <SalawatGardenAnnouncement />
       <Container maxW="container.xl" py={10}>
         <Flex
           direction={{ base: "column", md: "row" }}
