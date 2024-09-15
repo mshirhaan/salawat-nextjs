@@ -22,6 +22,7 @@ export async function logRecitation(
   const userRef = doc(db, "users", userId);
   const now = Timestamp.now();
   const xpPerRecitation = 10; // Define how much XP is awarded per recitation
+  const storePointsPerRecitation = 1; // Points awarded per recitation
 
   await updateStreak(userId, now);
 
@@ -31,6 +32,7 @@ export async function logRecitation(
     const userData = userDoc.data();
     let newXP = userData.xp + xpPerRecitation;
     let newLevel = userData.level;
+    let newStorePoints = (userData.storePoints || 0) + storePointsPerRecitation;
 
     // Define the XP needed for each level (e.g., level 1 requires 100 XP, level 2 requires 200 XP, etc.)
     const xpForNextLevel = (newLevel: number) => newLevel * 100;
@@ -46,6 +48,7 @@ export async function logRecitation(
       recitationLogs: arrayUnion(now),
       xp: newXP,
       level: newLevel,
+      storePoints: newStorePoints, // Update store points
     });
   }
 
@@ -117,6 +120,14 @@ export async function createUserDocument(
     badges: [],
     level: 1, // Starting level
     xp: 0, // Starting XP
+    myGarden: {
+      gridSize: 3, // Initial 3x3 grid size
+      plants: [], // List of plants placed in the garden
+    },
+    myPlants: [
+      { plantId: "rose", name: "Rose", quantity: 1 },
+      { plantId: "tulip", name: "Tulip", quantity: 1 },
+    ],
   });
 }
 

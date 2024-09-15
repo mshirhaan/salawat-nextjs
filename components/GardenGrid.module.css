@@ -1,0 +1,74 @@
+@keyframes sway {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(3deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.wind-animation {
+  display: inline-block;
+  animation: sway 3s ease-in-out infinite; /* Sway effect */
+  transform-origin: bottom center; /* Sway from base */
+}
+
+.garden-grid {
+  display: grid;
+  /* gap: 10px; Increase the gap for a more spacious look */
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #a5d6a7; /* Light green background for the grid */
+  border: 5px solid #4caf50; /* Darker green border to give a garden fence feel */
+  border-radius: 12px; /* Rounded corners for a softer look */
+}
+
+.garden-cell {
+  background-color: #c8e6c9; /* Slightly lighter green for cells */
+  /* border: 2px solid #81c784; Lighter green border */
+  /* border-radius: 8px; Rounded corners for a more friendly look */
+  width: 100%;
+  height: 120px; /* Increase height for more room */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); Slight shadow for depth */
+  background-image: url("/plants/grass-pattern.jpg"); /* Add a grass pattern for texture */
+  background-size: cover;
+  background-size: cover; /* Ensure the image covers the entire cell */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat;
+}
+
+.garden-cell button {
+  padding: 12px 24px;
+  background-color: #8bc34a; /* Green button to match garden theme */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+.garden-cell button:hover {
+  background-color: #7cb342; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+/* Add a simple plant icon style */
+.garden-plant {
+  font-size: 2.5rem; /* Emoji size */
+  animation: sway 3s ease-in-out infinite; /* Wind animation */
+}

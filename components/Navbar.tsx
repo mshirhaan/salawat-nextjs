@@ -69,6 +69,24 @@ export default function Navbar() {
           </Button>
           <Button
             as={Link}
+            href="/store"
+            variant="ghost"
+            mx={2}
+            _hover={{ bg: "green.100" }}
+          >
+            Store
+          </Button>
+          <Button
+            as={Link}
+            href="/garden"
+            variant="ghost"
+            mx={2}
+            _hover={{ bg: "green.100" }}
+          >
+            Salawat Garden
+          </Button>
+          <Button
+            as={Link}
             href="/leaderboard"
             variant="ghost"
             mx={2}
@@ -160,6 +178,17 @@ export default function Navbar() {
               >
                 Salawat
               </Button>
+              <Button as={Link} href="/store" variant="ghost" onClick={onClose}>
+                Store
+              </Button>
+              <Button
+                as={Link}
+                href="/garden"
+                variant="ghost"
+                onClick={onClose}
+              >
+                Salawat Garden
+              </Button>
               <Button
                 as={Link}
                 href="/leaderboard"
@@ -209,7 +238,6 @@ export default function Navbar() {
                     />{" "}
                     Profile
                   </Button>
-
                   <Button
                     onClick={handleLogout}
                     colorScheme="red"
