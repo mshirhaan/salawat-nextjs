@@ -230,7 +230,7 @@ export default function Store({ userId }: { userId: string }) {
             ))
           ) : (
             <Text textAlign="center" color="gray.600">
-              You don't have any plants yet.
+              You don&apos;t have any plants yet.
             </Text>
           )}
         </Grid>
