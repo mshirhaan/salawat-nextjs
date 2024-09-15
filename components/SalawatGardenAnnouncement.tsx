@@ -46,7 +46,7 @@ const SalawatGardenAnnouncement = () => {
               height={500}
             />
             <Text className="text-lg">
-              We're excited to announce our new feature: Salawat Garden!
+              We&apos;re excited to announce our new feature: Salawat Garden!
             </Text>
             <Text>Now you can:</Text>
             <ul className="list-disc pl-5">
