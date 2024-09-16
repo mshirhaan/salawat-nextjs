@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 import { FaHeart } from "react-icons/fa";
 import SalawatGardenAnnouncement from "@/components/SalawatGardenAnnouncement";
 
+// Define Chakra motion for floating effects
 const MotionBox = motion(Box);
 
 const float = keyframes`
@@ -34,6 +35,83 @@ export default function Home() {
   return (
     <Box bg={bgColor} minH="100vh" overflow="hidden" position="relative">
       <SalawatGardenAnnouncement />
+
+      {/* Eid Milad Un Nabi Banner */}
+      <Box
+        w="full"
+        bgGradient="linear(to-r, teal.500, green.400)"
+        py={10}
+        color="white"
+        textAlign="center"
+        mb={10}
+        boxShadow="lg"
+        borderRadius="lg"
+        position="relative"
+        overflow="hidden"
+      >
+        {/* Floating hearts */}
+        <Box
+          position="absolute"
+          top="10%"
+          left="15%"
+          animation={`${float} 4s ease-in-out infinite`}
+          opacity={Math.random()}
+        >
+          <Icon as={FaHeart} w={8} h={8} color="red.300" />
+        </Box>
+        <Box
+          position="absolute"
+          bottom="15%"
+          right="20%"
+          animation={`${float} 5s ease-in-out infinite`}
+          opacity={Math.random()}
+        >
+          <Icon as={FaHeart} w={6} h={6} color="red.500" />
+        </Box>
+        <Box
+          position="absolute"
+          top="30%"
+          left="35%"
+          animation={`${float} 4.5s ease-in-out infinite`}
+          opacity={Math.random()}
+        >
+          <Icon as={FaHeart} w={10} h={10} color="red.300" />
+        </Box>
+        <Box
+          position="absolute"
+          bottom="25%"
+          right="30%"
+          animation={`${float} 3.5s ease-in-out infinite`}
+          opacity={Math.random()}
+        >
+          <Icon as={FaHeart} w={7} h={7} color="red.400" />
+        </Box>
+
+        {/* Banner Content */}
+        <VStack spacing={4} position="relative" zIndex={1}>
+          <Heading fontSize={{ base: "3xl", md: "4xl" }}>
+            Eid Milad Un Nabi ﷺ Mubarak!
+          </Heading>
+          <Text fontSize={{ base: "md", md: "xl" }} px={5}>
+            May the blessings and peace of Allah be upon the Beloved Prophet
+            Muhammad ﷺ. Celebrate His birth by sending Salawat.
+          </Text>
+          <Button
+            as={Link}
+            href="/salawat"
+            size="lg"
+            bg="white"
+            color="green.600"
+            _hover={{ bg: "green.500", color: "white" }}
+            boxShadow="lg"
+            leftIcon={<FaHeart />}
+          >
+            Recite Salawat Now
+          </Button>
+        </VStack>
+      </Box>
+
+      {/* Main Container */}
       <Container maxW="container.xl" py={10}>
         <Flex
           direction={{ base: "column", md: "row" }}
@@ -118,7 +196,6 @@ export default function Home() {
       </Container>
 
       {/* Floating hearts */}
-
       <Box
         position="absolute"
         top="60%"
@@ -135,7 +212,6 @@ export default function Home() {
       >
         <Icon as={FaHeart} w={5} h={5} color="red.500" />
       </Box>
-
       <Box
         position="absolute"
         top="70%"
