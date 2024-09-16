@@ -13,11 +13,24 @@ import {
   DrawerCloseButton,
   DrawerBody,
   VStack,
+  Icon,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { FaSignOutAlt } from "react-icons/fa";
+import {
+  FaSignOutAlt,
+  FaHome,
+  FaStore,
+  FaSeedling,
+  FaTachometerAlt,
+  FaUser,
+  FaUserAlt,
+  FaChartLine,
+  FaEnvelope,
+} from "react-icons/fa";
+import TasbeehBeadIcon from "@/public/icons/tasbih.png";
+import Image from "next/image";
 
 export default function Navbar() {
   const bgColor = "green.50"; // Light mode equivalent
@@ -55,6 +68,7 @@ export default function Navbar() {
             variant="ghost"
             mx={2}
             _hover={{ bg: "green.100" }}
+            leftIcon={<FaHome />}
           >
             Home
           </Button>
@@ -64,6 +78,9 @@ export default function Navbar() {
             variant="ghost"
             mx={2}
             _hover={{ bg: "green.100" }}
+            leftIcon={
+              <Image src={TasbeehBeadIcon} width={26} height={26} alt="" />
+            }
           >
             Salawat
           </Button>
@@ -73,6 +90,7 @@ export default function Navbar() {
             variant="ghost"
             mx={2}
             _hover={{ bg: "green.100" }}
+            leftIcon={<FaStore />}
           >
             Store
           </Button>
@@ -82,6 +100,7 @@ export default function Navbar() {
             variant="ghost"
             mx={2}
             _hover={{ bg: "green.100" }}
+            leftIcon={<FaSeedling />}
           >
             Salawat Garden
           </Button>
@@ -91,6 +110,7 @@ export default function Navbar() {
             variant="ghost"
             mx={2}
             _hover={{ bg: "green.100" }}
+            leftIcon={<FaChartLine />}
           >
             Leaderboard
           </Button>
@@ -100,6 +120,9 @@ export default function Navbar() {
             variant="ghost"
             mx={2}
             _hover={{ bg: "green.100" }}
+            leftIcon={
+              <Image src={TasbeehBeadIcon} width={26} height={26} alt="" />
+            }
           >
             Counter
           </Button>
@@ -109,6 +132,7 @@ export default function Navbar() {
             variant="ghost"
             mx={2}
             _hover={{ bg: "green.100" }}
+            leftIcon={<FaEnvelope />}
           >
             Contact Us
           </Button>
@@ -120,6 +144,7 @@ export default function Navbar() {
                 variant="ghost"
                 mx={2}
                 _hover={{ bg: "green.100" }}
+                leftIcon={<FaTachometerAlt />}
               >
                 Dashboard
               </Button>
@@ -167,7 +192,13 @@ export default function Navbar() {
           <DrawerCloseButton />
           <DrawerBody>
             <VStack spacing={4} align="start" mt={4}>
-              <Button as={Link} href="/" variant="ghost" onClick={onClose}>
+              <Button
+                as={Link}
+                href="/"
+                variant="ghost"
+                onClick={onClose}
+                leftIcon={<FaHome />}
+              >
                 Home
               </Button>
               <Button
@@ -175,10 +206,19 @@ export default function Navbar() {
                 href="/salawat"
                 variant="ghost"
                 onClick={onClose}
+                leftIcon={
+                  <Image src={TasbeehBeadIcon} width={26} height={26} alt="" />
+                }
               >
                 Salawat
               </Button>
-              <Button as={Link} href="/store" variant="ghost" onClick={onClose}>
+              <Button
+                as={Link}
+                href="/store"
+                variant="ghost"
+                onClick={onClose}
+                leftIcon={<FaStore />}
+              >
                 Store
               </Button>
               <Button
@@ -186,6 +226,7 @@ export default function Navbar() {
                 href="/garden"
                 variant="ghost"
                 onClick={onClose}
+                leftIcon={<FaSeedling />}
               >
                 Salawat Garden
               </Button>
@@ -194,6 +235,7 @@ export default function Navbar() {
                 href="/leaderboard"
                 variant="ghost"
                 onClick={onClose}
+                leftIcon={<FaChartLine />}
               >
                 Leaderboard
               </Button>
@@ -202,6 +244,9 @@ export default function Navbar() {
                 href="/counter"
                 variant="ghost"
                 onClick={onClose}
+                leftIcon={
+                  <Image src={TasbeehBeadIcon} width={26} height={26} alt="" />
+                }
               >
                 Counter
               </Button>
@@ -210,6 +255,7 @@ export default function Navbar() {
                 href="/contact-us"
                 variant="ghost"
                 onClick={onClose}
+                leftIcon={<FaEnvelope />}
               >
                 Contact Us
               </Button>
@@ -220,6 +266,7 @@ export default function Navbar() {
                     href="/dashboard"
                     variant="ghost"
                     onClick={onClose}
+                    leftIcon={<FaTachometerAlt />}
                   >
                     Dashboard
                   </Button>
@@ -228,6 +275,7 @@ export default function Navbar() {
                     href="/profile"
                     variant="ghost"
                     onClick={onClose}
+                    leftIcon={<FaUser />}
                   >
                     <Avatar
                       name={user.displayName || "User"}
