@@ -28,6 +28,7 @@ import {
   FaUserAlt,
   FaChartLine,
   FaEnvelope,
+  FaHeart,
 } from "react-icons/fa";
 import TasbeehBeadIcon from "@/public/icons/tasbih.png";
 import Image from "next/image";
@@ -78,9 +79,7 @@ export default function Navbar() {
             variant="ghost"
             mx={2}
             _hover={{ bg: "green.100" }}
-            leftIcon={
-              <Image src={TasbeehBeadIcon} width={26} height={26} alt="" />
-            }
+            leftIcon={<FaHeart />}
           >
             Salawat
           </Button>
@@ -206,9 +205,7 @@ export default function Navbar() {
                 href="/salawat"
                 variant="ghost"
                 onClick={onClose}
-                leftIcon={
-                  <Image src={TasbeehBeadIcon} width={26} height={26} alt="" />
-                }
+                leftIcon={<FaHeart />}
               >
                 Salawat
               </Button>
@@ -245,7 +242,7 @@ export default function Navbar() {
                 variant="ghost"
                 onClick={onClose}
                 leftIcon={
-                  <Image src={TasbeehBeadIcon} width={26} height={26} alt="" />
+                  <Image src={TasbeehBeadIcon} width={16} height={16} alt="" />
                 }
               >
                 Counter
