@@ -395,7 +395,7 @@ function SalawatPage({ params }: { params: { id: string } }) {
         position="fixed"
         top={"4.5rem"}
         right={5}
-        size="lg"
+        size="sm"
         onClick={onOpen}
         zIndex={10}
         colorScheme="teal"
