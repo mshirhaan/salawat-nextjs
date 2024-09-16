@@ -105,7 +105,7 @@ export default function EidMiladBanner() {
         </Heading>
         <Text fontSize={{ base: "md", md: "xl" }} px={5}>
           May the blessings and peace of Allah be upon the Beloved Prophet
-          Muhammad ﷺ. Celebrate His birth by sending Salawat.
+          Muhammad ﷺ. Celebrate His ﷺ birth by sending Salawat.
         </Text>
         <Button
           as={Link}
