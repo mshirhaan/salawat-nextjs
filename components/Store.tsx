@@ -12,6 +12,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { buyPlant, buyLand } from "@/lib/garden";
+import { FaCoins } from "react-icons/fa";
+import { GiTwoCoins } from "react-icons/gi";
 
 export default function Store({ userId }: { userId: string }) {
   const [storePoints, setStorePoints] = useState<number>(0);
@@ -28,14 +30,13 @@ export default function Store({ userId }: { userId: string }) {
     { plantId: "lily", name: "Lily", emoji: "🌸", price: 900 },
     { plantId: "cactus", name: "Cactus", emoji: "🌵", price: 600 },
     { plantId: "daisy", name: "Daisy", emoji: "🌼", price: 700 },
-    { plantId: "peony", name: "Peony", emoji: "🌷", price: 1100 },
     { plantId: "lavender", name: "Lavender", emoji: "💐", price: 950 },
     { plantId: "bamboo", name: "Bamboo", emoji: "🎋", price: 700 },
     { plantId: "bonsai", name: "Bonsai Tree", emoji: "🌳", price: 1500 },
     { plantId: "aloe", name: "Aloe Vera", emoji: "🌿", price: 350 },
   ];
 
-  const landPrice = 1000;
+  const landPrice = 10000;
 
   const toast = useToast();
 
@@ -129,8 +130,21 @@ export default function Store({ userId }: { userId: string }) {
         <Text fontSize="3xl" fontWeight="bold" color="teal.600">
           Store
         </Text>
-        <Text fontSize="lg" color="gray.700">
-          Available Points: <strong>{storePoints}</strong>
+        <Text
+          fontSize="3xl"
+          color="gray.700"
+          display="flex"
+          alignItems="center"
+        >
+          Your Points: &nbsp;
+          <GiTwoCoins color="gold" style={{ marginRight: "8px" }} />
+          <strong>{storePoints}</strong>
+        </Text>
+        <Text
+          
+          alignItems="center"
+        >
+          1 salawat recitation earns you 1 point
         </Text>
       </Stack>
 
