@@ -16,8 +16,8 @@ const MotionBox = motion(Box);
 // Keyframes for floating upwards and fading out
 const floatUpwards = keyframes`
   0% { transform: translateY(0); opacity: 1; }
-  50% { opacity: 0.7; }
-  100% { transform: translateY(-100px); opacity: 0; }
+  90% { opacity: 0.9; }
+  100% { transform: translateY(-100vh); opacity: 0; }
 `;
 
 // Predefined colors for the hearts (added more colors)
@@ -59,7 +59,7 @@ const generateRandomHearts = (numHearts: number) => {
     color: getRandomColor(),
     top: "100%", // Start from the bottom
     left: Math.random() * 100 + "%", // Random left position
-    animationDuration: Math.random() * (6 - 3) + 3 + "s", // Random duration between 3s and 6s
+    animationDuration: Math.random() * (30 - 20) + 20 + "s", // Random duration between 3s and 6s
   }));
 };
 
