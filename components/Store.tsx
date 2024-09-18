@@ -2,6 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import Image from "next/image";
 import {
   Button,
   VStack,
@@ -18,22 +19,22 @@ import { GiTwoCoins } from "react-icons/gi";
 export default function Store({ userId }: { userId: string }) {
   const [storePoints, setStorePoints] = useState<number>(0);
   const [userPlants, setUserPlants] = useState<
-    Array<{ plantId: string; name: string; emoji: string; quantity: number }>
+    Array<{ plantId: string; name: string; quantity: number }>
   >([]);
 
   const plantsForSale = [
-    { plantId: "rose", name: "Rose", emoji: "🌹", price: 1000 }, // Price is high for slow progression
-    { plantId: "tulip", name: "Tulip", emoji: "🌷", price: 800 },
-    { plantId: "sunflower", name: "Sunflower", emoji: "🌻", price: 1200 },
-    { plantId: "hibiscus", name: "Hibiscus", emoji: "🌺", price: 1500 },
-    { plantId: "orchid", name: "Orchid", emoji: "🪷", price: 1200 },
-    { plantId: "lily", name: "Lily", emoji: "🌸", price: 900 },
-    { plantId: "cactus", name: "Cactus", emoji: "🌵", price: 600 },
-    { plantId: "daisy", name: "Daisy", emoji: "🌼", price: 700 },
-    { plantId: "lavender", name: "Lavender", emoji: "💐", price: 950 },
-    { plantId: "bamboo", name: "Bamboo", emoji: "🎋", price: 700 },
-    { plantId: "bonsai", name: "Bonsai Tree", emoji: "🌳", price: 1500 },
-    { plantId: "aloe", name: "Aloe Vera", emoji: "🌿", price: 350 },
+    { plantId: "rose", name: "Rose", price: 1000 },
+    { plantId: "tulip", name: "Tulip", price: 800 },
+    { plantId: "sunflower", name: "Sunflower", price: 1200 },
+    { plantId: "hibiscus", name: "Hibiscus", price: 1500 },
+    { plantId: "orchid", name: "Orchid", price: 1200 },
+    { plantId: "lily", name: "Lily", price: 900 },
+    { plantId: "cactus", name: "Cactus", price: 600 },
+    { plantId: "daisy", name: "Daisy", price: 700 },
+    { plantId: "lavender", name: "Lavender", price: 950 },
+    { plantId: "bamboo", name: "Bamboo", price: 700 },
+    { plantId: "bonsai", name: "Bonsai Tree", price: 1500 },
+    { plantId: "aloe", name: "Aloe Vera", price: 350 },
   ];
 
   const landPrice = 10000;
@@ -65,7 +66,6 @@ export default function Store({ userId }: { userId: string }) {
         updatedPlants.push({
           plantId,
           name: plantData!.name,
-          emoji: plantData!.emoji,
           quantity: 1,
         });
       }
@@ -140,12 +140,7 @@ export default function Store({ userId }: { userId: string }) {
           <GiTwoCoins color="gold" style={{ marginRight: "8px" }} />
           <strong>{storePoints}</strong>
         </Text>
-        <Text
-          
-          alignItems="center"
-        >
-          1 salawat recitation earns you 1 point
-        </Text>
+        <Text alignItems="center">1 salawat recitation earns you 1 point</Text>
       </Stack>
 
       <Grid
@@ -166,9 +161,14 @@ export default function Store({ userId }: { userId: string }) {
             alignItems="center"
             justifyContent="center"
           >
-            <Text fontSize="5xl" mb={2}>
-              {plant.emoji}
-            </Text>
+            <Box width={50} height={50} position="relative" mb={2}>
+              <Image
+                src={`/icons/${plant.plantId}.svg`}
+                alt={plant.name}
+                layout="fill"
+                objectFit="contain"
+              />
+            </Box>
             <Text fontSize="xl" fontWeight="semibold" mb={1}>
               {plant.name}
             </Text>
@@ -195,9 +195,14 @@ export default function Store({ userId }: { userId: string }) {
           alignItems="center"
           justifyContent="center"
         >
-          <Text fontSize="5xl" mb={2}>
-            🏞️
-          </Text>
+          <Box width={50} height={50} position="relative" mb={2}>
+            <Image
+              src="/icons/land.svg"
+              alt="Land"
+              layout="fill"
+              objectFit="contain"
+            />
+          </Box>
           <Text fontSize="xl" fontWeight="semibold" mb={1}>
             Land
           </Text>
@@ -233,9 +238,14 @@ export default function Store({ userId }: { userId: string }) {
                 alignItems="center"
                 justifyContent="center"
               >
-                <Text fontSize="5xl" mb={2}>
-                  {plant.emoji}
-                </Text>
+                <Box width={50} height={50} position="relative" mb={2}>
+                  <Image
+                    src={`/icons/${plant.plantId}.svg`}
+                    alt={plant.name}
+                    layout="fill"
+                    objectFit="contain"
+                  />
+                </Box>
                 <Text fontSize="xl" fontWeight="semibold" mb={1}>
                   {plant.name}
                 </Text>
