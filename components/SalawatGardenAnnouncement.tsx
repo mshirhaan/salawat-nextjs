@@ -18,11 +18,11 @@ const SalawatGardenAnnouncement = () => {
 
   useEffect(() => {
     const hasSeenAnnouncement = localStorage.getItem(
-      "hasSeenSalawatGardenAnnouncement"
+      "hasSeenSalawatGardenAnnouncement1"
     );
     if (!hasSeenAnnouncement) {
       setIsOpen(true);
-      localStorage.setItem("hasSeenSalawatGardenAnnouncement", "true");
+      localStorage.setItem("hasSeenSalawatGardenAnnouncement1", "true");
     }
   }, []);
 
