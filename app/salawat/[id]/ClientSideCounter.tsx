@@ -27,6 +27,7 @@ import { useNotification } from "@/contexts/NotificationContext";
 
 interface ClientSideCounterProps {
   salawatId: string;
+  size: number;
 }
 
 function getDayId(date: Date): string {
@@ -59,6 +60,7 @@ function getWeekNumber(date: Date): number {
 
 export default function ClientSideCounter({
   salawatId,
+  size,
 }: ClientSideCounterProps) {
   const [totalCount, setTotalCount] = useState(0);
   const [dailyCount, setDailyCount] = useState(0);
@@ -157,7 +159,10 @@ export default function ClientSideCounter({
       setWeeklyCount(weeklyCount + 1);
       setMonthlyCount(monthlyCount + 1);
 
-      localStorage.setItem(`salawatCount_${salawatId}`, newTotalCount.toString());
+      localStorage.setItem(
+        `salawatCount_${salawatId}`,
+        newTotalCount.toString()
+      );
 
       if (user) {
         await updateUserSalawatCount(user.uid, salawatId, 1);
@@ -193,8 +198,8 @@ export default function ClientSideCounter({
           colorScheme="teal"
           variant="solid"
           borderRadius="full"
-          width="90px"
-          height="90px"
+          width={size + "px"}
+          height={size + "px"}
           boxShadow="md"
           _hover={{ bg: "teal.600" }}
           _focus={{ boxShadow: "outline" }}

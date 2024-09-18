@@ -240,6 +240,7 @@ function SalawatPage({ params }: { params: { id: string } }) {
   const [showTranslation, setShowTranslation] = useState(true); // Controls translation visibility
   const [arabicFontSize, setArabicFontSize] = useState(24); // Arabic font size
   const [translationFontSize, setTranslationFontSize] = useState(16); // Translation font size
+  const [counterButtonSize, setCounterButtonSize] = useState(90); // Counter button size
 
   // Load settings from localStorage on page load
   useEffect(() => {
@@ -249,9 +250,9 @@ function SalawatPage({ params }: { params: { id: string } }) {
     );
     const savedShowTranslation = localStorage.getItem("showTranslation");
 
-    if (savedArabicFontSize) {
-      console.log("$setting arabicFontSize", parseInt(savedArabicFontSize));
+    const savedCounterButtonSize = localStorage.getItem("counterButtonSize");
 
+    if (savedArabicFontSize) {
       setArabicFontSize(parseInt(savedArabicFontSize));
     }
     if (savedTranslationFontSize) {
@@ -259,6 +260,10 @@ function SalawatPage({ params }: { params: { id: string } }) {
     }
     if (savedShowTranslation) {
       setShowTranslation(savedShowTranslation === "true");
+    }
+
+    if (savedCounterButtonSize) {
+      setCounterButtonSize(parseInt(savedCounterButtonSize));
     }
   }, []);
 
@@ -451,6 +456,26 @@ function SalawatPage({ params }: { params: { id: string } }) {
                 </Slider>
               </Box>
 
+              {/* Translation Font Size Slider */}
+              <Box>
+                <FormLabel>Counter Button Size</FormLabel>
+                <Slider
+                  defaultValue={counterButtonSize}
+                  min={90}
+                  max={270}
+                  step={1}
+                  onChange={(val) => {
+                    setCounterButtonSize(val);
+                    localStorage.setItem("counterButtonSize", val.toString());
+                  }}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+              </Box>
+
               {/* Toggle Translation Visibility */}
               <Box>
                 <FormLabel>Show Translation</FormLabel>
@@ -563,7 +588,7 @@ function SalawatPage({ params }: { params: { id: string } }) {
 
         {/* Improved Button with Vibration */}
         <Suspense fallback={<div>Loading counter...</div>}>
-          <ClientSideCounter salawatId={params.id} />
+          <ClientSideCounter salawatId={params.id} size={counterButtonSize} />
         </Suspense>
       </Box>
 
