@@ -20,6 +20,8 @@ import {
   Text,
   Box,
   HStack,
+  Center,
+  Spinner,
 } from "@chakra-ui/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { placePlantInGarden } from "@/lib/garden";
@@ -36,47 +38,70 @@ export default function GardenGrid({ userId }: GardenGridProps) {
     Array<{ position: number; plantId: string }>
   >([]);
   const [availablePlants, setAvailablePlants] = useState<
-    Array<{ plantId: string; name: string; emoji: string; quantity: number }>
+    Array<{ plantId: string; name: string; quantity: number }>
   >([]); // User's available plants with emoji and quantity
   const [selectedPosition, setSelectedPosition] = useState<number | null>(null); // Track selected grid position
   const { isOpen, onOpen, onClose } = useDisclosure(); // Chakra UI modal control
+  const [isLoading, setIsLoading] = useState(true);
 
   // Load user data, including garden and available plants
   const loadGardenData = useCallback(async () => {
-    const userRef = doc(db, "users", userId);
-    const userDoc = await getDoc(userRef);
-    if (userDoc.exists()) {
-      const gardenData = userDoc.data()?.myGarden;
-      const plantData = userDoc.data()?.myPlants || []; // Load available plants from user data
-      setGridSize(gardenData?.gridSize || 3);
-      setPlants(gardenData?.plants || []);
-      setAvailablePlants(plantData); // Set available plants with emoji and quantity
+    setIsLoading(true);
+    try {
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        const gardenData = userDoc.data()?.myGarden;
+        const plantData = userDoc.data()?.myPlants || []; // Load available plants from user data
+        setGridSize(gardenData?.gridSize || 3);
+        setPlants(gardenData?.plants || []);
+        setAvailablePlants(plantData); // Set available plants with emoji and quantity
+      }
+    } catch (error) {
+      console.error("Error loading garden data:", error);
+    } finally {
+      setIsLoading(false);
     }
   }, [userId]);
 
   // Handle placing a plant in the garden and reducing its quantity
   const handlePlantSelection = async (plantId: string) => {
     if (selectedPosition !== null) {
-      // Reduce the quantity of the selected plant
-      const updatedPlants = availablePlants.map((plant) =>
-        plant.plantId === plantId
-          ? { ...plant, quantity: plant.quantity - 1 }
-          : plant
-      );
+      setIsLoading(true);
+      try {
+        // Reduce the quantity of the selected plant
+        const updatedPlants = availablePlants.map((plant) =>
+          plant.plantId === plantId
+            ? { ...plant, quantity: plant.quantity - 1 }
+            : plant
+        );
 
-      // Update Firestore with new plant quantity and add plant to garden
-      await updateDoc(doc(db, "users", userId), {
-        myPlants: updatedPlants,
-      });
-      await placePlantInGarden(userId, selectedPosition, plantId); // Place the plant in the garden
-      await loadGardenData(); // Reload data to reflect changes
-      onClose(); // Close the modal after placing the plant
+        // Update Firestore with new plant quantity and add plant to garden
+        await updateDoc(doc(db, "users", userId), {
+          myPlants: updatedPlants,
+        });
+        await placePlantInGarden(userId, selectedPosition, plantId); // Place the plant in the garden
+        await loadGardenData(); // Reload data to reflect changes
+      } catch (error) {
+        console.error("Error placing plant:", error);
+      } finally {
+        setIsLoading(false);
+        onClose(); // Close the modal after placing the plant
+      }
     }
   };
 
   useEffect(() => {
     loadGardenData();
   }, [loadGardenData]);
+
+  if (isLoading) {
+    return (
+      <Center height="300px">
+        <Spinner size="xl" color="green.500" thickness="4px" />
+      </Center>
+    );
+  }
 
   return (
     <>
