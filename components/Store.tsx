@@ -35,6 +35,14 @@ export default function Store({ userId }: { userId: string }) {
     { plantId: "bamboo", name: "Bamboo", price: 700 },
     { plantId: "bonsai", name: "Bonsai Tree", price: 1500 },
     { plantId: "aloe", name: "Aloe Vera", price: 350 },
+
+    { plantId: "maple", name: "Maple Tree", price: 2000 },
+    { plantId: "palm", name: "Palm Tree", price: 1800 },
+    { plantId: "pine", name: "Pine Tree", price: 1600 },
+    { plantId: "succulent", name: "Succulent", price: 1300 },
+    { plantId: "jasmine", name: "Jasmine", price: 850 },
+    { plantId: "cherry-blossom", name: "Cherry Blossom", price: 1700 },
+    { plantId: "oak", name: "Oak Tree", price: 1000 },
   ];
 
   const landPrice = 10000;

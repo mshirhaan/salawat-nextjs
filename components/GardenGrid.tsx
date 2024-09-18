@@ -18,10 +18,13 @@ import {
   useDisclosure,
   VStack,
   Text,
+  Box,
+  HStack,
 } from "@chakra-ui/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { placePlantInGarden } from "@/lib/garden";
 import Link from "next/link";
+import Image from "next/image";
 
 type GardenGridProps = {
   userId: string;
@@ -125,10 +128,24 @@ export default function GardenGrid({ userId }: GardenGridProps) {
                     onClick={() => handlePlantSelection(plant.plantId)}
                     variant="solid"
                     colorScheme="green"
-                    isDisabled={plant.quantity === 0} // Disable button if quantity is 0
+                    isDisabled={plant.quantity === 0}
+                    width="100%"
+                    justifyContent="flex-start"
+                    leftIcon={
+                      <Box width={6} height={6} position="relative">
+                        <Image
+                          src={`/icons/${plant.plantId}.svg`}
+                          alt={plant.name}
+                          layout="fill"
+                          objectFit="contain"
+                        />
+                      </Box>
+                    }
                   >
-                    {plant.emoji} (x{plant.quantity}){" "}
-                    {/* Show emoji and quantity */}
+                    <HStack justify="space-between" width="100%">
+                      <Text>{plant.name}</Text>
+                      <Text>(x{plant.quantity})</Text>
+                    </HStack>
                   </Button>
                 ))
               ) : (
