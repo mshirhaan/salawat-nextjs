@@ -113,7 +113,7 @@ export default function Navbar() {
           >
             Leaderboard
           </Button>
-          <Button
+          {/* <Button
             as={Link}
             href="/counter"
             variant="ghost"
@@ -124,7 +124,7 @@ export default function Navbar() {
             }
           >
             Counter
-          </Button>
+          </Button> */}
           <Button
             as={Link}
             href="/contact-us"
@@ -236,7 +236,7 @@ export default function Navbar() {
               >
                 Leaderboard
               </Button>
-              <Button
+              {/* <Button
                 as={Link}
                 href="/counter"
                 variant="ghost"
@@ -246,7 +246,7 @@ export default function Navbar() {
                 }
               >
                 Counter
-              </Button>
+              </Button> */}
               <Button
                 as={Link}
                 href="/contact-us"
