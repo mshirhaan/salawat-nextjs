@@ -2,7 +2,6 @@
 
 import React, { Suspense, useState } from "react";
 import {
-  ChakraProvider,
   Box,
   VStack,
   Text,
@@ -80,7 +79,7 @@ export default function MustafaJaaneRehmatPage() {
   };
 
   return (
-    <ChakraProvider>
+    <>
       <NextSeo
         title="Mustafa Jaane Rehmat - Beautiful Salaam Recitation"
         description="Experience the beautiful recitation of Mustafa Jaane Rehmat with word-by-word translations and meanings."
@@ -114,6 +113,6 @@ export default function MustafaJaaneRehmatPage() {
           </Suspense>
         </VStack>
       </Box>
-    </ChakraProvider>
+    </>
   );
 }
