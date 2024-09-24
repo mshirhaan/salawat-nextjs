@@ -1,13 +1,7 @@
 "use client";
 
 import React, { Suspense, useState } from "react";
-import {
-  Box,
-  VStack,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import { NextSeo } from "next-seo";
+import { Box, VStack, Text, useColorModeValue } from "@chakra-ui/react";
 
 // Import components
 import { Line, SalaamText } from "./SalaamText";
@@ -80,26 +74,6 @@ export default function MustafaJaaneRehmatPage() {
 
   return (
     <>
-      <NextSeo
-        title="Mustafa Jaane Rehmat - Beautiful Salaam Recitation"
-        description="Experience the beautiful recitation of Mustafa Jaane Rehmat with word-by-word translations and meanings."
-        canonical="https://your-website.com/mustafa-jaane-rehmat"
-        openGraph={{
-          url: "https://your-website.com/mustafa-jaane-rehmat",
-          title: "Mustafa Jaane Rehmat - Beautiful Salaam Recitation",
-          description:
-            "Experience the beautiful recitation of Mustafa Jaane Rehmat with word-by-word translations and meanings.",
-          images: [
-            {
-              url: "https://your-website.com/images/mustafa-jaane-rehmat-og.jpg",
-              width: 1200,
-              height: 630,
-              alt: "Mustafa Jaane Rehmat Recitation",
-            },
-          ],
-          site_name: "Your Website Name",
-        }}
-      />
       <Box minHeight="100vh" bg={bgColor} color={textColor} p={4}>
         <VStack spacing={8} align="stretch">
           <Text fontSize="3xl" fontWeight="bold" textAlign="center">
