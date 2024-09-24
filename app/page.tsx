@@ -35,8 +35,6 @@ export default function Home() {
 
   return (
     <Box bg={bgColor} minH="100vh" overflow="hidden" position="relative">
-      <SalawatGardenAnnouncement />
-
       {/* Eid Milad Un Nabi Banner */}
       <EidMiladBanner />
       {/* Main Container */}
