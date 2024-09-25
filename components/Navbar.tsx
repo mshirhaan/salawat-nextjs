@@ -50,7 +50,7 @@ export default function Navbar() {
   };
 
   // Prevent logo click from opening Drawer
-  const handleLogoClick = (e) => {
+  const handleLogoClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Stops event propagation to other listeners
     router.push("/"); // Navigate to homepage
   };
