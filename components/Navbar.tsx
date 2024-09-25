@@ -14,6 +14,7 @@ import {
   DrawerBody,
   VStack,
   Icon,
+  Spinner,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -32,6 +33,8 @@ import {
 } from "react-icons/fa";
 import TasbeehBeadIcon from "@/public/icons/tasbih.png";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { checkAuthState } from "@/utils/auth";
 
 export default function Navbar() {
   const bgColor = "green.50"; // Light mode equivalent
@@ -39,6 +42,16 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      await checkAuthState();
+      setIsLoading(false);
+    };
+    checkAuth();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -55,6 +68,81 @@ export default function Navbar() {
     router.push("/"); // Navigate to homepage
   };
 
+  const navButtons = [
+    { href: "/", label: "Home", icon: FaHome },
+    { href: "/salawat", label: "Salawat", icon: FaHeart },
+    { href: "/store", label: "Store", icon: FaStore },
+    { href: "/garden", label: "Salawat Garden", icon: FaSeedling },
+    { href: "/leaderboard", label: "Leaderboard", icon: FaChartLine },
+    { href: "/contact-us", label: "Contact Us", icon: FaEnvelope },
+  ];
+
+  const renderNavButtons = () => (
+    <>
+      {navButtons.map((button) => (
+        <Button
+          key={button.href}
+          as={Link}
+          href={button.href}
+          variant="ghost"
+          mx={2}
+          _hover={{ bg: "green.100" }}
+          leftIcon={<button.icon />}
+        >
+          {button.label}
+        </Button>
+      ))}
+    </>
+  );
+
+  const renderAuthButtons = () => {
+    if (isLoading) {
+      return <Spinner size="sm" />;
+    }
+    if (user) {
+      return (
+        <>
+          <Button
+            as={Link}
+            href="/dashboard"
+            variant="ghost"
+            mx={2}
+            _hover={{ bg: "green.100" }}
+            leftIcon={<FaTachometerAlt />}
+          >
+            Dashboard
+          </Button>
+          <Avatar
+            name={user.displayName || "User"}
+            src={user.photoURL || undefined}
+            size="sm"
+            mr={4}
+            cursor="pointer"
+            onClick={() => router.push("/profile")}
+          />
+          <Button
+            onClick={handleLogout}
+            colorScheme="red"
+            _hover={{ bg: "red.600" }}
+            leftIcon={<FaSignOutAlt />}
+          >
+            Logout
+          </Button>
+        </>
+      );
+    }
+    return (
+      <Button
+        as={Link}
+        href="/login"
+        colorScheme="blue"
+        _hover={{ bg: "blue.600" }}
+      >
+        Login
+      </Button>
+    );
+  };
+
   return (
     <Box bg={bgColor} px={4} boxShadow="md">
       <Flex h={16} alignItems="center" justifyContent="space-between">
@@ -63,123 +151,13 @@ export default function Navbar() {
           fontSize="xl"
           color={textColor}
           cursor="pointer"
-          onClick={handleLogoClick} // Properly handle logo clicks
+          onClick={handleLogoClick}
         >
           Salawat App
         </Box>
         <Flex alignItems="center" display={{ base: "none", md: "flex" }}>
-          <Button
-            as={Link}
-            href="/"
-            variant="ghost"
-            mx={2}
-            _hover={{ bg: "green.100" }}
-            leftIcon={<FaHome />}
-          >
-            Home
-          </Button>
-          <Button
-            as={Link}
-            href="/salawat"
-            variant="ghost"
-            mx={2}
-            _hover={{ bg: "green.100" }}
-            leftIcon={<FaHeart />}
-          >
-            Salawat
-          </Button>
-          <Button
-            as={Link}
-            href="/store"
-            variant="ghost"
-            mx={2}
-            _hover={{ bg: "green.100" }}
-            leftIcon={<FaStore />}
-          >
-            Store
-          </Button>
-          <Button
-            as={Link}
-            href="/garden"
-            variant="ghost"
-            mx={2}
-            _hover={{ bg: "green.100" }}
-            leftIcon={<FaSeedling />}
-          >
-            Salawat Garden
-          </Button>
-          <Button
-            as={Link}
-            href="/leaderboard"
-            variant="ghost"
-            mx={2}
-            _hover={{ bg: "green.100" }}
-            leftIcon={<FaChartLine />}
-          >
-            Leaderboard
-          </Button>
-          {/* <Button
-            as={Link}
-            href="/counter"
-            variant="ghost"
-            mx={2}
-            _hover={{ bg: "green.100" }}
-            leftIcon={
-              <Image src={TasbeehBeadIcon} width={26} height={26} alt="" />
-            }
-          >
-            Counter
-          </Button> */}
-          <Button
-            as={Link}
-            href="/contact-us"
-            variant="ghost"
-            mx={2}
-            _hover={{ bg: "green.100" }}
-            leftIcon={<FaEnvelope />}
-          >
-            Contact Us
-          </Button>
-          {user && (
-            <>
-              <Button
-                as={Link}
-                href="/dashboard"
-                variant="ghost"
-                mx={2}
-                _hover={{ bg: "green.100" }}
-                leftIcon={<FaTachometerAlt />}
-              >
-                Dashboard
-              </Button>
-              <Avatar
-                name={user.displayName || "User"}
-                src={user.photoURL || undefined}
-                size="sm"
-                mr={4}
-                cursor="pointer"
-                onClick={() => router.push("/profile")}
-              />
-              <Button
-                onClick={handleLogout}
-                colorScheme="red"
-                _hover={{ bg: "red.600" }}
-                leftIcon={<FaSignOutAlt />}
-              >
-                Logout
-              </Button>
-            </>
-          )}
-          {!user && (
-            <Button
-              as={Link}
-              href="/login"
-              colorScheme="blue"
-              _hover={{ bg: "blue.600" }}
-            >
-              Login
-            </Button>
-          )}
+          {renderNavButtons()}
+          {renderAuthButtons()}
         </Flex>
         <Button
           display={{ base: "flex", md: "none" }}
@@ -196,72 +174,19 @@ export default function Navbar() {
           <DrawerCloseButton />
           <DrawerBody>
             <VStack spacing={4} align="start" mt={4}>
-              <Button
-                as={Link}
-                href="/"
-                variant="ghost"
-                onClick={onClose}
-                leftIcon={<FaHome />}
-              >
-                Home
-              </Button>
-              <Button
-                as={Link}
-                href="/salawat"
-                variant="ghost"
-                onClick={onClose}
-                leftIcon={<FaHeart />}
-              >
-                Salawat
-              </Button>
-              <Button
-                as={Link}
-                href="/store"
-                variant="ghost"
-                onClick={onClose}
-                leftIcon={<FaStore />}
-              >
-                Store
-              </Button>
-              <Button
-                as={Link}
-                href="/garden"
-                variant="ghost"
-                onClick={onClose}
-                leftIcon={<FaSeedling />}
-              >
-                Salawat Garden
-              </Button>
-              <Button
-                as={Link}
-                href="/leaderboard"
-                variant="ghost"
-                onClick={onClose}
-                leftIcon={<FaChartLine />}
-              >
-                Leaderboard
-              </Button>
-              {/* <Button
-                as={Link}
-                href="/counter"
-                variant="ghost"
-                onClick={onClose}
-                leftIcon={
-                  <Image src={TasbeehBeadIcon} width={16} height={16} alt="" />
-                }
-              >
-                Counter
-              </Button> */}
-              <Button
-                as={Link}
-                href="/contact-us"
-                variant="ghost"
-                onClick={onClose}
-                leftIcon={<FaEnvelope />}
-              >
-                Contact Us
-              </Button>
-              {user && (
+              {navButtons.map((button) => (
+                <Button
+                  key={button.href}
+                  as={Link}
+                  href={button.href}
+                  variant="ghost"
+                  onClick={onClose}
+                  leftIcon={<button.icon />}
+                >
+                  {button.label}
+                </Button>
+              ))}
+              {user && !isLoading && (
                 <>
                   <Button
                     as={Link}
@@ -298,7 +223,7 @@ export default function Navbar() {
                   </Button>
                 </>
               )}
-              {!user && (
+              {!user && !isLoading && (
                 <Button
                   as={Link}
                   href="/login"
@@ -308,6 +233,7 @@ export default function Navbar() {
                   Login
                 </Button>
               )}
+              {isLoading && <Spinner />}
             </VStack>
           </DrawerBody>
         </DrawerContent>
