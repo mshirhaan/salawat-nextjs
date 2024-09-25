@@ -49,19 +49,24 @@ export default function Navbar() {
     }
   };
 
+  // Prevent logo click from opening Drawer
+  const handleLogoClick = (e) => {
+    e.stopPropagation(); // Stops event propagation to other listeners
+    router.push("/"); // Navigate to homepage
+  };
+
   return (
     <Box bg={bgColor} px={4} boxShadow="md">
       <Flex h={16} alignItems="center" justifyContent="space-between">
-        <Link href="/" passHref>
-          <Box
-            fontWeight="bold"
-            fontSize="xl"
-            color={textColor}
-            cursor="pointer"
-          >
-            Salawat App
-          </Box>
-        </Link>
+        <Box
+          fontWeight="bold"
+          fontSize="xl"
+          color={textColor}
+          cursor="pointer"
+          onClick={handleLogoClick} // Properly handle logo clicks
+        >
+          Salawat App
+        </Box>
         <Flex alignItems="center" display={{ base: "none", md: "flex" }}>
           <Button
             as={Link}
