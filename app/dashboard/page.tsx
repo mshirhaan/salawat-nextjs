@@ -38,7 +38,7 @@ import {
 } from "react-icons/fa";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { getDayId, getMonthId, getWeekId } from "@/utils/dateUtils";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import "chart.js/auto"; // Automatically registers the necessary chart components
 import { badgeConfigs } from "../badgeConfigs";
 import { calculateXpToNextLevel } from "@/utils/dashboardUtils";
@@ -99,7 +99,7 @@ const tourSteps: Step[] = [
   },
 ];
 
- function Dashboard() {
+function Dashboard() {
   const { user } = useAuth();
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
@@ -363,8 +363,19 @@ const tourSteps: Step[] = [
     },
   };
 
+  // Sort daily, weekly, and monthly data by their keys
+  const sortedDailyKeys = Object.keys(
+    userData?.dailySalawatCounts || {}
+  ).sort(); // Sort by date
+  const sortedWeeklyKeys = Object.keys(
+    userData?.weeklySalawatCounts || {}
+  ).sort(); // Sort by week
+  const sortedMonthlyKeys = Object.keys(
+    userData?.monthlySalawatCounts || {}
+  ).sort(); // Sort by month
+
   const dailyData = {
-    labels: Object.keys(userData?.dailySalawatCounts || {}).slice(-7),
+    labels: sortedDailyKeys.slice(-7),
     datasets: [
       {
         label: "Daily Salawat",
@@ -380,7 +391,7 @@ const tourSteps: Step[] = [
   };
 
   const weeklyData = {
-    labels: Object.keys(userData?.weeklySalawatCounts || {}).slice(-4),
+    labels: sortedWeeklyKeys.slice(-4), // Last 4 weeks
     datasets: [
       {
         label: "Weekly Salawat",
@@ -396,7 +407,7 @@ const tourSteps: Step[] = [
   };
 
   const monthlyData = {
-    labels: Object.keys(userData?.monthlySalawatCounts || {}).slice(-12),
+    labels: sortedMonthlyKeys.slice(-12), // Last 12 months
     datasets: [
       {
         label: "Monthly Salawat",
@@ -499,19 +510,19 @@ const tourSteps: Step[] = [
                     <Text fontSize="lg" mb={2} color={textColor}>
                       Daily
                     </Text>
-                    <Line data={dailyData} options={chartOptions} />
+                    <Bar data={dailyData} options={chartOptions} />
                   </Box>
                   <Box h="250px">
                     <Text fontSize="lg" mb={2} color={textColor}>
                       Weekly
                     </Text>
-                    <Line data={weeklyData} options={chartOptions} />
+                    <Bar data={weeklyData} options={chartOptions} />
                   </Box>
                   <Box h="250px">
                     <Text fontSize="lg" mb={2} color={textColor}>
                       Monthly
                     </Text>
-                    <Line data={monthlyData} options={chartOptions} />
+                    <Bar data={monthlyData} options={chartOptions} />
                   </Box>
                 </SimpleGrid>
               </VStack>
