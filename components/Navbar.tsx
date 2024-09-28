@@ -168,7 +168,12 @@ export default function Navbar() {
         </Button>
       </Flex>
 
-      <Drawer isOpen={isOpen} onClose={onClose} placement="right">
+      <Drawer
+        key={isOpen ? "drawer-open" : "drawer-closed"}
+        isOpen={isOpen}
+        onClose={onClose}
+        placement="right"
+      >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
