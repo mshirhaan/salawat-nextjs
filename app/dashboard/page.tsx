@@ -375,49 +375,43 @@ function Dashboard() {
   ).sort(); // Sort by month
 
   const dailyData = {
-    labels: sortedDailyKeys.slice(-7),
+    labels: sortedDailyKeys.slice(-7), // Last 7 sorted dates
     datasets: [
       {
         label: "Daily Salawat",
-        data: Object.values(userData?.dailySalawatCounts || {}).map(
-          (data: any) => data.totalCount
-        ),
-        fill: false,
+        data: sortedDailyKeys
+          .slice(-7) // Only take the last 7 sorted keys
+          .map((key) => userData?.dailySalawatCounts[key]?.totalCount || 0), // Map keys to corresponding totalCount
         backgroundColor: "teal",
         borderColor: "teal",
-        tension: 0.1,
       },
     ],
   };
 
   const weeklyData = {
-    labels: sortedWeeklyKeys.slice(-4), // Last 4 weeks
+    labels: sortedWeeklyKeys.slice(-4), // Last 4 sorted weeks
     datasets: [
       {
         label: "Weekly Salawat",
-        data: Object.values(userData?.weeklySalawatCounts || {}).map(
-          (data: any) => data.totalCount
-        ),
-        fill: false,
+        data: sortedWeeklyKeys
+          .slice(-4) // Only take the last 4 sorted keys
+          .map((key) => userData?.weeklySalawatCounts[key]?.totalCount || 0), // Map keys to corresponding totalCount
         backgroundColor: "blue",
         borderColor: "blue",
-        tension: 0.1,
       },
     ],
   };
 
   const monthlyData = {
-    labels: sortedMonthlyKeys.slice(-12), // Last 12 months
+    labels: sortedMonthlyKeys.slice(-12), // Last 12 sorted months
     datasets: [
       {
         label: "Monthly Salawat",
-        data: Object.values(userData?.monthlySalawatCounts || {}).map(
-          (data: any) => data.totalCount
-        ),
-        fill: false,
+        data: sortedMonthlyKeys
+          .slice(-12) // Only take the last 12 sorted keys
+          .map((key) => userData?.monthlySalawatCounts[key]?.totalCount || 0), // Map keys to corresponding totalCount
         backgroundColor: "purple",
         borderColor: "purple",
-        tension: 0.1,
       },
     ],
   };
