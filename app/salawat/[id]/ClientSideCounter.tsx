@@ -17,6 +17,7 @@ import {
   IconButton,
   useDisclosure,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { logRecitation, updateUserSalawatCount } from "../../../lib/user";
 import { useAuth } from "@/contexts/AuthContext";
@@ -74,6 +75,13 @@ export default function ClientSideCounter({
 
   const lastClickTime = useRef<number>(0);
   const debounceDelay = 1000; // 1 second debounce delay
+
+  // Theme-aware color values
+  const bgColor = useColorModeValue("white", "gray.800");
+  const textColor = useColorModeValue("gray.800", "white");
+  const buttonBgColor = useColorModeValue("teal.500", "teal.200");
+  const buttonHoverBgColor = useColorModeValue("teal.600", "teal.300");
+  const buttonTextColor = useColorModeValue("white", "gray.800");
 
   useEffect(() => {
     let unsubscribe: () => void;
@@ -195,13 +203,14 @@ export default function ClientSideCounter({
         <Button
           onClick={handleCount}
           size="lg"
-          colorScheme="teal"
+          bg={buttonBgColor}
+          color={buttonTextColor}
           variant="solid"
           borderRadius="full"
           width={size + "px"}
           height={size + "px"}
           boxShadow="md"
-          _hover={{ bg: "teal.600" }}
+          _hover={{ bg: buttonHoverBgColor }}
           _focus={{ boxShadow: "outline" }}
           transition="background-color 0.3s ease, transform 0.3s ease"
           _active={{ transform: "scale(0.95)" }}
@@ -209,7 +218,7 @@ export default function ClientSideCounter({
           fontWeight="bold"
           className="counter-button"
         >
-          <Text color="white">{dailyCount}</Text>
+          <Text>{dailyCount}</Text>
         </Button>
 
         {/* Info Button */}
@@ -225,30 +234,36 @@ export default function ClientSideCounter({
         {/* Drawer for Count Details */}
         <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="sm">
           <DrawerOverlay />
-          <DrawerContent>
+          <DrawerContent bg={bgColor}>
             <DrawerCloseButton />
-            <DrawerHeader>Salawat Count Details</DrawerHeader>
+            <DrawerHeader color={textColor}>Salawat Count Details</DrawerHeader>
 
             <DrawerBody>
               <VStack spacing={4} align="start">
                 <HStack spacing={4}>
                   <VStack>
-                    <Text fontSize="sm" fontWeight="bold">
+                    <Text fontSize="sm" fontWeight="bold" color={textColor}>
                       Today
                     </Text>
-                    <Text fontSize="md">{dailyCount}</Text>
+                    <Text fontSize="md" color={textColor}>
+                      {dailyCount}
+                    </Text>
                   </VStack>
                   <VStack>
-                    <Text fontSize="sm" fontWeight="bold">
+                    <Text fontSize="sm" fontWeight="bold" color={textColor}>
                       This Week
                     </Text>
-                    <Text fontSize="md">{weeklyCount}</Text>
+                    <Text fontSize="md" color={textColor}>
+                      {weeklyCount}
+                    </Text>
                   </VStack>
                   <VStack>
-                    <Text fontSize="sm" fontWeight="bold">
+                    <Text fontSize="sm" fontWeight="bold" color={textColor}>
                       This Month
                     </Text>
-                    <Text fontSize="md">{monthlyCount}</Text>
+                    <Text fontSize="md" color={textColor}>
+                      {monthlyCount}
+                    </Text>
                   </VStack>
                 </HStack>
               </VStack>

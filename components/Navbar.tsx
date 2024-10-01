@@ -15,10 +15,13 @@ import {
   VStack,
   Icon,
   Spinner,
+  IconButton,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   FaSignOutAlt,
   FaHome,
@@ -31,14 +34,15 @@ import {
   FaEnvelope,
   FaHeart,
 } from "react-icons/fa";
-import TasbeehBeadIcon from "@/public/icons/tasbih.png";
-import Image from "next/image";
+
 import { useEffect, useState } from "react";
 import { checkAuthState } from "@/utils/auth";
+import React from "react";
 
 export default function Navbar() {
-  const bgColor = "green.50"; // Light mode equivalent
-  const textColor = "green.800"; // Light mode text color
+  const { colorMode, toggleColorMode } = useColorMode();
+  const bgColor = useColorModeValue("green.50", "gray.800"); // Use different background color based on the theme
+  const textColor = useColorModeValue("green.800", "white");
   const { user, logout } = useAuth();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -86,7 +90,6 @@ export default function Navbar() {
           href={button.href}
           variant="ghost"
           mx={2}
-          _hover={{ bg: "green.100" }}
           leftIcon={<button.icon />}
         >
           {button.label}
@@ -107,7 +110,6 @@ export default function Navbar() {
             href="/dashboard"
             variant="ghost"
             mx={2}
-            _hover={{ bg: "green.100" }}
             leftIcon={<FaTachometerAlt />}
           >
             Dashboard
@@ -159,13 +161,24 @@ export default function Navbar() {
           {renderNavButtons()}
           {renderAuthButtons()}
         </Flex>
-        <Button
-          display={{ base: "flex", md: "none" }}
-          onClick={onOpen}
-          aria-label="Open Menu"
-        >
-          <HamburgerIcon boxSize={6} color={textColor} />
-        </Button>
+
+        <Flex alignItems="center">
+          <IconButton
+            aria-label="Toggle Theme"
+            icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+            onClick={toggleColorMode}
+            mx={2}
+            bg="transparent"
+          />
+
+          <Button
+            display={{ base: "flex", md: "none" }}
+            onClick={onOpen}
+            aria-label="Open Menu"
+          >
+            <HamburgerIcon boxSize={6} color={textColor} />
+          </Button>
+        </Flex>
       </Flex>
 
       <Drawer

@@ -28,6 +28,7 @@ import {
   Avatar,
   useBreakpointValue,
   Grid,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import {
   collection,
@@ -55,6 +56,17 @@ export default function LeaderboardPage() {
     "daily" | "weekly" | "monthly" | "allTime"
   >("daily"); // Set default to "daily"
   const toast = useToast();
+
+  // Updated color scheme
+  const bgColor = useColorModeValue("gray.50", "gray.900");
+  const cardBgColor = useColorModeValue("white", "gray.800");
+  const textColor = useColorModeValue("gray.800", "white");
+  const headingColor = useColorModeValue("#5d4037", "#d7ccc8");
+  const gradientBg = useColorModeValue(
+    "linear-gradient(to right, #f2e6d9, #e6ccb3)",
+    "linear-gradient(to right, #3e2723, #4e342e)"
+  );
+  const mutedTextColor = useColorModeValue("gray.600", "gray.400");
 
   useEffect(() => {
     async function fetchData() {
@@ -150,7 +162,7 @@ export default function LeaderboardPage() {
   }
 
   return (
-    <Box bg="gray.50" minHeight="100vh" py={10}>
+    <Box bg={bgColor} minHeight="100vh" py={10}>
       <Container maxW="4xl">
         <VStack spacing={8}>
           <Heading as="h1" size="2xl" color="teal.600" textAlign="center">
@@ -208,6 +220,7 @@ const getAvatarColor = (index: number) => {
   ];
   return colors[index] || "teal.400";
 };
+
 function LeaderboardTable({
   users,
   timeFrame,
@@ -216,9 +229,12 @@ function LeaderboardTable({
   timeFrame: string;
 }) {
   const isMobile = useBreakpointValue({ base: true, md: false });
+  const bgColor = useColorModeValue("white", "gray.800");
+  const borderColor = useColorModeValue("gray.200", "gray.700");
+  const hoverBgColor = useColorModeValue("gray.50", "gray.700");
 
   return (
-    <Box bg="white" borderRadius="lg" boxShadow="md" overflow="hidden">
+    <Box bg={bgColor} borderRadius="lg" boxShadow="md" overflow="hidden">
       {isMobile ? (
         <Grid templateColumns="repeat(1, 1fr)" gap={4} p={4}>
           {users.map((user, index) => (
@@ -228,6 +244,7 @@ function LeaderboardTable({
               borderWidth={1}
               borderRadius="md"
               boxShadow="sm"
+              borderColor={borderColor}
             >
               <Flex justify="space-between" align="center" mb={2}>
                 <Flex direction="column" align="flex-start">
@@ -281,7 +298,11 @@ function LeaderboardTable({
           </Thead>
           <Tbody>
             {users.map((user, index) => (
-              <Tr key={user.id} _hover={{ bg: "gray.50" }}>
+              <Tr
+                key={user.id}
+                _hover={{ bg: hoverBgColor }}
+                transition="background-color 0.2s"
+              >
                 <Td>
                   <Flex align="center">
                     <Text fontWeight="bold" mr={2}>

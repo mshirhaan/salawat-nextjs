@@ -29,9 +29,17 @@ const float = keyframes`
 `;
 
 export default function Home() {
-  const bgColor = useColorModeValue("green.50", "green.900");
-  const textColor = useColorModeValue("green.800", "green.100");
-  const accentColor = useColorModeValue("green.600", "green.300");
+  // Updated color scheme to match Leaderboard
+  const bgColor = useColorModeValue("gray.50", "gray.900");
+  const cardBgColor = useColorModeValue("white", "gray.800");
+  const textColor = useColorModeValue("gray.800", "white");
+  const headingColor = useColorModeValue("#5d4037", "#d7ccc8");
+  const gradientBg = useColorModeValue(
+    "linear-gradient(to right, #f2e6d9, #e6ccb3)",
+    "linear-gradient(to right, #3e2723, #4e342e)"
+  );
+  const mutedTextColor = useColorModeValue("gray.600", "gray.400");
+  const accentColor = useColorModeValue("teal.600", "teal.300");
 
   return (
     <Box bg={bgColor} minH="100vh" overflow="hidden" position="relative">
@@ -50,7 +58,7 @@ export default function Home() {
             <Heading
               as={motion.h1}
               size="2xl"
-              color={textColor}
+              color={headingColor}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
             >
@@ -81,7 +89,7 @@ export default function Home() {
             </Text>
             <Text
               fontSize={{ base: "md", md: "lg" }}
-              color={accentColor}
+              color={mutedTextColor}
               fontStyle="italic"
               as={motion.p}
               initial={{ opacity: 0, y: -10 }}

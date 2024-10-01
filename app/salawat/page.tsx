@@ -31,6 +31,7 @@ import {
   useToast,
   Progress,
   Badge,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { InfoIcon, EditIcon } from "@chakra-ui/icons";
@@ -39,6 +40,7 @@ import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase"; // Adjust the import path as needed
 import { useAuth } from "@/contexts/AuthContext";
 import Joyride, { CallBackProps, STATUS, Step } from "react-joyride"; // Import Joyride
+import React from "react";
 
 interface SalawatLine {
   arabic: string;
@@ -110,6 +112,17 @@ export default function HomePage() {
   const headingSize = useBreakpointValue({ base: "xl", md: "2xl" });
   const itemPadding = useBreakpointValue({ base: 4, md: 6 });
   const itemBorderRadius = useBreakpointValue({ base: "md", md: "lg" });
+
+  const bgColor = useColorModeValue("gray.50", "gray.900");
+  const cardBgColor = useColorModeValue("white", "gray.800");
+  const textColor = useColorModeValue("gray.800", "white");
+  const headingColor = useColorModeValue("#5d4037", "#d7ccc8");
+  const gradientBg = useColorModeValue(
+    "linear-gradient(to right, #f2e6d9, #e6ccb3)",
+    "linear-gradient(to right, #3e2723, #4e342e)"
+  );
+  const hoverBgColor = useColorModeValue(colors.teal[50], colors.teal[900]);
+  const mutedTextColor = useColorModeValue("gray.600", "gray.400");
 
   useEffect(() => {
     async function fetchSalawatList() {
@@ -287,7 +300,7 @@ export default function HomePage() {
   };
 
   return (
-    <Box p={5} bg="gray.50" minHeight="100vh">
+    <Box p={5} bg={bgColor} minHeight="100vh">
       <Joyride
         steps={tourSteps}
         continuous
@@ -304,7 +317,7 @@ export default function HomePage() {
       />
 
       <Box
-        bg="linear-gradient(to right, #f2e6d9, #e6ccb3)"
+        bg={gradientBg}
         py={12} // Increased vertical padding
         px={6} // Added horizontal padding
         mb={8}
@@ -329,7 +342,7 @@ export default function HomePage() {
           as="h1"
           size={headingSize}
           textAlign="center"
-          color="#5d4037"
+          color={headingColor}
           fontWeight="bold"
           fontFamily="'Amiri', serif"
           position="relative"
@@ -346,7 +359,7 @@ export default function HomePage() {
 
         <Text
           textAlign="center"
-          color="#ffffff"
+          color={textColor}
           mt={4} // Adjusted margin top for spacing
           fontSize="lg"
           fontWeight="medium"
@@ -365,7 +378,7 @@ export default function HomePage() {
           onChange={(e) => setSearchQuery(e.target.value)}
           size="lg"
           variant="outline"
-          bg="white"
+          bg={cardBgColor}
           className="search-input"
         />
       </Box>
@@ -392,11 +405,11 @@ export default function HomePage() {
                   p={itemPadding}
                   borderWidth={1}
                   borderRadius={itemBorderRadius}
-                  bg="white"
+                  bg={cardBgColor}
                   boxShadow="md"
                   _hover={{
                     boxShadow: "lg",
-                    bg: colors.teal[50],
+                    bg: hoverBgColor,
                     transform: "scale(1.02)",
                     transition: "all 0.3s ease",
                   }}
@@ -406,17 +419,17 @@ export default function HomePage() {
                 >
                   <HStack justify="space-between">
                     <Box>
-                      <Heading size="md" mb={1}>
+                      <Heading size="md" mb={1} color={textColor}>
                         {salawat.title}
                       </Heading>
                       {salawat.description && (
-                        <Text fontSize="sm" color="gray.600">
+                        <Text fontSize="sm" color={mutedTextColor}>
                           {salawat.description}
                         </Text>
                       )}
                       <Text
                         fontSize="md"
-                        color="gray.800"
+                        color={textColor}
                         fontFamily="'Uthmanic', 'Amiri', serif"
                         dir="rtl"
                         noOfLines={1}
@@ -518,7 +531,10 @@ export default function HomePage() {
             >
               <NumberInputField placeholder="Daily Target" />
             </NumberInput>
-            <Text fontSize="sm" color="gray.500">
+            <Text
+              fontSize="sm"
+              color={useColorModeValue("gray.500", "gray.400")}
+            >
               Set a daily target for {selectedSalawat?.title}. This will help
               track your progress.
             </Text>
