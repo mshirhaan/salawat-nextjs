@@ -285,7 +285,7 @@ function Dashboard() {
           sm: "repeat(2, 1fr)",
           md: "repeat(3, 1fr)",
         }}
-        gap={{ base: 3, md: 6 }}
+        gap={{ base: 8, md: 6 }}
       >
         {userData?.salawatCounts &&
           Object.entries(userData.salawatCounts).map(([salawatId, count]) => (
