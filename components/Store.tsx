@@ -11,9 +11,9 @@ import {
   Grid,
   Stack,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import { buyPlant, buyLand } from "@/lib/garden";
-import { FaCoins } from "react-icons/fa";
+import { buyLand } from "@/lib/garden";
 import { GiTwoCoins } from "react-icons/gi";
 
 export default function Store({ userId }: { userId: string }) {
@@ -21,6 +21,14 @@ export default function Store({ userId }: { userId: string }) {
   const [userPlants, setUserPlants] = useState<
     Array<{ plantId: string; name: string; quantity: number }>
   >([]);
+
+  // Theme colors
+  const bgColor = useColorModeValue("gray.50", "gray.900");
+  const cardBgColor = useColorModeValue("white", "gray.800");
+  const textColor = useColorModeValue("gray.800", "white");
+  const mutedTextColor = useColorModeValue("gray.600", "gray.400");
+  const headingColor = useColorModeValue("teal.600", "teal.300");
+  const buttonColorScheme = useColorModeValue("teal", "teal");
 
   const plantsForSale = [
     { plantId: "rose", name: "Rose", price: 1000 },
@@ -133,14 +141,14 @@ export default function Store({ userId }: { userId: string }) {
   }, [loadStoreData]);
 
   return (
-    <VStack spacing={8} p={6} bg="gray.100" borderRadius="lg" boxShadow="lg">
+    <VStack spacing={8} p={6} bg={bgColor} borderRadius="lg" boxShadow="lg">
       <Stack spacing={4} align="center">
-        <Text fontSize="3xl" fontWeight="bold" color="teal.600">
+        <Text fontSize="3xl" fontWeight="bold" color={headingColor}>
           Store
         </Text>
         <Text
           fontSize="3xl"
-          color="gray.700"
+          color={textColor}
           display="flex"
           alignItems="center"
         >
@@ -148,7 +156,9 @@ export default function Store({ userId }: { userId: string }) {
           <GiTwoCoins color="gold" style={{ marginRight: "8px" }} />
           <strong>{storePoints}</strong>
         </Text>
-        <Text alignItems="center">1 salawat recitation earns you 1 point</Text>
+        <Text color={mutedTextColor} alignItems="center">
+          1 salawat recitation earns you 1 point
+        </Text>
       </Stack>
 
       <Grid
@@ -160,7 +170,7 @@ export default function Store({ userId }: { userId: string }) {
           <Box
             key={plant.plantId}
             p={4}
-            bg="white"
+            bg={cardBgColor}
             borderRadius="md"
             boxShadow="md"
             textAlign="center"
@@ -177,14 +187,14 @@ export default function Store({ userId }: { userId: string }) {
                 objectFit="contain"
               />
             </Box>
-            <Text fontSize="xl" fontWeight="semibold" mb={1}>
+            <Text fontSize="xl" fontWeight="semibold" mb={1} color={textColor}>
               {plant.name}
             </Text>
-            <Text color="gray.600" mb={2}>
+            <Text color={mutedTextColor} mb={2}>
               Price: {plant.price} points
             </Text>
             <Button
-              colorScheme="teal"
+              colorScheme={buttonColorScheme}
               onClick={() => handleBuyPlant(plant.plantId, plant.price)}
             >
               Buy
@@ -194,7 +204,7 @@ export default function Store({ userId }: { userId: string }) {
 
         <Box
           p={4}
-          bg="white"
+          bg={cardBgColor}
           borderRadius="md"
           boxShadow="md"
           textAlign="center"
@@ -211,10 +221,10 @@ export default function Store({ userId }: { userId: string }) {
               objectFit="contain"
             />
           </Box>
-          <Text fontSize="xl" fontWeight="semibold" mb={1}>
+          <Text fontSize="xl" fontWeight="semibold" mb={1} color={textColor}>
             Land
           </Text>
-          <Text color="gray.600" mb={2}>
+          <Text color={mutedTextColor} mb={2}>
             Price: {landPrice} points
           </Text>
           <Button colorScheme="blue" onClick={handleBuyLand}>
@@ -224,7 +234,7 @@ export default function Store({ userId }: { userId: string }) {
       </Grid>
 
       <Box w="full">
-        <Text fontSize="lg" mb={2}>
+        <Text fontSize="lg" mb={2} color={textColor}>
           Your Plants
         </Text>
         <Grid
@@ -237,7 +247,7 @@ export default function Store({ userId }: { userId: string }) {
               <Box
                 key={plant.plantId}
                 p={4}
-                bg="white"
+                bg={cardBgColor}
                 borderRadius="md"
                 boxShadow="md"
                 textAlign="center"
@@ -254,14 +264,19 @@ export default function Store({ userId }: { userId: string }) {
                     objectFit="contain"
                   />
                 </Box>
-                <Text fontSize="xl" fontWeight="semibold" mb={1}>
+                <Text
+                  fontSize="xl"
+                  fontWeight="semibold"
+                  mb={1}
+                  color={textColor}
+                >
                   {plant.name}
                 </Text>
-                <Text color="gray.600">Quantity: {plant.quantity}</Text>
+                <Text color={mutedTextColor}>Quantity: {plant.quantity}</Text>
               </Box>
             ))
           ) : (
-            <Text textAlign="center" color="gray.600">
+            <Text textAlign="center" color={mutedTextColor}>
               You don&apos;t have any plants yet.
             </Text>
           )}
