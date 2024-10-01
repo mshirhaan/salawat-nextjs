@@ -110,9 +110,13 @@ function Dashboard() {
   const [isTourOpen, setIsTourOpen] = useState(false);
 
   const bgColor = useColorModeValue("gray.50", "gray.900");
-  const cardBgColor = useColorModeValue("white", "gray.700");
-  const textColor = useColorModeValue("gray.800", "gray.100");
+  const cardBgColor = useColorModeValue("white", "gray.800");
+  const progressCardBgColor = useColorModeValue("gray.100", "gray.700");
+  const textColor = useColorModeValue("gray.800", "gray.200");
   const highlightColor = useColorModeValue("teal.500", "teal.300");
+  const streakBgColor = useColorModeValue("blue.50", "blue.900");
+  const streakTextColor = useColorModeValue("blue.800", "blue.200");
+  const progressBarColor = useColorModeValue("green.400", "green.600");
 
   useEffect(() => {
     if (user && !user.emailVerified) {
@@ -172,7 +176,7 @@ function Dashboard() {
   const levelSection = (
     <Box
       p={6}
-      bgGradient="linear(to-r, #f7fafc, #edf2f7)"
+      bg={cardBgColor} // Solid background color
       borderRadius="lg"
       boxShadow="2xl"
       textAlign="center"
@@ -203,7 +207,7 @@ function Dashboard() {
         </HStack>
         <Progress
           value={progressPercent}
-          colorScheme="green"
+          colorScheme="teal"
           size="lg"
           width="100%"
           borderRadius="lg"
@@ -226,7 +230,7 @@ function Dashboard() {
     <>
       <Box
         p={4}
-        bg="blue.50"
+        bg={streakBgColor}
         borderRadius="md"
         textAlign="center"
         borderWidth="1px"
@@ -234,11 +238,11 @@ function Dashboard() {
         boxShadow="md"
         className="streak-section"
       >
-        <Text fontSize="lg" color="blue.800" fontWeight="bold" mb={2}>
+        <Text fontSize="lg" color={streakTextColor} fontWeight="bold" mb={2}>
           <Icon as={FaFire} boxSize={5} color="red.500" /> Keep your streak
           going!
         </Text>
-        <Text fontSize="md" color="blue.700">
+        <Text fontSize="md" color={streakTextColor}>
           Your streak is based on daily recitations. Don’t miss a day to keep
           your streak going strong!
         </Text>
@@ -285,7 +289,12 @@ function Dashboard() {
       >
         {userData?.salawatCounts &&
           Object.entries(userData.salawatCounts).map(([salawatId, count]) => (
-            <GridItem key={salawatId} bg="gray.100" p={4} borderRadius="lg">
+            <GridItem
+              key={salawatId}
+              bg={progressCardBgColor}
+              p={4}
+              borderRadius="lg"
+            >
               <Text fontSize="lg" color={textColor} fontWeight="bold">
                 {salawatNames[salawatId] || salawatId}
               </Text>
