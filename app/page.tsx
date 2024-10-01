@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 import { FaHeart } from "react-icons/fa";
 import SalawatGardenAnnouncement from "@/components/SalawatGardenAnnouncement";
 import EidMiladBanner from "@/components/EidMiladBanner";
+import DarkModeAnnouncement from "@/components/DarkModeAnnouncement";
 
 // Define Chakra motion for floating effects
 const MotionBox = motion(Box);
@@ -45,6 +46,7 @@ export default function Home() {
     <Box bg={bgColor} minH="100vh" overflow="hidden" position="relative">
       {/* Eid Milad Un Nabi Banner */}
       <EidMiladBanner />
+      <DarkModeAnnouncement />
       {/* Main Container */}
       <Container maxW="container.xl" py={10}>
         <Flex
