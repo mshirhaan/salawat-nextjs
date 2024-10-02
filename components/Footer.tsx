@@ -13,6 +13,11 @@ export default function Footer() {
         © {new Date().getFullYear()} Salawat App. All rights reserved.
       </Text>
       <Text textAlign="center">by Asswuffah Foundation</Text>
+
+      {/* Date Display with Better Wording */}
+      <Text textAlign="center" mt={2} fontSize="lg" color={textColor}>
+        Launched on 1 Rabiul Awwal 1446 / 4th September 2024
+      </Text>
     </Box>
   );
 }
