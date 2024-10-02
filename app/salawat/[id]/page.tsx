@@ -626,17 +626,6 @@ function SalawatPage({ params }: { params: { id: string } }) {
         {salawat.lines.map((line, index) => (
           <Box key={index} mb={6}>
             {renderArabicTextWithTooltips(line.arabic, line.words)}
-            {showTranslation && (
-              <Text
-                mb={4}
-                fontSize={`${translationFontSize}px`}
-                color="gray.200"
-                textAlign="center"
-                className="salawat-translation"
-              >
-                {line.translations[language]}
-              </Text>
-            )}
 
             {showTransliteration && line.transliteration && (
               <Text
@@ -647,6 +636,18 @@ function SalawatPage({ params }: { params: { id: string } }) {
                 className="salawat-transliteration"
               >
                 {line.transliteration}
+              </Text>
+            )}
+
+            {showTranslation && (
+              <Text
+                mb={4}
+                fontSize={`${translationFontSize}px`}
+                color="gray.200"
+                textAlign="center"
+                className="salawat-translation"
+              >
+                {line.translations[language]}
               </Text>
             )}
 
