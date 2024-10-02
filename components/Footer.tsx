@@ -16,7 +16,7 @@ export default function Footer() {
 
       {/* Date Display with Better Wording */}
       <Text textAlign="center" mt={2} fontSize="lg" color={textColor}>
-        Launched on 1 Rabiul Awwal 1446 / 4th September 2024
+        Launched on 1st Rabiul Awwal 1446 / 4th September 2024
       </Text>
     </Box>
   );
