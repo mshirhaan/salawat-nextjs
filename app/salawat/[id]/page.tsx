@@ -251,7 +251,14 @@ function SalawatPage({ params }: { params: { id: string } }) {
     const savedTranslationFontSize = localStorage.getItem(
       "translationFontSize"
     );
+    const savedTransliterationFontSize = localStorage.getItem(
+      "transliterationFontSize"
+    );
     const savedShowTranslation = localStorage.getItem("showTranslation");
+
+    const savedShowTransliteration = localStorage.getItem(
+      "showTransliteration"
+    );
 
     const savedCounterButtonSize = localStorage.getItem("counterButtonSize");
 
@@ -261,8 +268,15 @@ function SalawatPage({ params }: { params: { id: string } }) {
     if (savedTranslationFontSize) {
       setTranslationFontSize(parseInt(savedTranslationFontSize));
     }
+    if (savedTransliterationFontSize) {
+      setTransliterationFontSize(parseInt(savedTransliterationFontSize));
+    }
     if (savedShowTranslation) {
       setShowTranslation(savedShowTranslation === "true");
+    }
+
+    if (savedShowTransliteration) {
+      setShowTransliteration(savedShowTransliteration === "true");
     }
 
     if (savedCounterButtonSize) {
