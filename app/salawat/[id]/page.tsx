@@ -52,6 +52,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { withAuth } from "@/components/withAuth";
 import { SettingsIcon } from "@chakra-ui/icons";
+import TransliterationAnnouncement from "@/components/TransliterationAnnouncement";
 interface SalawatWord {
   word: string;
   translations: { [key: string]: string };
@@ -391,6 +392,7 @@ function SalawatPage({ params }: { params: { id: string } }) {
 
   return (
     <Box position="relative" minHeight="100vh" overflow="hidden">
+      <TransliterationAnnouncement />
       {/* Video Background */}
       {/* <video
         autoPlay
