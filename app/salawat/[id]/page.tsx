@@ -61,6 +61,7 @@ interface SalawatLine {
   arabic: string;
   translations: { [key: string]: string };
   words: SalawatWord[];
+  transliteration?: string;
 }
 
 interface SalawatData {
@@ -238,8 +239,10 @@ function SalawatPage({ params }: { params: { id: string } }) {
   const [imageIndex, setImageIndex] = useState(0);
   const [isTourOpen, setIsTourOpen] = useState(false); // State to control the tour
   const [showTranslation, setShowTranslation] = useState(true); // Controls translation visibility
+  const [showTransliteration, setShowTransliteration] = useState(true);
   const [arabicFontSize, setArabicFontSize] = useState(24); // Arabic font size
   const [translationFontSize, setTranslationFontSize] = useState(16); // Translation font size
+  const [transliterationFontSize, setTransliterationFontSize] = useState(16);
   const [counterButtonSize, setCounterButtonSize] = useState(90); // Counter button size
 
   // Load settings from localStorage on page load
@@ -476,6 +479,29 @@ function SalawatPage({ params }: { params: { id: string } }) {
                 </Slider>
               </Box>
 
+              {/* Transliteration Font Size Slider */}
+              <Box>
+                <FormLabel>Transliteration Font Size</FormLabel>
+                <Slider
+                  defaultValue={transliterationFontSize}
+                  min={12}
+                  max={32}
+                  step={1}
+                  onChange={(val) => {
+                    setTransliterationFontSize(val);
+                    localStorage.setItem(
+                      "transliterationFontSize",
+                      val.toString()
+                    );
+                  }}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+              </Box>
+
               {/* Toggle Translation Visibility */}
               <Box>
                 <FormLabel>Show Translation</FormLabel>
@@ -485,6 +511,21 @@ function SalawatPage({ params }: { params: { id: string } }) {
                     setShowTranslation(e.target.checked);
                     localStorage.setItem(
                       "showTranslation",
+                      e.target.checked.toString()
+                    );
+                  }}
+                />
+              </Box>
+
+              {/* Toggle Transliteration Visibility */}
+              <Box>
+                <FormLabel>Show Transliteration</FormLabel>
+                <Switch
+                  isChecked={showTransliteration}
+                  onChange={(e) => {
+                    setShowTransliteration(e.target.checked);
+                    localStorage.setItem(
+                      "showTransliteration",
                       e.target.checked.toString()
                     );
                   }}
@@ -580,6 +621,19 @@ function SalawatPage({ params }: { params: { id: string } }) {
                 {line.translations[language]}
               </Text>
             )}
+
+            {showTransliteration && line.transliteration && (
+              <Text
+                mb={4}
+                fontSize={`${transliterationFontSize}px`}
+                color="gray.300"
+                textAlign="center"
+                className="salawat-transliteration"
+              >
+                {line.transliteration}
+              </Text>
+            )}
+
             {index < salawat.lines.length - 1 && (
               <Divider my={4} borderColor="gray.200" />
             )}
