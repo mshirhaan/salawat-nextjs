@@ -130,6 +130,16 @@ const GlobalSalawatCount: React.FC = () => {
           </Box>
         </Text>
       )}
+
+      {/* Beautiful Date Display */}
+      <Text
+        fontSize="lg"
+        color="whiteAlpha.800"
+        mt={4}
+        textShadow="0 1px 3px rgba(0, 0, 0, 0.3)"
+      >
+        Since 1st Rabiul Awwal 1446 / 4th September 2024
+      </Text>
     </Box>
   );
 };
