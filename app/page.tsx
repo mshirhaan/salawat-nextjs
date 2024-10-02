@@ -79,8 +79,6 @@ export default function Home() {
               practice of reciting Salawat.
             </Text>
 
-            <GlobalSalawatCount />
-
             <Text
               fontSize={{ base: "md", md: "x-large" }}
               color={accentColor}
@@ -117,6 +115,8 @@ export default function Home() {
             >
               Start Reciting Salawat
             </Button>
+
+            <GlobalSalawatCount />
           </VStack>
           <Box flex={1} mt={{ base: 12, lg: 0 }} maxW="400px">
             <MotionBox
