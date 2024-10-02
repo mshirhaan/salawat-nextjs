@@ -116,7 +116,9 @@ export default function Home() {
               Start Reciting Salawat
             </Button>
 
-            <GlobalSalawatCount />
+            <Box position="relative">
+              <GlobalSalawatCount />
+            </Box>
           </VStack>
           <Box flex={1} mt={{ base: 12, lg: 0 }} maxW="400px">
             <MotionBox
