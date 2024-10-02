@@ -12,7 +12,6 @@ import {
 import { FaGlobe } from "react-icons/fa"; // Icon for global representation
 import { collection, getDocs } from "firebase/firestore"; // Firestore import
 import { db } from "@/lib/firebase";
-import { motion } from "framer-motion"; // For animation
 import CountUp from "react-countup"; // For animated counting
 
 const GlobalSalawatCount: React.FC = () => {
@@ -64,35 +63,10 @@ const GlobalSalawatCount: React.FC = () => {
       maxW="xl"
       mx="auto"
       position="relative"
-      as={motion.div}
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition="all 0.6s ease-in-out"
-      _hover={{ transform: "scale(1.02)", transition: "all 0.3s ease-in-out" }}
       overflow="hidden"
     >
-      {/* Subtle moving background animation */}
-      <Box
-        position="absolute"
-        top={-40}
-        right={-40}
-        bg="rgba(255, 255, 255, 0.1)"
-        boxSize="300px"
-        borderRadius="full"
-        filter="blur(100px)"
-        as={motion.div}
-        animate={{ rotate: 360 }}
-      />
-
       {/* Globe Icon */}
-      <Icon
-        as={FaGlobe}
-        boxSize={14}
-        color="whiteAlpha.800"
-        mb={6}
-        _hover={{ color: "white", transform: "rotate(15deg)" }}
-        transition="all 0.4s ease"
-      />
+      <Icon as={FaGlobe} boxSize={14} color="whiteAlpha.800" mb={6} />
 
       {/* Title with refined shadow */}
       <Heading
@@ -115,8 +89,6 @@ const GlobalSalawatCount: React.FC = () => {
           mt={6}
           textShadow="0 2px 4px rgba(0, 0, 0, 0.3)"
           letterSpacing="widest"
-          as={motion.div}
-          whileHover={{ scale: 1.05 }}
         >
           {/* Animated Counter */}
           {totalSalawat ? (
@@ -138,7 +110,7 @@ const GlobalSalawatCount: React.FC = () => {
         mt={4}
         textShadow="0 1px 3px rgba(0, 0, 0, 0.3)"
       >
-        Since 1st Rabiul Awwal 1446 / 4th September 2024
+        Established on 1st Rabiul Awwal 1446 / 4th September 2024
       </Text>
     </Box>
   );
