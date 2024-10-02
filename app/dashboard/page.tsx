@@ -44,6 +44,7 @@ import { badgeConfigs } from "../badgeConfigs";
 import { calculateXpToNextLevel } from "@/utils/dashboardUtils";
 import { GiLaurelsTrophy } from "react-icons/gi";
 import { withAuth } from "@/components/withAuth";
+import React from "react";
 
 interface UserData {
   email: string;

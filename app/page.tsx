@@ -19,6 +19,7 @@ import { FaHeart } from "react-icons/fa";
 import SalawatGardenAnnouncement from "@/components/SalawatGardenAnnouncement";
 import EidMiladBanner from "@/components/EidMiladBanner";
 import DarkModeAnnouncement from "@/components/DarkModeAnnouncement";
+import GlobalSalawatCount from "@/components/GlobalSalawatCount";
 
 // Define Chakra motion for floating effects
 const MotionBox = motion(Box);
@@ -77,6 +78,9 @@ export default function Home() {
               Embrace the love for Prophet Muhammad ﷺ through the blessed
               practice of reciting Salawat.
             </Text>
+
+            <GlobalSalawatCount />
+
             <Text
               fontSize={{ base: "md", md: "x-large" }}
               color={accentColor}
