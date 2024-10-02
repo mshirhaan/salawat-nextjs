@@ -243,7 +243,7 @@ function SalawatPage({ params }: { params: { id: string } }) {
   const [arabicFontSize, setArabicFontSize] = useState(24); // Arabic font size
   const [translationFontSize, setTranslationFontSize] = useState(16); // Translation font size
   const [transliterationFontSize, setTransliterationFontSize] = useState(16);
-  const [counterButtonSize, setCounterButtonSize] = useState(92); // Counter button size
+  const [counterButtonSize, setCounterButtonSize] = useState(90); // Counter button size
 
   // Load settings from localStorage on page load
   useEffect(() => {
