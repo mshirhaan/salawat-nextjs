@@ -13,6 +13,8 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { FirebaseError } from "firebase/app";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -28,7 +30,42 @@ export default function Login() {
     setLoading(true);
     setError("");
     try {
-      await login(email, password);
+      const userCredential = await login(email, password);
+      const user = userCredential.user;
+
+      // Check if Firestore document exists
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (!userDoc.exists()) {
+        // Recreate Firestore document if missing
+        await setDoc(userDocRef, {
+          email: user.email,
+          name: user.email,
+          emailVerified: false,
+          totalCount: 0,
+          salawatCounts: {},
+          recitationLogs: [], // Field for recitation logs
+          currentStreak: 0, // Field for current streak
+          highestStreak: 0, // Field for highest streak
+          dailySalawatCounts: {}, // New field for daily Salawat counts
+          weeklySalawatCounts: {}, // New field for weekly Salawat counts
+          monthlySalawatCounts: {}, // New field for monthly Salawat counts
+          lastRecitationDate: null, // New field to track the last recitation date
+          badges: [],
+          level: 1, // Starting level
+          xp: 0, // Starting XP
+          myGarden: {
+            gridSize: 3, // Initial 3x3 grid size
+            plants: [], // List of plants placed in the garden
+          },
+          myPlants: [
+            { plantId: "rose", name: "Rose", quantity: 1 },
+            { plantId: "tulip", name: "Tulip", quantity: 1 },
+          ],
+        });
+      }
+
       toast({
         title: "Login successful",
         status: "success",
