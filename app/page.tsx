@@ -45,9 +45,6 @@ export default function Home() {
 
   return (
     <Box bg={bgColor} minH="100vh" overflow="hidden" position="relative">
-      {/* Eid Milad Un Nabi Banner */}
-      <EidMiladBanner />
-      <DarkModeAnnouncement />
       {/* Main Container */}
       <Container maxW="container.xl" py={10}>
         <Flex

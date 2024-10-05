@@ -399,7 +399,6 @@ function SalawatPage({ params }: { params: { id: string } }) {
 
   return (
     <Box position="relative" minHeight="100vh" overflow="hidden">
-      <TransliterationAnnouncement />
       {/* Video Background */}
       {/* <video
         autoPlay
@@ -681,7 +680,11 @@ function SalawatPage({ params }: { params: { id: string } }) {
 
         {/* Improved Button with Vibration */}
         <Suspense fallback={<div>Loading counter...</div>}>
-          <ClientSideCounter salawatId={params.id} size={counterButtonSize} enableSound={enableSound} />
+          <ClientSideCounter
+            salawatId={params.id}
+            size={counterButtonSize}
+            enableSound={enableSound}
+          />
         </Suspense>
       </Box>
 
