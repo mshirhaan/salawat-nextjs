@@ -245,6 +245,7 @@ function SalawatPage({ params }: { params: { id: string } }) {
   const [translationFontSize, setTranslationFontSize] = useState(16); // Translation font size
   const [transliterationFontSize, setTransliterationFontSize] = useState(16);
   const [counterButtonSize, setCounterButtonSize] = useState(90); // Counter button size
+  const [enableSound, setEnableSound] = useState(true); // Enable sound
 
   // Load settings from localStorage on page load
   useEffect(() => {
@@ -262,6 +263,8 @@ function SalawatPage({ params }: { params: { id: string } }) {
     );
 
     const savedCounterButtonSize = localStorage.getItem("counterButtonSize");
+
+    const savedEnableSound = localStorage.getItem("enableSound");
 
     if (savedArabicFontSize) {
       setArabicFontSize(parseInt(savedArabicFontSize));
@@ -282,6 +285,10 @@ function SalawatPage({ params }: { params: { id: string } }) {
 
     if (savedCounterButtonSize) {
       setCounterButtonSize(parseInt(savedCounterButtonSize));
+    }
+
+    if (savedEnableSound) {
+      setEnableSound(savedEnableSound === "true");
     }
   }, []);
 
@@ -547,6 +554,21 @@ function SalawatPage({ params }: { params: { id: string } }) {
                   }}
                 />
               </Box>
+
+              {/* Toggle Sound Enable */}
+              <Box>
+                <FormLabel>Enable Sound</FormLabel>
+                <Switch
+                  isChecked={enableSound}
+                  onChange={(e) => {
+                    setEnableSound(e.target.checked);
+                    localStorage.setItem(
+                      "enableSound",
+                      e.target.checked.toString()
+                    );
+                  }}
+                />
+              </Box>
             </Stack>
           </DrawerBody>
         </DrawerContent>
@@ -659,7 +681,7 @@ function SalawatPage({ params }: { params: { id: string } }) {
 
         {/* Improved Button with Vibration */}
         <Suspense fallback={<div>Loading counter...</div>}>
-          <ClientSideCounter salawatId={params.id} size={counterButtonSize} />
+          <ClientSideCounter salawatId={params.id} size={counterButtonSize} enableSound={enableSound} />
         </Suspense>
       </Box>
 

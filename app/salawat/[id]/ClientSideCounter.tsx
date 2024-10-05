@@ -29,6 +29,7 @@ import { useNotification } from "@/contexts/NotificationContext";
 interface ClientSideCounterProps {
   salawatId: string;
   size: number;
+  enableSound?: boolean; // New prop for enabling/disabling sound
 }
 
 function getDayId(date: Date): string {
@@ -62,6 +63,7 @@ function getWeekNumber(date: Date): number {
 export default function ClientSideCounter({
   salawatId,
   size,
+  enableSound,
 }: ClientSideCounterProps) {
   const [totalCount, setTotalCount] = useState(0);
   const [dailyCount, setDailyCount] = useState(0);
@@ -74,7 +76,8 @@ export default function ClientSideCounter({
   const toast = useToast(); // Chakra UI toast for notifications
 
   const lastClickTime = useRef<number>(0);
-  const debounceDelay = 1000; // 1 second debounce delay
+  const debounceDelay = 1000;
+  const clickSoundRef = useRef<HTMLAudioElement | null>(null); // Ref for the click sound
 
   // Theme-aware color values
   const bgColor = useColorModeValue("white", "gray.800");
@@ -161,6 +164,11 @@ export default function ClientSideCounter({
         navigator.vibrate(100);
       }
 
+      // Play the click sound
+      if (enableSound && clickSoundRef.current) {
+        clickSoundRef.current.play();
+      }
+
       const newTotalCount = totalCount + 1;
       setTotalCount(newTotalCount);
       setDailyCount(dailyCount + 1);
@@ -200,6 +208,9 @@ export default function ClientSideCounter({
       justifyContent="center"
     >
       <VStack spacing={2}>
+        {/* Add hidden audio element */}
+        <audio ref={clickSoundRef} src="/click-sound.mp3" preload="auto" />
+
         <Button
           onClick={handleCount}
           size="lg"
