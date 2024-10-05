@@ -14,16 +14,16 @@ import {
 } from "@chakra-ui/react";
 import { InfoIcon } from "@chakra-ui/icons";
 
-const TransliterationAnnouncement = () => {
+const SoundAnnouncement = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const hasSeenAnnouncement = localStorage.getItem(
-      "hasSeenTransliterationAnnouncement"
+      "hasSeenSoundAnnouncement"
     );
     if (!hasSeenAnnouncement) {
       setIsOpen(true);
-      localStorage.setItem("hasSeenTransliterationAnnouncement", "true");
+      localStorage.setItem("hasSeenSoundAnnouncement", "true");
     }
   }, []);
 
@@ -39,28 +39,25 @@ const TransliterationAnnouncement = () => {
       <ModalOverlay />
       <ModalContent bg={bgColor}>
         <ModalHeader color={headerColor} fontSize="2xl" fontWeight="bold">
-          New Transliteration Feature!
+          New Sound Feature!
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <VStack spacing={4} align="stretch">
             <Text fontSize="lg" color={textColor}>
-              We&apos;re excited to introduce our new Transliteration feature!
+              We&apos;re thrilled to introduce our new Sound feature!
             </Text>
             <Text color={textColor}>Now you can:</Text>
             <ul style={{ listStyleType: "disc", paddingLeft: "20px" }}>
+              <li>Enjoy sound notifications for each Salawat recitation.</li>
+              <li>Enhance your engagement with auditory feedback.</li>
               <li>
-                Read Salawat in Arabic with proper pronunciation even if
-                you&apos;re unfamiliar with the script
-              </li>
-              <li>Enhance your recitation experience</li>
-              <li>
-                You can hide or show it from the settings by clicking on the
-                settings icon in top right
+                You can toggle sound on or off from the settings by clicking on
+                the settings icon in the top right.
               </li>
             </ul>
             <Text fontStyle="italic" color={headerColor}>
-              Customize your learning experience with ease!
+              Customize your recitation experience with sound!
             </Text>
           </VStack>
         </ModalBody>
@@ -70,7 +67,7 @@ const TransliterationAnnouncement = () => {
             colorScheme={buttonColorScheme}
             leftIcon={<InfoIcon />}
           >
-            Explore Transliteration
+            Explore Sound Features
           </Button>
         </ModalFooter>
       </ModalContent>
@@ -78,4 +75,4 @@ const TransliterationAnnouncement = () => {
   );
 };
 
-export default TransliterationAnnouncement;
+export default SoundAnnouncement;
