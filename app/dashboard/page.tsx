@@ -119,6 +119,7 @@ function Dashboard() {
   const streakBgColor = useColorModeValue("blue.50", "blue.900");
   const streakTextColor = useColorModeValue("blue.800", "blue.200");
   const progressBarColor = useColorModeValue("green.400", "green.600");
+  const progressBorderColor = useColorModeValue("gray.300", "gray.600");
 
   useEffect(() => {
     if (user && !user.emailVerified) {
@@ -277,35 +278,56 @@ function Dashboard() {
   );
 
   const dailyProgressSection = (
-    <VStack spacing={6} align="stretch">
-      <Heading color={textColor} size="md">
+    <VStack spacing={8} align="stretch">
+      {/* Heading */}
+      <Heading color={textColor} size="lg" textAlign="center" mb={4}>
         Today&apos;s Salawat Recitations
       </Heading>
 
-      {/* Display total count first */}
+      {/* Total Count with Radial Progress */}
       {userData?.dailySalawatCounts?.[dayId]?.totalCount && (
         <Box
           bg={progressCardBgColor}
-          p={4}
+          p={6}
           borderRadius="lg"
           textAlign="center"
-          mb={4}
+          mb={8}
+          shadow="md"
+          border="1px"
+          borderColor={progressBorderColor} // Use the border color here
         >
-          <Text fontSize="xl" color={textColor} fontWeight="bold">
-            Total Salawat Today:{" "}
-            {Number(userData.dailySalawatCounts[dayId].totalCount)}
+          {/* Radial Progress Bar */}
+          <CircularProgress
+            value={Math.min(
+              Number(userData.dailySalawatCounts[dayId].totalCount),
+              100
+            )} // Cap at 100 for visual effect
+            size="120px"
+            color={progressBarColor} // Use dynamic color based on mode
+            thickness="12px"
+          >
+            <CircularProgressLabel
+              fontSize="2xl"
+              fontWeight="bold"
+              color={textColor}
+            >
+              {Number(userData.dailySalawatCounts[dayId].totalCount)}
+            </CircularProgressLabel>
+          </CircularProgress>
+          <Text fontSize="lg" color={textColor} mt={4}>
+            Total Salawat Today
           </Text>
         </Box>
       )}
 
-      {/* Display individual salawat counts */}
+      {/* Individual Salawat Counts */}
       <Grid
         templateColumns={{
           base: "repeat(1, 1fr)",
           sm: "repeat(2, 1fr)",
           md: "repeat(3, 1fr)",
         }}
-        gap={{ base: 8, md: 6 }}
+        gap={{ base: 6, md: 8 }}
       >
         {userData?.dailySalawatCounts?.[dayId] &&
           Object.entries(userData.dailySalawatCounts[dayId])
@@ -314,10 +336,23 @@ function Dashboard() {
               <GridItem
                 key={salawatId}
                 bg={progressCardBgColor}
-                p={4}
+                p={6}
                 borderRadius="lg"
+                shadow="sm"
+                border="1px"
+                borderColor={progressBorderColor} // Use the same border color for consistency
+                transition="all 0.2s ease-in-out"
+                _hover={{
+                  transform: "scale(1.05)",
+                  shadow: "lg",
+                }}
               >
-                <Text fontSize="lg" color={textColor} fontWeight="bold">
+                <Text
+                  fontSize="lg"
+                  color={textColor}
+                  fontWeight="semibold"
+                  mb={2}
+                >
                   {salawatNames[salawatId] || salawatId}
                 </Text>
                 <Text fontSize="md" color={textColor}>
@@ -328,7 +363,6 @@ function Dashboard() {
       </Grid>
     </VStack>
   );
-
   const progressSection = (
     <VStack spacing={6} align="stretch" className="progress-section">
       <Heading color={textColor} size="md">
