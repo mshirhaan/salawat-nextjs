@@ -1,3 +1,4 @@
+// pages/dashboard.tsx
 "use client";
 import { useEffect, useState } from "react";
 import Joyride, { CallBackProps, STATUS, Step } from "react-joyride";
@@ -275,6 +276,59 @@ function Dashboard() {
     </>
   );
 
+  const dailyProgressSection = (
+    <VStack spacing={6} align="stretch">
+      <Heading color={textColor} size="md">
+        Today&apos;s Salawat Recitations
+      </Heading>
+
+      {/* Display total count first */}
+      {userData?.dailySalawatCounts?.[dayId]?.totalCount && (
+        <Box
+          bg={progressCardBgColor}
+          p={4}
+          borderRadius="lg"
+          textAlign="center"
+          mb={4}
+        >
+          <Text fontSize="xl" color={textColor} fontWeight="bold">
+            Total Salawat Today:{" "}
+            {Number(userData.dailySalawatCounts[dayId].totalCount)}
+          </Text>
+        </Box>
+      )}
+
+      {/* Display individual salawat counts */}
+      <Grid
+        templateColumns={{
+          base: "repeat(1, 1fr)",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
+        }}
+        gap={{ base: 8, md: 6 }}
+      >
+        {userData?.dailySalawatCounts?.[dayId] &&
+          Object.entries(userData.dailySalawatCounts[dayId])
+            .filter(([key]) => key !== "totalCount") // Exclude totalCount
+            .map(([salawatId, dailyCount]) => (
+              <GridItem
+                key={salawatId}
+                bg={progressCardBgColor}
+                p={4}
+                borderRadius="lg"
+              >
+                <Text fontSize="lg" color={textColor} fontWeight="bold">
+                  {salawatNames[salawatId] || salawatId}
+                </Text>
+                <Text fontSize="md" color={textColor}>
+                  Today&apos;s Count: {Number(dailyCount)}
+                </Text>
+              </GridItem>
+            ))}
+      </Grid>
+    </VStack>
+  );
+
   const progressSection = (
     <VStack spacing={6} align="stretch" className="progress-section">
       <Heading color={textColor} size="md">
@@ -463,6 +517,7 @@ function Dashboard() {
             {/* Streak Section */}
             {streakSection}
 
+            {dailyProgressSection}
             {/* Total Salawat Section */}
             <Box p={6} bg={cardBgColor} borderRadius="lg" boxShadow="2xl">
               <VStack spacing={4} align="stretch">
