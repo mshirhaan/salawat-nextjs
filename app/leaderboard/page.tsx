@@ -49,6 +49,44 @@ interface UserData {
   totalCount: number;
 }
 
+// Hadith Component
+const HadithDisplay = () => {
+  const bgColor = useColorModeValue("gray.50", "gray.800");
+  const borderColor = useColorModeValue("teal.500", "teal.300");
+
+  return (
+    <Box
+      bg={bgColor}
+      p={6}
+      borderRadius="lg"
+      boxShadow="lg"
+      mb={8}
+      position="relative"
+      borderLeft="4px solid"
+      borderColor={borderColor}
+    >
+      <VStack spacing={4} align="start">
+        <Text
+          fontSize="xl"
+          fontWeight="medium"
+          fontStyle="italic"
+          color={useColorModeValue("gray.700", "gray.200")}
+        >
+          The person closest to me on the Day of Judgement is the one who sent
+          the most Salat upon me.
+        </Text>
+        <Text
+          fontSize="md"
+          color={useColorModeValue("gray.600", "gray.400")}
+          fontWeight="bold"
+        >
+          — Prophet Muhammad ﷺ
+        </Text>
+      </VStack>
+    </Box>
+  );
+};
+
 export default function LeaderboardPage() {
   const [users, setUsers] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -168,6 +206,8 @@ export default function LeaderboardPage() {
           <Heading as="h1" size="2xl" color="teal.600" textAlign="center">
             Salawat Leaderboard
           </Heading>
+
+          <HadithDisplay />
           <Tabs
             isFitted
             variant="enclosed"
