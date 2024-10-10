@@ -80,9 +80,10 @@ async function updateStreak(userId: string, now: Timestamp) {
       newStreak = currentStreak;
     } else if (
       lastRecitationDate ===
-      new Date(new Date().setDate(new Date().getDate() - 1))
-        .toISOString()
-        .split("T")[0]
+        new Date(new Date().setDate(new Date().getDate() - 1))
+          .toISOString()
+          .split("T")[0] ||
+      null
     ) {
       newStreak = currentStreak + 1;
     } else {
