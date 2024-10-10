@@ -16,7 +16,7 @@ export async function buyLand(userId: string) {
     const userData = userDoc.data();
     const currentPoints = userData?.storePoints || 0;
     const currentGridSize = userData?.myGarden?.gridSize || 3;
-    const landPrice = 1000;
+    const landPrice = 10000;
 
     if (currentPoints >= landPrice) {
       await updateDoc(userRef, {
