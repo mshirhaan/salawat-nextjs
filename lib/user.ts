@@ -21,7 +21,7 @@ export async function logRecitation(
 ) {
   const userRef = doc(db, "users", userId);
   const now = Timestamp.now();
-  const today = new Date().toISOString().split("T")[0];
+  
   const xpPerRecitation = 10; // Define how much XP is awarded per recitation
   const storePointsPerRecitation = 1; // Points awarded per recitation
 
@@ -46,11 +46,10 @@ export async function logRecitation(
     }
 
     await updateDoc(userRef, {
-      // recitationLogs: arrayUnion(now),
+      recitationLogs: arrayUnion(now),
       xp: newXP,
       level: newLevel,
       storePoints: newStorePoints, // Update store points
-      lastRecitationDate: today, // Update last recitation date
     });
   }
 
@@ -67,23 +66,27 @@ async function updateStreak(userId: string, now: Timestamp) {
   const userDoc = await getDoc(userRef);
   if (userDoc.exists()) {
     const data = userDoc.data();
-    //const recitationLogs = data.recitationLogs;
+    const recitationLogs = data.recitationLogs;
     const currentStreak = data.currentStreak || 0;
     const highestStreak = data.highestStreak || 0;
 
     // Calculate the streak
     const today = new Date().toISOString().split("T")[0];
-    const lastRecitationDate = data.lastRecitationDate || null;
+    const lastRecitationDate = recitationLogs?.length
+      ? recitationLogs[recitationLogs.length - 1]
+          .toDate()
+          .toISOString()
+          .split("T")[0]
+      : null;
 
     let newStreak = currentStreak;
     if (lastRecitationDate === today) {
       newStreak = currentStreak;
     } else if (
       lastRecitationDate ===
-        new Date(new Date().setDate(new Date().getDate() - 1))
-          .toISOString()
-          .split("T")[0] ||
-      null
+      new Date(new Date().setDate(new Date().getDate() - 1))
+        .toISOString()
+        .split("T")[0]
     ) {
       newStreak = currentStreak + 1;
     } else {
