@@ -287,7 +287,7 @@ export default function Home() {
                 src="/images/madinah-night.avif"
                 alt="Masjid al-Nabawi"
                 w="full"
-                h="auto"
+                h="46rem"
                 objectFit="cover"
                 transform="scale(1.02)"
                 transition="transform 0.3s ease-in-out"
