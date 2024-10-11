@@ -41,7 +41,7 @@ export default function Home() {
     "linear-gradient(to right, #3e2723, #4e342e)"
   );
   const mutedTextColor = useColorModeValue("gray.600", "gray.400");
-  const accentColor = useColorModeValue("teal.600", "teal.300");
+  const accentColor = useColorModeValue("green.600", "green.400");
 
   return (
     <Box bg={bgColor} minH="100vh" overflow="hidden" position="relative">
@@ -58,9 +58,10 @@ export default function Home() {
             <Heading
               as={motion.h1}
               size="2xl"
-              color={headingColor}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
+              bgGradient={`linear(to-r, ${accentColor}, teal.500)`}
+              bgClip="text"
             >
               Welcome to the Salawat App
             </Heading>
