@@ -284,7 +284,7 @@ export default function Home() {
               boxShadow="2xl"
             >
               <Image
-                src="/images/madinah.jpeg"
+                src="/images/madinah-night.avif"
                 alt="Masjid al-Nabawi"
                 w="full"
                 h="auto"
