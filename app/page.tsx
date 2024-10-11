@@ -55,10 +55,7 @@ export default function Home() {
 
   // Color modes
   const bgColor = useColorModeValue("gray.50", "gray.900");
-  const headerBg = useColorModeValue("white", "gray.800");
-  const textColor = useColorModeValue("gray.800", "white");
-  const accentColor = useColorModeValue("teal.500", "teal.300");
-  const cardBg = useColorModeValue("white", "gray.800");
+  const accentColor = useColorModeValue("green.600", "green.400");
   const statBg = useColorModeValue("teal.50", "gray.700");
   const verseBg = useColorModeValue("teal.50", "gray.800");
   const arabicColor = useColorModeValue("teal.800", "teal.200");
