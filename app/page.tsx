@@ -315,6 +315,34 @@ export default function Home() {
           </MotionBox>
         </SimpleGrid>
 
+        <Box
+          mt={8}
+          p={6}
+          bg={verseBg}
+          borderRadius="xl"
+          boxShadow="xl"
+          textAlign="center"
+          w="full"
+        >
+          <Text
+            fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
+            fontFamily="'Uthmanic', 'Amiri', serif"
+            mb={4}
+            color={arabicColor}
+            lineHeight={1.8}
+          >
+            الصلاة والسلام عليك ياسيدى يارسول الله خذ بيدى قلت حيلتى ادركنى
+          </Text>
+          <Text
+            fontSize={{ base: "md", lg: "lg" }}
+            fontStyle="italic"
+            color={useColorModeValue("gray.600", "gray.300")}
+          >
+            &quot;May prayer and peace be upon you, O my Master, O Messenger of
+            Allah. Take my hand, my strength has diminished. Help me.&quot;
+          </Text>
+        </Box>
+
         <Divider my={16} />
 
         {/* Features Section */}
