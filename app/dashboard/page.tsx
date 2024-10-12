@@ -225,15 +225,18 @@ function Dashboard() {
     return levelToColorMap.find((entry) => level <= entry.maxLevel)?.color;
   };
 
-  const getLevelTitle = (level: number) => {
-    if (level < 20) return "Bronze League";
-    if (level < 40) return "Silver League";
-    if (level < 60) return "Gold League";
-    if (level < 80) return "Platinum League";
-    if (level < 100) return "Diamond League";
-    if (level < 140) return "Master League";
-    if (level < 180) return "Grandmaster League";
-    return "Legend League";
+  const getLevelTitle = (level: number): string => {
+    if (level < 18) return "Bronze League";
+    if (level < 36) return "Silver League";
+    if (level < 54) return "Gold League";
+    if (level < 72) return "Platinum League";
+    if (level < 90) return "Diamond League";
+    if (level < 108) return "Master League";
+    if (level < 126) return "Grandmaster League";
+    if (level < 144) return "Epic League";
+    if (level < 162) return "Mythic League";
+    if (level < 180) return "Legendary League";
+    return "Eternal League"; // For levels above 180
   };
 
   // Usage in the component
