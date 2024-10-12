@@ -289,54 +289,72 @@ function LeaderboardTable({
   const borderColor = useColorModeValue("gray.200", "gray.700");
   const hoverBgColor = useColorModeValue("gray.50", "gray.700");
 
-  const levelToGemMap = [
-    { maxLevel: 18, gem: GiGemPendant },
-    { maxLevel: 36, gem: GiCutDiamond },
-    { maxLevel: 54, gem: GiDiamondHard },
-    { maxLevel: 72, gem: GiFireGem },
-    { maxLevel: 90, gem: GiCrystalGrowth },
-    { maxLevel: 108, gem: GiCrystalCluster },
-    { maxLevel: 126, gem: GiCrystalize },
-    { maxLevel: 144, gem: GiIceCube },
-    { maxLevel: 162, gem: GiRoundStar },
-    { maxLevel: 180, gem: GiSparkles },
-    { maxLevel: Infinity, gem: GiStarSwirl }, // For levels above 180
+  const leagueMap = [
+    {
+      maxLevel: 18,
+      gem: GiGemPendant,
+      color: "blue.400",
+      title: "Bronze League",
+    },
+    {
+      maxLevel: 36,
+      gem: GiCutDiamond,
+      color: "green.400",
+      title: "Silver League",
+    },
+    {
+      maxLevel: 54,
+      gem: GiDiamondHard,
+      color: "yellow.400",
+      title: "Gold League",
+    },
+    {
+      maxLevel: 72,
+      gem: GiFireGem,
+      color: "orange.400",
+      title: "Platinum League",
+    },
+    {
+      maxLevel: 90,
+      gem: GiCrystalGrowth,
+      color: "red.400",
+      title: "Diamond League",
+    },
+    {
+      maxLevel: 108,
+      gem: GiCrystalCluster,
+      color: "pink.400",
+      title: "Master League",
+    },
+    {
+      maxLevel: 126,
+      gem: GiCrystalize,
+      color: "purple.400",
+      title: "Grandmaster League",
+    },
+    { maxLevel: 144, gem: GiIceCube, color: "cyan.400", title: "Epic League" },
+    {
+      maxLevel: 162,
+      gem: GiRoundStar,
+      color: "teal.400",
+      title: "Mythic League",
+    },
+    {
+      maxLevel: 180,
+      gem: GiSparkles,
+      color: "lime.400",
+      title: "Legendary League",
+    },
+    {
+      maxLevel: Infinity,
+      gem: GiStarSwirl,
+      color: "violet.400",
+      title: "Eternal League",
+    }, // For levels above 180
   ];
 
-  const levelToColorMap = [
-    { maxLevel: 18, color: "blue.400" },
-    { maxLevel: 36, color: "green.400" },
-    { maxLevel: 54, color: "yellow.400" },
-    { maxLevel: 72, color: "orange.400" },
-    { maxLevel: 90, color: "red.400" },
-    { maxLevel: 108, color: "pink.400" },
-    { maxLevel: 126, color: "purple.400" },
-    { maxLevel: 144, color: "cyan.400" },
-    { maxLevel: 162, color: "teal.400" },
-    { maxLevel: 180, color: "lime.400" },
-    { maxLevel: Infinity, color: "violet.400" }, // For levels above 180
-  ];
-
-  const getGemForLevel = (level: number) => {
-    return levelToGemMap.find((entry) => level <= entry.maxLevel)?.gem;
-  };
-
-  const getColorForLevel = (level: number) => {
-    return levelToColorMap.find((entry) => level <= entry.maxLevel)?.color;
-  };
-
-  const getLevelTitle = (level: number): string => {
-    if (level < 18) return "Bronze League";
-    if (level < 36) return "Silver League";
-    if (level < 54) return "Gold League";
-    if (level < 72) return "Platinum League";
-    if (level < 90) return "Diamond League";
-    if (level < 108) return "Master League";
-    if (level < 126) return "Grandmaster League";
-    if (level < 144) return "Epic League";
-    if (level < 162) return "Mythic League";
-    if (level < 180) return "Legendary League";
-    return "Eternal League"; // For levels above 180
+  const getLeagueDetails = (level: number) => {
+    return leagueMap.find((entry) => level <= entry.maxLevel)!;
   };
 
   return (
@@ -344,9 +362,9 @@ function LeaderboardTable({
       {isMobile ? (
         <Grid templateColumns="repeat(1, 1fr)" gap={4} p={4}>
           {users.map((user, index) => {
-            const gemIcon = getGemForLevel(user.level);
-            const gemColor = getColorForLevel(user.level);
-            const leagueTitle = getLevelTitle(user.level);
+            const gemIcon = getLeagueDetails(user.level).gem;
+            const gemColor = getLeagueDetails(user.level).color;
+            const leagueTitle = getLeagueDetails(user.level).title;
 
             return (
               <Box
@@ -421,9 +439,9 @@ function LeaderboardTable({
           </Thead>
           <Tbody>
             {users.map((user, index) => {
-              const gemIcon = getGemForLevel(user.level);
-              const gemColor = getColorForLevel(user.level);
-              const leagueTitle = getLevelTitle(user.level);
+              const gemIcon = getLeagueDetails(user.level).gem;
+              const gemColor = getLeagueDetails(user.level).color;
+              const leagueTitle = getLeagueDetails(user.level).title;
 
               return (
                 <Tr
