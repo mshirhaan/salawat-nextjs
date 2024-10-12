@@ -43,7 +43,20 @@ import { Bar } from "react-chartjs-2";
 import "chart.js/auto"; // Automatically registers the necessary chart components
 import { badgeConfigs } from "../badgeConfigs";
 import { calculateXpToNextLevel } from "@/utils/dashboardUtils";
-import { GiLaurelsTrophy } from "react-icons/gi";
+import {
+  GiGemPendant,
+  GiCutDiamond,
+  GiDiamondHard,
+  GiFireGem,
+  GiCrystalGrowth,
+  GiCrystalCluster,
+  GiCrystalize,
+  GiIceCube,
+  GiRoundStar,
+  GiSparkles,
+  GiStarSwirl,
+  GiLaurelsTrophy,
+} from "react-icons/gi";
 import { withAuth } from "@/components/withAuth";
 import React from "react";
 
@@ -176,6 +189,58 @@ function Dashboard() {
   const xpToNextLevel = calculateXpToNextLevel(userLevel);
   const progressPercent = (userXp / xpToNextLevel) * 100;
 
+  const levelToGemMap = [
+    { maxLevel: 18, gem: GiGemPendant },
+    { maxLevel: 36, gem: GiCutDiamond },
+    { maxLevel: 54, gem: GiDiamondHard },
+    { maxLevel: 72, gem: GiFireGem },
+    { maxLevel: 90, gem: GiCrystalGrowth },
+    { maxLevel: 108, gem: GiCrystalCluster },
+    { maxLevel: 126, gem: GiCrystalize },
+    { maxLevel: 144, gem: GiIceCube },
+    { maxLevel: 162, gem: GiRoundStar },
+    { maxLevel: 180, gem: GiSparkles },
+    { maxLevel: Infinity, gem: GiStarSwirl }, // For levels above 180
+  ];
+
+  const levelToColorMap = [
+    { maxLevel: 18, color: "blue.400" },
+    { maxLevel: 36, color: "green.400" },
+    { maxLevel: 54, color: "yellow.400" },
+    { maxLevel: 72, color: "orange.400" },
+    { maxLevel: 90, color: "red.400" },
+    { maxLevel: 108, color: "pink.400" },
+    { maxLevel: 126, color: "purple.400" },
+    { maxLevel: 144, color: "cyan.400" },
+    { maxLevel: 162, color: "teal.400" },
+    { maxLevel: 180, color: "lime.400" },
+    { maxLevel: Infinity, color: "violet.400" }, // For levels above 180
+  ];
+
+  const getGemForLevel = (level: number) => {
+    return levelToGemMap.find((entry) => level <= entry.maxLevel)?.gem;
+  };
+
+  const getColorForLevel = (level: number) => {
+    return levelToColorMap.find((entry) => level <= entry.maxLevel)?.color;
+  };
+
+  const getLevelTitle = (level: number) => {
+    if (level < 20) return "Bronze League";
+    if (level < 40) return "Silver League";
+    if (level < 60) return "Gold League";
+    if (level < 80) return "Platinum League";
+    if (level < 100) return "Diamond League";
+    if (level < 140) return "Master League";
+    if (level < 180) return "Grandmaster League";
+    return "Legend League";
+  };
+
+  // Usage in the component
+  const LevelGem = getGemForLevel(userLevel);
+  const gemColor = getColorForLevel(userLevel);
+  const levelTitle = getLevelTitle(userLevel);
+
   const levelSection = (
     <Box
       p={6}
@@ -195,11 +260,14 @@ function Dashboard() {
             trackColor="gray.200"
           >
             <CircularProgressLabel>
-              <Icon as={FaLevelUpAlt} boxSize={10} color={highlightColor} />
+              <Icon as={LevelGem} boxSize={10} color={gemColor} />
             </CircularProgressLabel>
           </CircularProgress>
           <Text fontSize="2xl" fontWeight="bold" color={highlightColor} mt={4}>
             Level {userLevel}
+          </Text>
+          <Text fontSize="lg" color={gemColor} fontWeight="medium">
+            {levelTitle}
           </Text>
         </Flex>
         <HStack spacing={4}>
