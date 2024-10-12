@@ -55,6 +55,17 @@ import {
   GiRoundStar,
   GiSparkles,
   GiStarSwirl,
+  GiPearlNecklace,
+  GiGoldBar,
+  GiMoon,
+  GiRuneStone,
+  GiMagicPortal,
+  GiGemChain,
+  GiEmerald,
+  GiAmethyst,
+  GiBigDiamondRing,
+  GiMagicSwirl,
+  GiOrbitalRays,
 } from "react-icons/gi";
 
 interface UserData {
@@ -292,65 +303,70 @@ function LeaderboardTable({
   const leagueMap = [
     {
       maxLevel: 18,
-      gem: GiGemPendant,
-      color: "blue.400",
+      gem: GiGemPendant, // Basic gem pendant for beginners
+      color: "orange.400", // A warm orange to reflect the charm of the pendant
       title: "Bronze League",
     },
     {
       maxLevel: 36,
-      gem: GiCutDiamond,
-      color: "green.400",
+      gem: GiEmerald, // Green emerald for growth and advancement
+      color: "green.500", // A vibrant green to represent the richness of emerald
       title: "Silver League",
     },
     {
       maxLevel: 54,
-      gem: GiDiamondHard,
-      color: "yellow.400",
+      gem: GiStoneSphere, // Polished diamond indicating high achievement
+      color: "yellow.500", // A bright yellow to symbolize the brilliance of gold
       title: "Gold League",
     },
     {
       maxLevel: 72,
-      gem: GiFireGem,
-      color: "orange.400",
+      gem: GiFireGem, // Fiery ruby reflecting passion and strength
+      color: "red.600", // A deeper red to reflect the intensity of a ruby
       title: "Platinum League",
     },
     {
       maxLevel: 90,
-      gem: GiCrystalGrowth,
-      color: "red.400",
+      gem: GiCutDiamond, // Expanding crystal symbolizing rare refinement
+      color: "blue.600", // A refined blue to convey the clarity of a diamond
       title: "Diamond League",
     },
     {
       maxLevel: 108,
-      gem: GiCrystalCluster,
-      color: "pink.400",
+      gem: GiAmethyst, // Purple amethyst denoting wisdom and mastery
+      color: "purple.500", // A rich purple that resonates with amethyst's depth
       title: "Master League",
     },
     {
       maxLevel: 126,
-      gem: GiCrystalize,
-      color: "purple.400",
+      gem: GiBigDiamondRing, // A luxurious diamond ring for top-tier status
+      color: "pink.500", // A soft pink to highlight luxury and elegance
       title: "Grandmaster League",
     },
-    { maxLevel: 144, gem: GiIceCube, color: "cyan.400", title: "Epic League" },
+    {
+      maxLevel: 144,
+      gem: GiCrystalize, // Enchanted crystal for the epic tier
+      color: "cyan.400", // A bright cyan to reflect the magical nature of crystals
+      title: "Epic League",
+    },
     {
       maxLevel: 162,
-      gem: GiRoundStar,
-      color: "teal.400",
+      gem: GiSparkles, // Mysterious ice crystal for mythical rank
+      color: "teal.500", // A mystical teal to evoke the mystery of mythic gems
       title: "Mythic League",
     },
     {
       maxLevel: 180,
-      gem: GiSparkles,
-      color: "lime.400",
+      gem: GiMagicSwirl, // A magical swirl gem for legendary feats
+      color: "lime.600", // A vivid lime to convey a sense of legendary brilliance
       title: "Legendary League",
     },
     {
       maxLevel: Infinity,
-      gem: GiStarSwirl,
-      color: "violet.400",
+      gem: GiOrbitalRays, // Cosmic gem for eternal rank
+      color: "violet.500", // A cosmic violet to represent eternity and depth
       title: "Eternal League",
-    }, // For levels above 180
+    },
   ];
 
   const getLeagueDetails = (level: number) => {
