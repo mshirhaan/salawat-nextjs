@@ -30,18 +30,37 @@ import {
   Grid,
   useColorModeValue,
   Icon,
-  Divider,
 } from "@chakra-ui/react";
-import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  limit,
+  where,
+  Timestamp,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { FaTrophy } from "react-icons/fa";
 import { getDayId, getMonthId, getWeekId } from "@/utils/dateUtils";
 import {
   GiGemPendant,
   GiCutDiamond,
+  GiDiamondHard,
   GiFireGem,
+  GiCrystalGrowth,
+  GiCrystalCluster,
   GiCrystalize,
+  GiIceCube,
+  GiRoundStar,
   GiSparkles,
+  GiStarSwirl,
+  GiPearlNecklace,
+  GiGoldBar,
+  GiMoon,
+  GiRuneStone,
+  GiMagicPortal,
+  GiGemChain,
   GiEmerald,
   GiAmethyst,
   GiBigDiamondRing,
@@ -356,12 +375,12 @@ function LeaderboardTable({
   };
 
   return (
-    <Box bg={bgColor} borderRadius="lg" boxShadow="lg" overflow="hidden">
+    <Box bg={bgColor} borderRadius="lg" boxShadow="md" overflow="hidden">
       {isMobile ? (
-        <Grid templateColumns="repeat(1, 1fr)" gap={6} p={4}>
+        <Grid templateColumns="repeat(1, 1fr)" gap={4} p={4}>
           {users.map((user, index) => {
             const {
-              gem: GemIcon,
+              gem: gemIcon,
               color: gemColor,
               title: leagueTitle,
             } = getLeagueDetails(user.level);
@@ -369,72 +388,64 @@ function LeaderboardTable({
             return (
               <Box
                 key={user.id}
-                p={5}
+                p={4}
                 borderWidth={1}
-                borderRadius="xl"
-                boxShadow="md"
-                transition="transform 0.25s, background 0.25s"
+                borderRadius="md"
+                boxShadow="sm"
+                borderColor={borderColor}
+                transition="transform 0.2s, background 0.2s"
                 _hover={{ transform: "scale(1.03)", bg: hoverBgColor }}
               >
-                <Flex justify="space-between" align="center" mb={3}>
-                  {/* User Info */}
-                  <Flex align="center">
-                    <Avatar
-                      name={user.name}
-                      bg={getAvatarColor(index)}
-                      size="lg"
-                      mr={3}
-                    />
-                    <Box>
-                      <Text fontWeight="bold" fontSize="lg" noOfLines={1}>
-                        {user.name}
-                      </Text>
-                      <Text fontSize="sm" color={gemColor}>
-                        {leagueTitle}
-                      </Text>
-                    </Box>
-                  </Flex>
-
-                  {/* Gem Icon and Level */}
-                  <Flex align="center">
-                    <Icon as={GemIcon} boxSize={7} color={gemColor} mr={2} />
-                    <Text fontWeight="bold" fontSize="lg" color={gemColor}>
-                      Lvl {user.level}
-                    </Text>
-                  </Flex>
-                </Flex>
-
-                <Divider />
-
-                <Flex justify="space-between" align="center" mt={3}>
-                  {/* Rank */}
-                  <Box>
-                    <Text fontSize="xs" color="gray.400" mb={1}>
+                <Flex justify="space-between" align="center" mb={2}>
+                  {/* Rank and League Info */}
+                  <VStack align="flex-start">
+                    <Text fontSize="xs" color="gray.500" mb={1}>
                       Rank
                     </Text>
                     <Flex align="center">
-                      <Text fontWeight="bold" fontSize="lg" mr={1}>
+                      <Text fontWeight="bold" mr={2}>
                         {index + 1}
                       </Text>
                       {getRankIcon(index)}
                     </Flex>
-                  </Box>
+                    <Text fontSize="sm" color={gemColor}>
+                      {leagueTitle}
+                    </Text>
+                  </VStack>
 
                   {/* Salawat Count */}
-                  <Box textAlign="right">
-                    <Text fontSize="xs" color="gray.400" mb={1}>
+                  <Flex direction="column" align="flex-end">
+                    <Text fontSize="xs" color="gray.500" mb={1}>
                       Salawat Count
                     </Text>
                     <Badge
                       colorScheme="teal"
-                      fontSize="0.9em"
+                      fontSize="0.8em"
                       borderRadius="full"
-                      px={3}
-                      py={1}
+                      px={2}
                     >
                       {user.totalCount.toLocaleString()}
                     </Badge>
-                  </Box>
+                  </Flex>
+                </Flex>
+
+                {/* User Info */}
+                <Flex align="center" mt={2}>
+                  <Avatar
+                    name={user.name}
+                    bg={getAvatarColor(index)}
+                    size="sm"
+                    mr={2}
+                  />
+                  <Text fontWeight="medium">{user.name}</Text>
+                </Flex>
+
+                {/* League Icon and Level */}
+                <Flex mt={2} align="center">
+                  <Icon as={gemIcon} boxSize={6} color={gemColor} mr={2} />
+                  <Text fontWeight="bold" color={gemColor}>
+                    Level {user.level}
+                  </Text>
                 </Flex>
               </Box>
             );
@@ -457,7 +468,7 @@ function LeaderboardTable({
           <Tbody>
             {users.map((user, index) => {
               const {
-                gem: GemIcon,
+                gem: gemIcon,
                 color: gemColor,
                 title: leagueTitle,
               } = getLeagueDetails(user.level);
@@ -476,6 +487,7 @@ function LeaderboardTable({
                       {getRankIcon(index)}
                     </Flex>
                   </Td>
+
                   <Td>
                     <Flex align="center">
                       <Avatar
@@ -487,19 +499,22 @@ function LeaderboardTable({
                       <Text fontWeight="medium">{user.name}</Text>
                     </Flex>
                   </Td>
+
                   <Td>
                     <Text fontWeight="medium" color={gemColor}>
                       {leagueTitle}
                     </Text>
                   </Td>
+
                   <Td>
                     <Flex align="center">
-                      <Icon as={GemIcon} boxSize={6} color={gemColor} mr={2} />
+                      <Icon as={gemIcon} boxSize={6} color={gemColor} mr={2} />
                       <Text fontWeight="bold" color={gemColor}>
                         Level {user.level}
                       </Text>
                     </Flex>
                   </Td>
+
                   <Td isNumeric>
                     <Badge
                       colorScheme="teal"
