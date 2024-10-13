@@ -397,8 +397,8 @@ function LeaderboardTable({
 
                   {/* Gem Icon and Level */}
                   <Flex align="center">
-                    <Icon as={GemIcon} boxSize={7} color={gemColor} mr={2} />
-                    <Text fontWeight="bold" fontSize="lg" color={gemColor}>
+                    <Icon as={GemIcon} boxSize={6} color={gemColor} mr={2} />
+                    <Text fontWeight="bold" color={gemColor}>
                       Lvl {user.level}
                     </Text>
                   </Flex>
