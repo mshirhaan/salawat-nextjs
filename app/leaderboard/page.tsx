@@ -382,11 +382,11 @@ function LeaderboardTable({
                     <Avatar
                       name={user.name}
                       bg={getAvatarColor(index)}
-                      size="lg"
+                      size="sm"
                       mr={3}
                     />
                     <Box>
-                      <Text fontWeight="bold" fontSize="lg" noOfLines={1}>
+                      <Text fontWeight="bold" noOfLines={1}>
                         {user.name}
                       </Text>
                       <Text fontSize="sm" color={gemColor}>
