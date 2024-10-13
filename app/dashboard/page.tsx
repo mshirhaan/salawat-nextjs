@@ -223,7 +223,7 @@ function Dashboard() {
     {
       maxLevel: 90,
       gem: GiCutDiamond, // Expanding crystal symbolizing rare refinement
-      color: "gray.100", // Light gray for diamond clarity
+      color: "blue.200", // Light gray for diamond clarity
       title: "Diamond League",
     },
     {
