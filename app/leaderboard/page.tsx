@@ -373,10 +373,12 @@ function LeaderboardTable({
                 borderWidth={1}
                 borderRadius="xl"
                 boxShadow="md"
+                maxWidth="100%" // Ensure it does not exceed the parent width
+                overflow="hidden" // Prevent overflow of content
                 transition="transform 0.25s, background 0.25s"
                 _hover={{ transform: "scale(1.03)", bg: hoverBgColor }}
               >
-                <Flex justify="space-between" align="center" mb={3}>
+                <Flex justify="space-between" align="center" mb={3} wrap="wrap">
                   {/* User Info */}
                   <Flex align="center">
                     <Avatar
@@ -431,6 +433,7 @@ function LeaderboardTable({
                       borderRadius="full"
                       px={3}
                       py={1}
+                      whiteSpace="nowrap" // Prevents badge text from breaking into multiple lines
                     >
                       {user.totalCount.toLocaleString()}
                     </Badge>
