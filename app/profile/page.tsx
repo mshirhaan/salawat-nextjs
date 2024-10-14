@@ -51,7 +51,7 @@ function Settings() {
   return (
     <Box p={6} maxW="400px" mx="auto">
       <Heading mb={6}>Update Name</Heading>
-      <Text mb={4} color="gray.600">
+      <Text mb={4}>
         This name will be used only to hide your real name on the leaderboard.
       </Text>
       <Input
