@@ -29,6 +29,8 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
+import { ColorResult, SketchPicker } from "react-color";
+
 import { ReactNode, Suspense, useEffect, useState } from "react";
 
 import Joyride, { CallBackProps, STATUS, Step } from "react-joyride"; // Import Joyride
@@ -53,6 +55,7 @@ import { motion } from "framer-motion";
 import { withAuth } from "@/components/withAuth";
 import { SettingsIcon } from "@chakra-ui/icons";
 import SoundAnnouncement from "@/components/SoundAnnouncement";
+import BackgroundAnnouncement from "@/components/BackgroundAnnouncement";
 interface SalawatWord {
   word: string;
   translations: { [key: string]: string };
@@ -239,6 +242,16 @@ function SalawatPage({ params }: { params: { id: string } }) {
   const [counterButtonSize, setCounterButtonSize] = useState(90); // Counter button size
   const [enableSound, setEnableSound] = useState(true); // Enable sound
 
+  const [isStaticBg, setIsStaticBg] = useState(false); // Control the background type
+  const [bgColor, setBgColor] = useState(
+    localStorage.getItem("bgColor") || "#2D3748"
+  ); // Default color
+
+  const handleColorChange = (color: ColorResult) => {
+    setBgColor(color.hex);
+    localStorage.setItem("bgColor", color.hex); // Save user’s color selection
+  };
+
   // Load settings from localStorage on page load
   useEffect(() => {
     const savedArabicFontSize = localStorage.getItem("arabicFontSize");
@@ -257,6 +270,12 @@ function SalawatPage({ params }: { params: { id: string } }) {
     const savedCounterButtonSize = localStorage.getItem("counterButtonSize");
 
     const savedEnableSound = localStorage.getItem("enableSound");
+
+    const savedIsStaticBg = localStorage.getItem("isStaticBg");
+
+    if (savedIsStaticBg) {
+      setIsStaticBg(savedIsStaticBg === "true");
+    }
 
     if (savedArabicFontSize) {
       setArabicFontSize(parseInt(savedArabicFontSize));
@@ -358,6 +377,7 @@ function SalawatPage({ params }: { params: { id: string } }) {
         lineHeight="1.8"
         className="salawat-text"
       >
+        <BackgroundAnnouncement />
         {arabicText.split(" ").map((word, index) => (
           <Suspense key={index} fallback={<span>{word} </span>}>
             <TooltipWithTouch label={wordMap.get(word) || ""} hasArrow>
@@ -561,34 +581,73 @@ function SalawatPage({ params }: { params: { id: string } }) {
                   }}
                 />
               </Box>
+
+              {/* Background Mode Toggle */}
+              <Box>
+                <FormLabel>Static Background</FormLabel>
+                <Switch
+                  isChecked={isStaticBg}
+                  onChange={(e) => {
+                    setIsStaticBg(e.target.checked);
+                    localStorage.setItem(
+                      "isStaticBg",
+                      e.target.checked.toString()
+                    );
+                  }}
+                />
+              </Box>
+
+              {/* Background Color Picker */}
+              <Box>
+                <FormLabel>Pick Background Color</FormLabel>
+                <SketchPicker
+                  color={bgColor}
+                  onChange={handleColorChange}
+                  onChangeComplete={handleColorChange}
+                />
+              </Box>
             </Stack>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
       {/* Image Background */}
-      {imageUrls.map((url, index) => (
-        <MotionBox
-          key={index}
+      {isStaticBg ? (
+        // Static Solid Color Background
+        <Box
           position="fixed"
           top={0}
           left={0}
           width="100%"
           height="100%"
-          backgroundImage={`url(${url})`}
-          backgroundSize="cover"
-          backgroundPosition="center"
+          background={isStaticBg ? bgColor : "none"}
           zIndex={-2}
-          initial={{ opacity: 0, scale: 1.08 }}
-          animate={{
-            opacity: imageIndex === index ? 1 : 0,
-            scale: imageIndex === index ? 1 : 1.08,
-          }}
-          transition={{
-            opacity: { duration: 1.5, ease: "easeInOut" },
-            scale: { duration: 15, ease: "easeInOut" }, // Faster zoom effect
-          }}
         />
-      ))}
+      ) : (
+        // Image Slideshow Background
+        imageUrls.map((url, index) => (
+          <MotionBox
+            key={index}
+            position="fixed"
+            top={0}
+            left={0}
+            width="100%"
+            height="100%"
+            backgroundImage={`url(${url})`}
+            backgroundSize="cover"
+            backgroundPosition="center"
+            zIndex={-2}
+            initial={{ opacity: 0, scale: 1.08 }}
+            animate={{
+              opacity: imageIndex === index ? 1 : 0,
+              scale: imageIndex === index ? 1 : 1.08,
+            }}
+            transition={{
+              opacity: { duration: 1.5, ease: "easeInOut" },
+              scale: { duration: 15, ease: "easeInOut" }, // Faster zoom effect
+            }}
+          />
+        ))
+      )}
 
       {/* Overlay */}
       <Box
