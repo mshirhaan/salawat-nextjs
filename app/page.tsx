@@ -350,7 +350,7 @@ export default function Home() {
           <FeatureCard
             icon={FaHeart}
             title="Spiritual Benefits"
-            description="Learn about the countless blessings and rewards of sending Salawat upon the Prophet ﷺ."
+            description="Experience the countless blessings and rewards of sending Salawat upon the Prophet ﷺ."
           />
           <FeatureCard
             icon={FaUserFriends}
