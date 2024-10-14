@@ -190,7 +190,7 @@ function Dashboard() {
     return <Box>Please log in to view your dashboard.</Box>;
   }
 
-  const userLevel = 160;
+  const userLevel = userData?.level || 1;
   const userXp = userData?.xp || 0;
   const xpToNextLevel = calculateXpToNextLevel(userLevel);
   const progressPercent = (userXp / xpToNextLevel) * 100;
