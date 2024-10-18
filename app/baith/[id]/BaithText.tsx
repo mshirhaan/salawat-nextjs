@@ -9,6 +9,7 @@ import {
 import { motion, useAnimation } from "framer-motion";
 import dynamic from "next/dynamic";
 import { Line } from "../data";
+import TooltipWithTouch from "@/app/salawat/[id]/TooltipWithTouch";
 
 const FloatingHearts = dynamic(() => import("./FloatingHearts"), {
   ssr: false,
@@ -98,15 +99,19 @@ export const BaithText: React.FC<Props> = ({ lines, currentTime }) => {
             color={textColor} // Apply text color based on mode
           >
             {line.words.map((word, wordIndex) => (
-              <Tooltip
-                key={wordIndex}
-                label={word.translations.en}
-                placement="top"
-              >
-                <Text as="span" cursor="pointer" _hover={{ color: "red.500" }}>
-                  {word.word}{" "}
-                </Text>
-              </Tooltip>
+              <React.Fragment key={wordIndex}>
+                <TooltipWithTouch label={word.translations.en || ""} hasArrow>
+                  <Text
+                    as="span"
+                    display="inline"
+                    cursor="pointer"
+                    _hover={{ color: "red.500" }}
+                    transition="color 0.3s ease"
+                  >
+                    {word.word}
+                  </Text>
+                </TooltipWithTouch>{" "}
+              </React.Fragment>
             ))}
           </Text>
           <Text fontSize="md" textAlign="center" color={textColor}>
