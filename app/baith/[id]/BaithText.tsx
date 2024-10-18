@@ -94,7 +94,6 @@ export const BaithText: React.FC<Props> = ({ lines, currentTime }) => {
           <Text
             fontSize="2rem"
             fontFamily={"'Uthmanic', 'Amiri', serif"}
-            fontWeight="bold"
             textAlign="center"
             mb={2}
             color={textColor} // Apply text color based on mode
