@@ -39,10 +39,20 @@ export default function BaithPage({ params }: { params: { id: string } }) {
 
         {baithData.audioUrl && (
           <Suspense fallback={<Text>Loading audio player...</Text>}>
-            <AudioPlayer
-              audioUrl={baithData.audioUrl}
-              onTimeUpdate={handleTimeUpdate}
-            />
+            <Box
+              position="fixed"
+              bottom="0"
+              left="0"
+              right="0"
+              zIndex={1000}
+              boxShadow="lg"
+              padding="4"
+            >
+              <AudioPlayer
+                audioUrl={baithData.audioUrl}
+                onTimeUpdate={handleTimeUpdate}
+              />
+            </Box>
           </Suspense>
         )}
 
