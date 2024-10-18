@@ -1,5 +1,11 @@
 import React, { useRef, useEffect, useCallback } from "react";
-import { VStack, Text, Tooltip, Box } from "@chakra-ui/react";
+import {
+  VStack,
+  Text,
+  Tooltip,
+  Box,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 import dynamic from "next/dynamic";
 import { Line } from "../data";
@@ -42,6 +48,11 @@ export const BaithText: React.FC<Props> = ({ lines, currentTime }) => {
     }
   }, [currentTime, lines, controls]);
 
+  // Color mode values
+  const activeBgColor = useColorModeValue("green.100", "green.700"); // Light mode vs Dark mode background
+  const inactiveBgColor = useColorModeValue("transparent", "transparent"); // Transparent for both modes
+  const textColor = useColorModeValue("gray.800", "gray.200"); // Text color for light and dark mode
+
   return (
     <VStack spacing={4} align="stretch">
       {lines.map((line, index) => (
@@ -52,12 +63,18 @@ export const BaithText: React.FC<Props> = ({ lines, currentTime }) => {
           borderRadius="md"
           bg={
             currentTime >= line.startTime && currentTime <= line.endTime
-              ? "green.100"
-              : "transparent"
+              ? activeBgColor
+              : inactiveBgColor
           }
           position="relative"
         >
-          <Text fontSize="2rem" fontWeight="bold" textAlign="center" mb={2}>
+          <Text
+            fontSize="2rem"
+            fontWeight="bold"
+            textAlign="center"
+            mb={2}
+            color={textColor} // Apply text color based on mode
+          >
             {line.words.map((word, wordIndex) => (
               <Tooltip
                 key={wordIndex}
@@ -70,7 +87,7 @@ export const BaithText: React.FC<Props> = ({ lines, currentTime }) => {
               </Tooltip>
             ))}
           </Text>
-          <Text fontSize="md" textAlign="center">
+          <Text fontSize="md" textAlign="center" color={textColor}>
             {line.translations.en}
           </Text>
           {currentTime >= line.startTime && currentTime <= line.endTime && (
