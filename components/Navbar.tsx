@@ -41,7 +41,8 @@ import {
   FaChartLine,
   FaEnvelope,
   FaHeart,
-} from "react-icons/fa";
+  FaBook, // Import an icon for Baith
+} from "react-icons/fa"; // Make sure you import any icon you choose
 import { useEffect, useState } from "react";
 import { checkAuthState } from "@/utils/auth";
 
@@ -71,11 +72,13 @@ export default function Navbar() {
     }
   };
 
+  // Add the new Baith link here
   const navItems = [
     { href: "/", label: "Home", icon: FaHome },
     { href: "/salawat", label: "Salawat", icon: FaHeart },
     { href: "/store", label: "Store", icon: FaStore },
     { href: "/garden", label: "Garden", icon: FaSeedling },
+    { href: "/baith", label: "Baith", icon: FaBook }, // New Baith link added
     { href: "/leaderboard", label: "Leaderboard", icon: FaChartLine },
     { href: "/contact-us", label: "Contact", icon: FaEnvelope },
   ];
