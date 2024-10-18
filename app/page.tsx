@@ -41,6 +41,7 @@ import { db } from "@/lib/firebase";
 import CountUp from "react-countup";
 import { IconType } from "react-icons";
 import Link from "next/link";
+import NewBaithPageAnnouncement from "@/components/BaithAnnoucement";
 
 const MotionBox = motion(Box);
 
@@ -108,6 +109,7 @@ export default function Home() {
 
   return (
     <Box bg={bgColor} minH="100vh">
+      <NewBaithPageAnnouncement />
       {/* Main Content */}
       <Container maxW="container.xl" pt={24}>
         {/* Welcome and Verse Section */}
