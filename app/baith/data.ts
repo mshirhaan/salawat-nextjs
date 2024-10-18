@@ -101,7 +101,7 @@ const allBaiths: AllBaiths = {
           { word: "عَلَيْكُمْ", translations: { en: "Be upon you" } },
         ],
         startTime: 0,
-        endTime: 21, // Adjusted end time
+        endTime: 10.8, // Adjusted end time
       },
       {
         arabic: "ياَ حَبِيبْ سَلاَمْ عَلَيْكُمْ صَلَوَاتُ الله عَلَيْكُمْ",
@@ -117,7 +117,7 @@ const allBaiths: AllBaiths = {
           { word: "الله", translations: { en: "Allah" } },
           { word: "عَلَيْكُمْ", translations: { en: "Be upon you" } },
         ],
-        startTime: 21, // Start time adjusted for the next segment
+        startTime: 10.9, // Start time adjusted for the next segment
         endTime: 42,
       },
       {
@@ -170,7 +170,7 @@ const allBaiths: AllBaiths = {
           { word: "نُورٍ", translations: { en: "Light" } },
         ],
         startTime: 85,
-        endTime: 90,
+        endTime: 94.8,
       },
       {
         arabic: "أَنْتَ إِكْسِيرٌ وَ غَالِي أَنْتَ مِصْباَحُ الصُّدُورِ",
@@ -186,8 +186,8 @@ const allBaiths: AllBaiths = {
           { word: "مِصْباَحُ", translations: { en: "Lamp" } },
           { word: "الصُّدُورِ", translations: { en: "Chests/Hearts" } },
         ],
-        startTime: 90,
-        endTime: 95,
+        startTime: 95,
+        endTime: 106,
       },
 
       {
