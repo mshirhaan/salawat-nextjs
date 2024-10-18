@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect, useCallback, useState } from "react";
 import {
   VStack,
   Text,
@@ -23,9 +23,31 @@ type Props = {
 export const BaithText: React.FC<Props> = ({ lines, currentTime }) => {
   const lineRefs = useRef<(HTMLDivElement | null)[]>([]);
   const controls = useAnimation();
+  const [userScrolled, setUserScrolled] = useState(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const setLineRef = useCallback((el: HTMLDivElement | null, index: number) => {
     lineRefs.current[index] = el;
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setUserScrolled(true);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      scrollTimeoutRef.current = setTimeout(() => {
+        setUserScrolled(false);
+      }, 5000); // Reset userScrolled after 5 seconds of inactivity
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -33,7 +55,7 @@ export const BaithText: React.FC<Props> = ({ lines, currentTime }) => {
       (line) => currentTime >= line.startTime && currentTime <= line.endTime
     );
 
-    if (currentLine) {
+    if (currentLine && !userScrolled) {
       const index = lines.indexOf(currentLine);
       lineRefs.current[index]?.scrollIntoView({
         behavior: "smooth",
@@ -46,7 +68,7 @@ export const BaithText: React.FC<Props> = ({ lines, currentTime }) => {
         transition: { duration: 2, times: [0, 0.1, 0.9, 1] },
       });
     }
-  }, [currentTime, lines, controls]);
+  }, [currentTime, lines, controls, userScrolled]);
 
   // Color mode values
   const activeBgColor = useColorModeValue("green.100", "green.700"); // Light mode vs Dark mode background
