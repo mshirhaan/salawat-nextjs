@@ -23,14 +23,16 @@ export default function Footer() {
       py={6}
     >
       <VStack spacing={2}>
-        <Text fontWeight="bold" fontSize="lg">
+        <Text fontWeight="bold" fontSize="lg" textAlign={"center"}>
           © {new Date().getFullYear()} Salawat App. All rights reserved.
         </Text>
-        <Text>by Asswuffah Foundation</Text>
+        <Text fontSize="sm" textAlign={"center"}>
+          by Asswuffah Foundation
+        </Text>
 
         <Divider borderColor={dividerColor} width="80%" />
 
-        <Text fontSize="md" mt={2}>
+        <Text fontSize="md" mt={2} textAlign={"center"}>
           Launched on 1st Rabiul Awwal 1446 / 4th September 2024
         </Text>
       </VStack>
