@@ -27,6 +27,11 @@ const baiths = [
     description: "The Full Moon Rose Over Us",
     link: "/baith/tala-al-badru-alayna-baith",
   },
+  {
+    title: "Ya Akrama Baith",
+    description: "The Full Moon Rose Over Us",
+    link: "/baith/ya-akrama-baith",
+  },
   // Add more Baiths as needed
 ];
 

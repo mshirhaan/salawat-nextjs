@@ -874,6 +874,331 @@ const allBaiths: AllBaiths = {
     audioUrl:
       "https://od.lk/s/NjRfNDE4MTY2ODRf/Tala%20Al%20Badru%20%27Alayna%20By%20Syrian%20Munshids.mp3", // Optional audio URL if needed
   },
+  "ya-akrama-baith": {
+    title: "Ya Akraman Baith",
+    lines: [
+      {
+        arabic:
+          "مَوْلاَىَ صَلِّ وَسَلِّمْ دَائِمًا اَبَدًا\nعَلَى حَبِيْبِيكَ خَيْرٍ الْخَلْقِ كُلِّهِمِ",
+        translations: {
+          en: "My Master, descend peace and blessings continuously and eternally (non-existence)\nOn Your Beloved, the Best of All Creation.",
+        },
+        words: [
+          { word: "مَوْلاَىَ", translations: { en: "My Master" } },
+          { word: "صَلِّ", translations: { en: "Descend peace" } },
+          { word: "وَسَلِّمْ", translations: { en: "And blessings" } },
+          { word: "دَائِمًا", translations: { en: "Continuously" } },
+          { word: "اَبَدًا", translations: { en: "And eternally" } },
+          { word: "عَلَى", translations: { en: "On" } },
+          { word: "حَبِيْبِيكَ", translations: { en: "Your Beloved" } },
+          { word: "خَيْرٍ", translations: { en: "The Best of" } },
+          { word: "الْخَلْقِ", translations: { en: "All Creation" } },
+          { word: "كُلِّهِمِ", translations: { en: "Among them" } },
+        ],
+        startTime: 59,
+        endTime: 75, // Adjusted end time
+      },
+
+      {
+        arabic:
+          "يَا أَكْرَمَ الْخَلْقِ مَا لِي مَنْ أَلُوذُ بِهِ\nسِوَاكَ عِنْدَ حُلُولِ الْحَادِثِ الْعَمِمِ",
+        translations: {
+          en: "O Noblest of Creation, whose protection can I seek but yours, when the Universal Event comes to pass?",
+        },
+        words: [
+          { word: "يَا", translations: { en: "O" } },
+          { word: "أَكْرَمَ", translations: { en: "Noblest" } },
+          { word: "الْخَلْقِ", translations: { en: "Of Creation" } },
+          { word: "مَا", translations: { en: "Whose" } },
+          { word: "لِي", translations: { en: "Can I" } },
+          { word: "مَنْ", translations: { en: "Seek" } },
+          { word: "أَلُوذُ", translations: { en: "Protection" } },
+          { word: "بِهِ", translations: { en: "But yours" } },
+          { word: "سِوَاكَ", translations: { en: "When" } },
+          { word: "عِنْدَ", translations: { en: "The" } },
+          { word: "حُلُولِ", translations: { en: "Universal" } },
+          { word: "الْحَادِثِ", translations: { en: "Event" } },
+          { word: "الْعَمِمِ", translations: { en: "Comes to pass" } },
+        ],
+        startTime: 75.6,
+        endTime: 91.3, // Adjusted end time
+      },
+      {
+        arabic:
+          "وَلَنْ يَضِيقَ رَسُولَ اللهِ جَاهُكَ بِي\nإِذَا الْكَرِيمُ تَجَلَّى بِاسْمِ مُنْتَقِمِ",
+        translations: {
+          en: "O Emissary of Allah, your rank will not be diminished by me when the Generous One appears, named as the Avenger.",
+        },
+        words: [
+          { word: "وَلَنْ", translations: { en: "And will not" } },
+          { word: "يَضِيقَ", translations: { en: "Be diminished" } },
+          { word: "رَسُولَ", translations: { en: "O Emissary" } },
+          { word: "اللهِ", translations: { en: "Of Allah" } },
+          { word: "جَاهُكَ", translations: { en: "Your rank" } },
+          { word: "بِي", translations: { en: "By me" } },
+          { word: "إِذَا", translations: { en: "When" } },
+          { word: "الْكَرِيمُ", translations: { en: "The Generous One" } },
+          { word: "تَجَلَّى", translations: { en: "Appears" } },
+          { word: "بِاسْمِ", translations: { en: "Named as" } },
+          { word: "مُنْتَقِمِ", translations: { en: "The Avenger" } },
+        ],
+        startTime: 107.6,
+        endTime: 123, // Adjusted end time
+      },
+      {
+        arabic:
+          "فَإِنَّ مِنْ جُودِكَ الدُّنْيَا وَضَرَّتَهَا\nوَمِنْ عُلُومِكَ عِلْمَ اللَّوْحِ وَالْقَلَمِ",
+        translations: {
+          en: "For this world and its companion the Next come from your bounty, and part of what you know is knowledge of the Tablet and Pen.",
+        },
+        words: [
+          { word: "فَإِنَّ", translations: { en: "For" } },
+          { word: "مِنْ", translations: { en: "This" } },
+          { word: "جُودِكَ", translations: { en: "World" } },
+          { word: "الدُّنْيَا", translations: { en: "And its" } },
+          { word: "وَضَرَّتَهَا", translations: { en: "Companion the Next" } },
+          { word: "وَمِنْ", translations: { en: "Come from" } },
+          { word: "عُلُومِكَ", translations: { en: "Your bounty" } },
+          { word: "عِلْمَ", translations: { en: "And part of" } },
+          { word: "اللَّوْحِ", translations: { en: "What you know" } },
+          {
+            word: "وَالْقَلَمِ",
+            translations: { en: "Is knowledge of the Tablet and Pen" },
+          },
+        ],
+        startTime: 139.5,
+        endTime: 155, // Adjusted end time
+      },
+      {
+        arabic:
+          "يَا نَفْسُ لَا تَقْنَطِي مِنْ زَلَّةٍ عَظُمَتْ\nإِنَّ الْكَبَائِرَ فِي الْغُفْرَانِ كَاللَّمَمِ",
+        translations: {
+          en: "O soul, despair not over a fault that is immense; Enormities, with divine forgiveness, are like minor errors.",
+        },
+        words: [
+          { word: "يَا", translations: { en: "O" } },
+          { word: "نَفْسُ", translations: { en: "Soul" } },
+          { word: "لَا", translations: { en: "Do not" } },
+          { word: "تَقْنَطِي", translations: { en: "Despair" } },
+          { word: "مِنْ", translations: { en: "Over" } },
+          { word: "زَلَّةٍ", translations: { en: "A fault" } },
+          { word: "عَظُمَتْ", translations: { en: "That is immense" } },
+          { word: "إِنَّ", translations: { en: "Indeed" } },
+          { word: "الْكَبَائِرَ", translations: { en: "The enormities" } },
+          { word: "فِي", translations: { en: "With" } },
+          { word: "الْغُفْرَانِ", translations: { en: "Divine forgiveness" } },
+          {
+            word: "كَاللَّمَمِ",
+            translations: { en: "Are like minor errors" },
+          },
+        ],
+        startTime: 171.5,
+        endTime: 186.5, // Adjusted end time
+      },
+      {
+        arabic:
+          "لَعَلَّ رَحْمَةَ رَبِّي حِينَ يَقْسِمُهَا\nتَأْتِي عَلَى حَسَبِ الْعِصْيَانِ فِي الْقِسَمِ",
+        translations: {
+          en: "Perchance my Lord’s mercy, when He apportions it, will be distributed in accordance with the measure of sins.",
+        },
+        words: [
+          { word: "لَعَلَّ", translations: { en: "Perchance" } },
+          { word: "رَحْمَةَ", translations: { en: "Mercy" } },
+          { word: "رَبِّي", translations: { en: "Of my Lord" } },
+          { word: "حِينَ", translations: { en: "When" } },
+          { word: "يَقْسِمُهَا", translations: { en: "He apportions it" } },
+          { word: "تَأْتِي", translations: { en: "Will come" } },
+          { word: "عَلَى", translations: { en: "In accordance with" } },
+          { word: "حَسَبِ", translations: { en: "The measure of" } },
+          { word: "الْعِصْيَانِ", translations: { en: "Sins" } },
+          { word: "فِي", translations: { en: "In" } },
+          { word: "الْقِسَمِ", translations: { en: "The distribution" } },
+        ],
+        startTime: 203,
+        endTime: 218.83, // Adjusted end time
+      },
+      {
+        arabic:
+          "يَا رَبِّ وَاجْعَلْ رَجَائِي غَيْرَ مُنْعَكِسٍ\nلَدَيْكَ وَاجْعَلْ حِسَابِي غَيْرَ مُنْخَرِمِ",
+        translations: {
+          en: "O my Lord, let not my hope in You be overturned and do not make my account devoid of value.",
+        },
+        words: [
+          { word: "يَا", translations: { en: "O" } },
+          { word: "رَبِّ", translations: { en: "My Lord" } },
+          { word: "وَاجْعَلْ", translations: { en: "Let" } },
+          { word: "رَجَائِي", translations: { en: "My hope" } },
+          { word: "غَيْرَ", translations: { en: "Not" } },
+          { word: "مُنْعَكِسٍ", translations: { en: "Overturned" } },
+          { word: "لَدَيْكَ", translations: { en: "In You" } },
+          { word: "وَاجْعَلْ", translations: { en: "And make" } },
+          { word: "حِسَابِي", translations: { en: "My account" } },
+          { word: "غَيْرَ", translations: { en: "Not" } },
+          { word: "مُنْخَرِمِ", translations: { en: "Devoid of value" } },
+        ],
+        startTime: 235.08,
+        endTime: 250.9, // Adjusted end time
+      },
+      {
+        arabic:
+          "وَالْطُفْ بِعَبْدِكَ فِي الدَّارَيْنِ إِنَّ لَهُ\nصَبْرًا مَتَى تَدْعُهُ الْأَهْوَالُ يَنْهَزِمِ",
+        translations: {
+          en: "Be gentle with Your servant in this life and the Next; for his patience flees when he is visited by terrors.",
+        },
+        words: [
+          { word: "وَالْطُفْ", translations: { en: "And be gentle" } },
+          { word: "بِعَبْدِكَ", translations: { en: "With Your servant" } },
+          { word: "فِي", translations: { en: "In" } },
+          {
+            word: "الدَّارَيْنِ",
+            translations: { en: "This life and the Next" },
+          },
+          { word: "إِنَّ", translations: { en: "For" } },
+          { word: "لَهُ", translations: { en: "He has" } },
+          { word: "صَبْرًا", translations: { en: "Patience" } },
+          { word: "مَتَى", translations: { en: "When" } },
+          { word: "تَدْعُهُ", translations: { en: "He is visited by" } },
+          { word: "الْأَهْوَالُ", translations: { en: "Terrors" } },
+          { word: "يَنْهَزِمِ", translations: { en: "Fleets" } },
+        ],
+        startTime: 267.01,
+        endTime: 285.4, // Adjusted end time
+      },
+      {
+        arabic:
+          "وَأْذَنْ لِسُحْبِ صَلَاةٍ مِنْكَ دَائِمَةٍ\nعَلَى النَّبِيِّ بِمُنْهَلٍّ وَمُنْسَجِمِ",
+        translations: {
+          en: "And may clouds of Your blessings rain down constantly upon the Prophet, pouring down in abundance.",
+        },
+        words: [
+          { word: "وَأْذَنْ", translations: { en: "And may grant" } },
+          { word: "لِسُحْبِ", translations: { en: "To the clouds of" } },
+          { word: "صَلَاةٍ", translations: { en: "Blessings" } },
+          { word: "مِنْكَ", translations: { en: "From You" } },
+          { word: "دَائِمَةٍ", translations: { en: "Constantly" } },
+          { word: "عَلَى", translations: { en: "Upon" } },
+          { word: "النَّبِيِّ", translations: { en: "The Prophet" } },
+          { word: "بِمُنْهَلٍّ", translations: { en: "In abundance" } },
+          { word: "وَمُنْسَجِمِ", translations: { en: "Pouring down" } },
+        ],
+        startTime: 303.5,
+        endTime: 321.5, // Adjusted end time
+      },
+      {
+        arabic:
+          "وَالْآلِ وَالصَّحْبِ ثُمَّ التَّابِعِينَ فَهُمْ\nأَهْلُ التُّقَى وَالنَّقَى وَالْحِلْمِ وَالْكَرَمِ",
+        translations: {
+          en: "And to the Family and the Companions, and then the Followers—the people of Godfearingness, purity, forbearance and generosity.",
+        },
+        words: [
+          { word: "وَالْآلِ", translations: { en: "And to the Family" } },
+          { word: "وَالصَّحْبِ", translations: { en: "And the Companions" } },
+          { word: "ثُمَّ", translations: { en: "And then" } },
+          { word: "التَّابِعِينَ", translations: { en: "The Followers" } },
+          { word: "فَهُمْ", translations: { en: "They are" } },
+          { word: "أَهْلُ", translations: { en: "The people of" } },
+          { word: "التُّقَى", translations: { en: "Godfearingness" } },
+          { word: "وَالنَّقَى", translations: { en: "Purity" } },
+          { word: "وَالْحِلْمِ", translations: { en: "Forbearance" } },
+          { word: "وَالْكَرَمِ", translations: { en: "And Generosity" } },
+        ],
+        startTime: 339.5,
+        endTime: 357, // Adjusted end time
+      },
+      {
+        arabic:
+          "مَا رَنَّحَتْ عَذَبَاتِ الْبَانِ رِيحُ صَبًا\nوَأَطْرَبَ الْعِيسَ حَادِي الْعِيسِ بِالنَّغَمِ",
+        translations: {
+          en: "For as long as the east wind stirs the branches of willows, and camel-drivers bring joy to their camels with melody.",
+        },
+        words: [
+          { word: "مَا", translations: { en: "For as long as" } },
+          { word: "رَنَّحَتْ", translations: { en: "The stirs" } },
+          { word: "عَذَبَاتِ", translations: { en: "Of willows" } },
+          { word: "الْبَانِ", translations: { en: "Branches" } },
+          { word: "رِيحُ", translations: { en: "The wind" } },
+          { word: "صَبًا", translations: { en: "Of the east" } },
+          { word: "وَأَطْرَبَ", translations: { en: "And brings joy" } },
+          { word: "الْعِيسَ", translations: { en: "To the camels" } },
+          { word: "حَادِي", translations: { en: "Camel-drivers" } },
+          { word: "الْعِيسِ", translations: { en: "The camels" } },
+          { word: "بِالنَّغَمِ", translations: { en: "With melody" } },
+        ],
+        startTime: 375.5,
+        endTime: 391.29, // Adjusted end time
+      },
+      {
+        arabic:
+          "ثُمَّ الرِّضَا عَنْ أَبِي بَكْرٍ وَعَنْ عُمَرَ\nوَعَنْ عَلِيٍّ وَعَنْ عُثْمَانَ ذِي الْكَرَمِ",
+        translations: {
+          en: "Then extend Your good-pleasure to Abū Bakr and to ʿUmar and to ‘Ali, and to ʿUthmān, the generous.",
+        },
+        words: [
+          { word: "ثُمَّ", translations: { en: "Then" } },
+          { word: "الرِّضَا", translations: { en: "Your good-pleasure" } },
+          { word: "عَنْ", translations: { en: "To" } },
+          { word: "أَبِي", translations: { en: "Abū" } },
+          { word: "بَكْرٍ", translations: { en: "Bakr" } },
+          { word: "وَعَنْ", translations: { en: "And to" } },
+          { word: "عُمَرَ", translations: { en: "ʿUmar" } },
+          { word: "وَعَنْ", translations: { en: "And to" } },
+          { word: "عَلِيٍّ", translations: { en: "‘Ali" } },
+          { word: "وَعَنْ", translations: { en: "And to" } },
+          { word: "عُثْمَانَ", translations: { en: "ʿUthmān" } },
+          { word: "ذِي", translations: { en: "The" } },
+          { word: "الْكَرَمِ", translations: { en: "Generous" } },
+        ],
+        startTime: 407.7,
+        endTime: 423.35, // Adjusted end time
+      },
+      {
+        arabic:
+          "سَعْدٍ سَعِيدٍ زُبَيْرٍ طَلْحَةٍ وَأَبِى\nعُبَيْدَةٍ وَابْنِ عَوْفٍ عَاشِرِ الْكَرَمِ",
+        translations: {
+          en: "And extend Your good-pleasure to Sa'd, Sa'eed, Zubayr, Talha, and Abu 'Ubaydah, and Ibn 'Awf, the tenth of the generous ones.",
+        },
+        words: [
+          { word: "سَعْدٍ", translations: { en: "Sa'd" } },
+          { word: "سَعِيدٍ", translations: { en: "Sa'eed" } },
+          { word: "زُبَيْرٍ", translations: { en: "Zubayr" } },
+          { word: "طَلْحَةٍ", translations: { en: "Talha" } },
+          { word: "وَأَبِى", translations: { en: "And Abu" } },
+          { word: "عُبَيْدَةٍ", translations: { en: "'Ubaydah" } },
+          { word: "وَابْنِ", translations: { en: "And Ibn" } },
+          { word: "عَوْفٍ", translations: { en: "'Awf" } },
+          { word: "عَاشِرِ", translations: { en: "The tenth of" } },
+          { word: "الْكَرَمِ", translations: { en: "The generous ones" } },
+        ],
+        startTime: 439.5,
+        endTime: 455.5, // Adjusted end time
+      },
+      {
+        arabic:
+          "يَا رَبِّ بِالْمُصْطَفَى بَلِّغْ مَقَاصِدَنَا\nوَاغْفِرْ لَنَا مَا مَضَى يَا وَاسِعَ الْكَرَمِ",
+        translations: {
+          en: "O Lord, by the Chosen One, allow us to attain our hopes\nAnd forgive us for what has gone past, O Vastly Generous.",
+        },
+        words: [
+          { word: "يَا", translations: { en: "O" } },
+          { word: "رَبِّ", translations: { en: "Lord" } },
+          { word: "بِالْمُصْطَفَى", translations: { en: "By the Chosen One" } },
+          { word: "بَلِّغْ", translations: { en: "Allow us to attain" } },
+          { word: "مَقَاصِدَنَا", translations: { en: "Our hopes" } },
+          { word: "وَاغْفِرْ", translations: { en: "And forgive" } },
+          { word: "لَنَا", translations: { en: "Us" } },
+          { word: "مَا", translations: { en: "What" } },
+          { word: "مَضَى", translations: { en: "Has gone past" } },
+          { word: "يَا", translations: { en: "O" } },
+          { word: "وَاسِعَ", translations: { en: "Vastly" } },
+          { word: "الْكَرَمِ", translations: { en: "Generous" } },
+        ],
+        startTime: 471.8,
+        endTime: 503.9, // Adjusted end time
+      },
+    ],
+    audioUrl:
+      "https://od.lk/s/NjRfNDE4MTY2OTJf/Qasweedathul%20burdah%20%20Ya%20akrama%20baith%20%20Hafiz%20Swadiq%20Ali%20Fazili.mp3",
+  },
 };
 
 export default allBaiths;
