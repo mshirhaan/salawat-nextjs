@@ -875,7 +875,7 @@ const allBaiths: AllBaiths = {
       "https://od.lk/s/NjRfNDE4MTY2ODRf/Tala%20Al%20Badru%20%27Alayna%20By%20Syrian%20Munshids.mp3", // Optional audio URL if needed
   },
   "ya-akrama-baith": {
-    title: "Ya Akraman Baith",
+    title: "Ya Akrama Baith",
     lines: [
       {
         arabic:
