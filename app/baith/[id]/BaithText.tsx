@@ -90,6 +90,7 @@ export const BaithText: React.FC<Props> = ({ lines, currentTime }) => {
               : inactiveBgColor
           }
           position="relative"
+          overflow={"hidden"}
         >
           <Text
             fontSize="2rem"
