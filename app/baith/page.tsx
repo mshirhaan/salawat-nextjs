@@ -22,6 +22,11 @@ const baiths = [
     description: "A beautiful Baith to uplift your spirit.",
     link: "/baith/ashraqa-baith",
   },
+  {
+    title: "Tala‘al Badru ‘Alayna",
+    description: "The Full Moon Rose Over Us",
+    link: "/baith/tala-al-badru-alayna-baith",
+  },
   // Add more Baiths as needed
 ];
 

@@ -15,7 +15,13 @@ export default function Footer() {
   const dividerColor = useColorModeValue("green.200", "gray.600");
 
   return (
-    <Box bg={bgColor} color={textColor} py={6}>
+    <Box
+      position={"relative"}
+      zIndex={1000}
+      bg={bgColor}
+      color={textColor}
+      py={6}
+    >
       <VStack spacing={2}>
         <Text fontWeight="bold" fontSize="lg">
           © {new Date().getFullYear()} Salawat App. All rights reserved.

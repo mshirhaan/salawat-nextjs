@@ -695,6 +695,185 @@ const allBaiths: AllBaiths = {
     ],
     audioUrl: "https://od.lk/s/NjRfNDE4MTQ5OTdf/ashraqa-baith.mp3", // Optional audio URL if needed
   },
+  "tala-al-badru-alayna-baith": {
+    title: "Tala‘al Badru ‘Alayna",
+    lines: [
+      {
+        arabic: "طَلَعَ الْبَدْرُ عَلَيْنَا مِنْ ثَنِيَّاتِ الْوِدَاعْ",
+        translations: {
+          en: "The full moon rose over us from the Pass of Wada.",
+        },
+        words: [
+          { word: "طَلَعَ", translations: { en: "Rose" } },
+          { word: "الْبَدْرُ", translations: { en: "The full moon" } },
+          { word: "عَلَيْنَا", translations: { en: "Over us" } },
+          { word: "مِنْ", translations: { en: "From" } },
+          { word: "ثَنِيَّاتِ", translations: { en: "The Pass" } },
+          { word: "الْوِدَاعْ", translations: { en: "Of Wada" } },
+        ],
+        startTime: 0,
+        endTime: 9, // Adjusted end time
+      },
+      {
+        arabic: "وَجَبَ الشَّكْرُ عَلَيْنَا مَا دَعَا لِلَّهِ دَاعْ",
+        translations: {
+          en: "Giving thanks is incumbent upon us as long as a caller calls to Allah.",
+        },
+        words: [
+          { word: "وَجَبَ", translations: { en: "It is incumbent" } },
+          { word: "الشَّكْرُ", translations: { en: "The thanks" } },
+          { word: "عَلَيْنَا", translations: { en: "Upon us" } },
+          { word: "مَا", translations: { en: "As long as" } },
+          { word: "دَعَا", translations: { en: "A caller calls" } },
+          { word: "لِلَّهِ", translations: { en: "To Allah" } },
+          { word: "دَاعْ", translations: { en: "A caller" } },
+        ],
+        startTime: 10,
+        endTime: 18, // Adjusted end time
+      },
+      {
+        arabic: "أَيُّهَا الْمَبْعُوثُ فِيْنَا جِئْتَ بِالْأَمْرِ الْمُطَاعْ",
+        translations: {
+          en: "O he who has been sent to us, you came with a command that is obeyed.",
+        },
+        words: [
+          { word: "أَيُّهَا", translations: { en: "O" } },
+          {
+            word: "الْمَبْعُوثُ",
+            translations: { en: "He who has been sent" },
+          },
+          { word: "فِيْنَا", translations: { en: "To us" } },
+          { word: "جِئْتَ", translations: { en: "You came" } },
+          { word: "بِالْأَمْرِ", translations: { en: "With a command" } },
+          { word: "الْمُطَاعْ", translations: { en: "That is obeyed" } },
+        ],
+        startTime: 18.1,
+        endTime: 27, // Adjusted end time
+      },
+      {
+        arabic: "جِئْتَ شَرَّفْتَ الْمَدِينَةُ مَرْحَباً يَا خَيْرَ دَاعْ",
+        translations: {
+          en: "You came and honoured Medina. Welcome, O best of callers.",
+        },
+        words: [
+          { word: "جِئْتَ", translations: { en: "You came" } },
+          { word: "شَرَّفْتَ", translations: { en: "And honoured" } },
+          { word: "الْمَدِينَةُ", translations: { en: "Medina" } },
+          { word: "مَرْحَباً", translations: { en: "Welcome" } },
+          { word: "يَا", translations: { en: "O" } },
+          { word: "خَيْرَ", translations: { en: "Best of" } },
+          { word: "دَاعْ", translations: { en: "Callers" } },
+        ],
+        startTime: 27.1,
+        endTime: 35, // Adjusted end time
+      },
+      {
+        arabic: "مَرْحَباً يَا مُصْطَفَانَا نُورُكَ الْبَاهِي أَضَاءُ",
+        translations: {
+          en: "Welcome, O our chosen one. Your precious light shines.",
+        },
+        words: [
+          { word: "مَرْحَباً", translations: { en: "Welcome" } },
+          { word: "يَا", translations: { en: "O" } },
+          { word: "مُصْطَفَانَا", translations: { en: "Our chosen one" } },
+          { word: "نُورُكَ", translations: { en: "Your light" } },
+          { word: "الْبَاهِي", translations: { en: "Precious" } },
+          { word: "أَضَاءُ", translations: { en: "Shines" } },
+        ],
+        startTime: 35.1,
+        endTime: 44, // Adjusted end time
+      },
+      {
+        arabic: "رَغْمَ أَنْفِ الْمُلْحِدِينَ فَيْضُهُ عَمَّ الْبِقَاعْ",
+        translations: {
+          en: "Despite the unbelievers, His generous overflowing has encompassed all quarters.",
+        },
+        words: [
+          { word: "رَغْمَ", translations: { en: "Despite" } },
+          { word: "أَنْفِ", translations: { en: "The nose" } },
+          {
+            word: "الْمُلْحِدِينَ",
+            translations: { en: "Of the unbelievers" },
+          },
+          {
+            word: "فَيْضُهُ",
+            translations: { en: "His generous overflowing" },
+          },
+          { word: "عَمَّ", translations: { en: "Has encompassed" } },
+          { word: "الْبِقَاعْ", translations: { en: "All quarters" } },
+        ],
+        startTime: 44.1,
+        endTime: 54, // Adjusted end time
+      },
+      {
+        arabic: "صَفْوَةُ الْبَارِي مُحَمَّدٌ دُرَّةٌ لِّلْكَائِنَاتْ",
+        translations: {
+          en: "The elect one of the Creator, Muhammad, the pearl of all creation.",
+        },
+        words: [
+          { word: "صَفْوَةُ", translations: { en: "The elect one" } },
+          { word: "الْبَارِي", translations: { en: "Of the Creator" } },
+          { word: "مُحَمَّدٌ", translations: { en: "Muhammad" } },
+          { word: "دُرَّةٌ", translations: { en: "The pearl" } },
+          { word: "لِّلْكَائِنَاتْ", translations: { en: "Of all creation" } },
+        ],
+        startTime: 70.9,
+        endTime: 79, // Adjusted end time
+      },
+      {
+        arabic: "مَدْحُهُ بَلْسَمْ لِرُوحِي وَلَهُ يَحْلُو السَّمَاعُ",
+        translations: {
+          en: "Praising him is a healing balm for my soul; it is sweet to hear.",
+        },
+        words: [
+          { word: "مَدْحُهُ", translations: { en: "Praising him" } },
+          { word: "بَلْسَمْ", translations: { en: "Is a healing balm" } },
+          { word: "لِرُوحِي", translations: { en: "For my soul" } },
+          { word: "وَلَهُ", translations: { en: "It is" } },
+          { word: "يَحْلُو", translations: { en: "Sweet" } },
+          { word: "السَّمَاعُ", translations: { en: "To hear" } },
+        ],
+        startTime: 79.1,
+        endTime: 87, // Adjusted end time
+      },
+      {
+        arabic: "أَشْرَقَتْ شَمْسُ الْكَمَالِ بِكَ يَا بَاهِي الجَمَالُ",
+        translations: {
+          en: "The sun of perfection rose with you, O possessor of splendid beauty.",
+        },
+        words: [
+          { word: "أَشْرَقَتْ", translations: { en: "The rose" } },
+          { word: "شَمْسُ", translations: { en: "The sun" } },
+          { word: "الْكَمَالِ", translations: { en: "Of perfection" } },
+          { word: "بِكَ", translations: { en: "With you" } },
+          { word: "يَا", translations: { en: "O" } },
+          { word: "بَاهِي", translations: { en: "Possessor of splendid" } },
+          { word: "الجَمَالُ", translations: { en: "Beauty" } },
+        ],
+        startTime: 106,
+        endTime: 115, // Adjusted end time
+      },
+      {
+        arabic: "جَلَّ مَنْ سَوَّاكَ حَقًّا دَائِماً لِلْخَيْرِ سَاعْ",
+        translations: {
+          en: "Exalted is He who has made you in truth; you always hasten to that which is good.",
+        },
+        words: [
+          { word: "جَلَّ", translations: { en: "Exalted" } },
+          { word: "مَنْ", translations: { en: "Is He who" } },
+          { word: "سَوَّاكَ", translations: { en: "Has made you" } },
+          { word: "حَقًّا", translations: { en: "In truth" } },
+          { word: "دَائِماً", translations: { en: "Always" } },
+          { word: "لِلْخَيْرِ", translations: { en: "To that which is good" } },
+          { word: "سَاعْ", translations: { en: "Hasten" } },
+        ],
+        startTime: 97.3,
+        endTime: 108.0, // Adjusted end time
+      },
+    ],
+    audioUrl:
+      "https://od.lk/s/NjRfNDE4MTY2ODRf/Tala%20Al%20Badru%20%27Alayna%20By%20Syrian%20Munshids.mp3", // Optional audio URL if needed
+  },
 };
 
 export default allBaiths;
