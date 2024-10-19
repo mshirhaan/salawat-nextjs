@@ -18,6 +18,8 @@ export default function BaithPage({ params }: { params: { id: string } }) {
   const bgColor = useColorModeValue("gray.50", "gray.900");
   const textColor = useColorModeValue("gray.800", "gray.100");
 
+  const accentColor = useColorModeValue("green.600", "green.400");
+
   const handleTimeUpdate = (time: number) => setCurrentTime(time);
 
   if (!baithData) {
@@ -33,7 +35,12 @@ export default function BaithPage({ params }: { params: { id: string } }) {
   return (
     <Box minHeight="100vh" bg={bgColor} color={textColor} p={4}>
       <VStack spacing={8} align="stretch">
-        <Text fontSize="3xl" fontWeight="bold" textAlign="center">
+        <Text
+          fontSize="3xl"
+          fontWeight="bold"
+          textAlign="center"
+          color={accentColor}
+        >
           {baithData.title}
         </Text>
 

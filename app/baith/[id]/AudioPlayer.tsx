@@ -7,6 +7,7 @@ import {
   SliderFilledTrack,
   SliderThumb,
   HStack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { FaPlay, FaPause } from "react-icons/fa";
 
@@ -23,6 +24,10 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const buttonColor = useColorModeValue("green.100", "green.700");
+
+  const filledTrackBg = useColorModeValue("green.400", "green.800"); // Background for the filled track
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -77,7 +82,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
           onClick={togglePlayPause}
           aria-label={isPlaying ? "Pause" : "Play"}
           icon={isPlaying ? <FaPause /> : <FaPlay />}
-          colorScheme="teal"
+          bg={buttonColor}
           size="lg"
         />
         <Slider
@@ -90,7 +95,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
           focusThumbOnChange={false}
         >
           <SliderTrack>
-            <SliderFilledTrack />
+            <SliderFilledTrack bg={filledTrackBg} />
           </SliderTrack>
           <SliderThumb />
         </Slider>
