@@ -8,7 +8,13 @@ export default function Footer() {
   const textColor = useColorModeValue("green.800", "green.200");
 
   return (
-    <Box bg={bgColor} color={textColor} py={4}>
+    <Box
+      bg={bgColor}
+      color={textColor}
+      py={4}
+      zIndex={1000}
+      position={"relative"}
+    >
       <Text textAlign="center">
         © {new Date().getFullYear()} Salawat App. All rights reserved.
       </Text>
