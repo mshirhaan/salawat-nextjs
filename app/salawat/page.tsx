@@ -194,6 +194,7 @@ export default function HomePage() {
 
   const handleSetTargetClick = (salawat: SalawatData) => {
     setSelectedSalawat(salawat);
+    setDailyTarget(userTargets[salawat.id]?.target || 0);
     onOpen();
   };
 
