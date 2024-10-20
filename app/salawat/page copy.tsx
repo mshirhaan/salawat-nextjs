@@ -32,11 +32,9 @@ import {
   Progress,
   Badge,
   useColorModeValue,
-  Container,
-  SimpleGrid,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { InfoIcon, EditIcon, SearchIcon, StarIcon } from "@chakra-ui/icons";
+import { InfoIcon, EditIcon } from "@chakra-ui/icons";
 import { BsPinFill, BsPin } from "react-icons/bs";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase"; // Adjust the import path as needed
@@ -123,10 +121,8 @@ export default function HomePage() {
     "linear-gradient(to right, #f2e6d9, #e6ccb3)",
     "linear-gradient(to right, #3e2723, #4e342e)"
   );
-  const hoverBgColor = useColorModeValue("teal.50", "teal.900");
+  const hoverBgColor = useColorModeValue(colors.teal[50], colors.teal[900]);
   const mutedTextColor = useColorModeValue("gray.600", "gray.400");
-
-  const columnCount = useBreakpointValue({ base: 1, md: 2, lg: 3 });
 
   useEffect(() => {
     async function fetchSalawatList() {
@@ -305,7 +301,7 @@ export default function HomePage() {
   };
 
   return (
-    <Box bg={bgColor} minHeight="100vh">
+    <Box p={5} bg={bgColor} minHeight="100vh">
       <Joyride
         steps={tourSteps}
         continuous
@@ -315,19 +311,19 @@ export default function HomePage() {
         run={isTourOpen}
         callback={handleTourCallback}
         styles={{
-          options: {
-            primaryColor: useColorModeValue("#38B2AC", "#81E6D9"),
+          beacon: {
+            display: "none", // Hide the beacon completely
           },
         }}
       />
 
       <Box
         bg={gradientBg}
-        py={16}
-        px={8}
-        mb={12}
+        py={12} // Increased vertical padding
+        px={6} // Added horizontal padding
+        mb={8}
         borderRadius="lg"
-        boxShadow="xl"
+        boxShadow="lg"
         position="relative"
         overflow="hidden"
       >
@@ -343,98 +339,88 @@ export default function HomePage() {
           bgPosition="center"
           bgSize="cover"
         />
-
-        <Container maxW="container.xl" position="relative" zIndex={1}>
-          <Heading
-            as="h1"
-            size="2xl"
-            textAlign="center"
-            color={headingColor}
-            fontWeight="bold"
-            fontFamily="'Amiri', serif"
-            mb={4}
-          >
-            📿 صلوا علی الحبیب ﷺ
-          </Heading>
-          <Text
-            textAlign="center"
-            color={textColor}
-            fontSize="xl"
-            fontWeight="medium"
-            textShadow="1px 1px 2px rgba(0, 0, 0, 0.6)"
-          >
-            Blessings from The Enlightened City
+        <Heading
+          as="h1"
+          size={headingSize}
+          textAlign="center"
+          color={headingColor}
+          fontWeight="bold"
+          fontFamily="'Amiri', serif"
+          position="relative"
+          zIndex={1}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Text as="span" fontSize="1.2em" mr={2}>
+            📿
           </Text>
-        </Container>
+          صلوا علی الحبیب ﷺ
+        </Heading>
+
+        <Text
+          textAlign="center"
+          color={textColor}
+          mt={4} // Adjusted margin top for spacing
+          fontSize="lg"
+          fontWeight="medium"
+          position="relative"
+          zIndex={1}
+          textShadow="1px 1px 2px rgba(0, 0, 0, 0.6)"
+        >
+          Blessings from The Enlightened City
+        </Text>
       </Box>
 
-      <Container maxW="container.xl" px={4} pb={4}>
-        <Box mb={8} position="relative">
-          <Input
-            placeholder="Search Salawat..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            size="lg"
-            variant="filled"
-            bg={cardBgColor}
-            pr="4rem"
-            className="search-input"
-          />
-          <IconButton
-            icon={<SearchIcon />}
-            position="absolute"
-            right={2}
-            top="50%"
-            transform="translateY(-50%)"
-            aria-label="Search"
-            variant="ghost"
-          />
-        </Box>
+      <Box mb={6}>
+        <Input
+          placeholder="Search Salawat..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          size="lg"
+          variant="outline"
+          bg={cardBgColor}
+          className="search-input"
+        />
+      </Box>
+      {loading ? (
+        <Flex justify="center" align="center" height="100vh">
+          <Spinner size="xl" color="teal.500" />
+        </Flex>
+      ) : (
+        <VStack spacing={4} align="stretch">
+          {filteredSalawatList
+            .sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0)) // Pin items to the top
+            .map((salawat) => {
+              const progress = userTargets[salawat.id]?.progress[today] || 0;
+              const target = userTargets[salawat.id]?.target || 0;
+              const progressPercentage =
+                target > 0 ? (progress / target) * 100 : 0;
 
-        {loading ? (
-          <Flex justify="center" align="center" height="50vh">
-            <Spinner size="xl" color="teal.500" thickness="4px" />
-          </Flex>
-        ) : (
-          <SimpleGrid columns={columnCount} spacing={6}>
-            {filteredSalawatList
-              .sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0))
-              .map((salawat) => {
-                const progress = userTargets[salawat.id]?.progress[today] || 0;
-                const target = userTargets[salawat.id]?.target || 0;
-                const progressPercentage =
-                  target > 0 ? (progress / target) * 100 : 0;
-                const firstLineArabic = salawat.lines[0]?.arabic || "";
+              // Get the first line of Arabic text
+              const firstLineArabic = salawat.lines[0]?.arabic || "";
 
-                return (
-                  <Box
-                    key={salawat.id}
-                    p={6}
-                    borderWidth={1}
-                    borderRadius="lg"
-                    bg={cardBgColor}
-                    boxShadow="md"
-                    _hover={{
-                      boxShadow: "lg",
-                      bg: hoverBgColor,
-                      transform: "translateY(-4px)",
-                      transition: "all 0.3s ease",
-                    }}
-                    cursor="pointer"
-                    onClick={() => handleCardClick(salawat.id)}
-                    className="salawat-card"
-                    position="relative"
-                  >
-                    {salawat.pinned && (
-                      <StarIcon
-                        position="absolute"
-                        top={2}
-                        right={2}
-                        color="yellow.400"
-                      />
-                    )}
-                    <VStack align="stretch" spacing={4}>
-                      <Heading size="md" color={textColor}>
+              return (
+                <Box
+                  key={salawat.id}
+                  p={itemPadding}
+                  borderWidth={1}
+                  borderRadius={itemBorderRadius}
+                  bg={cardBgColor}
+                  boxShadow="md"
+                  _hover={{
+                    boxShadow: "lg",
+                    bg: hoverBgColor,
+                    transform: "scale(1.02)",
+                    transition: "all 0.3s ease",
+                  }}
+                  cursor="pointer"
+                  onClick={() => handleCardClick(salawat.id)}
+                  className="salawat-card"
+                >
+                  <HStack justify="space-between">
+                    <Box>
+                      <Heading size="md" mb={1} color={textColor}>
                         {salawat.title}
                       </Heading>
                       {salawat.description && (
@@ -443,104 +429,91 @@ export default function HomePage() {
                         </Text>
                       )}
                       <Text
-                        fontSize="lg"
+                        fontSize="md"
                         color={textColor}
                         fontFamily="'Uthmanic', 'Amiri', serif"
                         dir="rtl"
-                        noOfLines={2}
-                        textAlign="right"
+                        noOfLines={1}
+                        textAlign={"right"}
                         title={firstLineArabic}
                       >
                         {firstLineArabic}
                       </Text>
-                      {isLoggedIn && target > 0 && (
-                        <Box>
-                          {progressPercentage >= 100 ? (
-                            <Flex
-                              align="center"
-                              justify="center"
-                              direction="column"
-                            >
-                              <Badge
-                                colorScheme="green"
-                                fontSize="md"
-                                p={2}
-                                borderRadius="md"
-                                width="100%"
-                                textAlign="center"
-                              >
-                                Completed
-                              </Badge>
-                              <Text fontSize="sm">
-                                You have completed your target for today!
-                              </Text>
-                            </Flex>
-                          ) : (
-                            <VStack spacing={2}>
-                              <Flex
-                                align="center"
-                                justify="space-between"
-                                width="100%"
-                              >
-                                <Text fontSize="sm">Progress</Text>
-                                <Text fontSize="sm" fontWeight="bold">
-                                  {progress} / {target}
-                                </Text>
-                              </Flex>
-                              <Progress
-                                value={progressPercentage}
-                                size="sm"
-                                colorScheme="teal"
-                                width="100%"
-                                borderRadius="full"
-                                hasStripe
-                                isAnimated
-                                className="progress-bar"
-                              />
-                            </VStack>
-                          )}
-                        </Box>
-                      )}
-                      <HStack justify="flex-end" spacing={2}>
-                        {isLoggedIn && (
-                          <Tooltip label="Edit target">
-                            <IconButton
-                              size="sm"
-                              variant="outline"
-                              aria-label="Edit target"
-                              icon={<EditIcon />}
-                              colorScheme="teal"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleSetTargetClick(salawat);
-                              }}
-                              className="edit-target-button"
-                            />
-                          </Tooltip>
-                        )}
-                        <Tooltip label={salawat.pinned ? "Unpin" : "Pin"}>
+                    </Box>
+                    <HStack spacing={2}>
+                      {isLoggedIn && (
+                        <Tooltip label="Edit target">
                           <IconButton
-                            size="sm"
-                            variant="outline"
-                            aria-label={salawat.pinned ? "Unpin" : "Pin"}
-                            icon={salawat.pinned ? <BsPinFill /> : <BsPin />}
+                            variant="ghost"
+                            aria-label="Edit target"
+                            icon={<EditIcon />}
                             colorScheme="teal"
                             onClick={(e) => {
-                              e.stopPropagation();
-                              togglePin(salawat.id);
+                              e.stopPropagation(); // Prevents click event from propagating to the Box
+                              handleSetTargetClick(salawat);
                             }}
-                            className="pin-button"
+                            className="edit-target-button"
                           />
                         </Tooltip>
-                      </HStack>
-                    </VStack>
-                  </Box>
-                );
-              })}
-          </SimpleGrid>
-        )}
-      </Container>
+                      )}
+                      <Tooltip label={salawat.pinned ? "Unpin" : "Pin"}>
+                        <IconButton
+                          variant="ghost"
+                          aria-label={salawat.pinned ? "Unpin" : "Pin"}
+                          icon={salawat.pinned ? <BsPinFill /> : <BsPin />}
+                          colorScheme="teal"
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevents click event from propagating to the Box
+                            togglePin(salawat.id);
+                          }}
+                          className="pin-button"
+                        />
+                      </Tooltip>
+                    </HStack>
+                  </HStack>
 
+                  {isLoggedIn && target > 0 && (
+                    <>
+                      <Divider my={3} />
+                      {progressPercentage >= 100 ? (
+                        <Flex
+                          align="center"
+                          justify="center"
+                          direction="column"
+                        >
+                          <Badge colorScheme="green" fontSize="md" mb={2}>
+                            Completed
+                          </Badge>
+                          <Text fontSize="sm" color="gray.600">
+                            You have completed your target for today!
+                          </Text>
+                        </Flex>
+                      ) : (
+                        <>
+                          <Flex align="center" justify="space-between">
+                            <Text fontSize="sm">Progress</Text>
+                            <Text fontSize="sm">
+                              {progress} / {target}
+                            </Text>
+                          </Flex>
+                          <Progress
+                            value={progressPercentage}
+                            size="sm"
+                            colorScheme="teal"
+                            mt={2}
+                            hasStripe
+                            isAnimated
+                            className="progress-bar"
+                          />
+                        </>
+                      )}
+                    </>
+                  )}
+                </Box>
+              );
+            })}
+        </VStack>
+      )}
       <Modal isOpen={isOpen} onClose={onClose} size="md">
         <ModalOverlay />
         <ModalContent>
@@ -557,7 +530,10 @@ export default function HomePage() {
             >
               <NumberInputField placeholder="Daily Target" />
             </NumberInput>
-            <Text fontSize="sm" color={mutedTextColor}>
+            <Text
+              fontSize="sm"
+              color={useColorModeValue("gray.500", "gray.400")}
+            >
               Set a daily target for {selectedSalawat?.title}. This will help
               track your progress.
             </Text>
