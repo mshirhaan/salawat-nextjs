@@ -491,10 +491,8 @@ export default function HomePage() {
                       ) : (
                         <>
                           <Flex align="center" justify="space-between">
-                            <Text fontSize="sm" color="gray.600">
-                              Progress
-                            </Text>
-                            <Text fontSize="sm" color="gray.600">
+                            <Text fontSize="sm">Progress</Text>
+                            <Text fontSize="sm">
                               {progress} / {target}
                             </Text>
                           </Flex>
