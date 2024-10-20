@@ -45,6 +45,8 @@ import {
 } from "react-icons/fa"; // Make sure you import any icon you choose
 import { useEffect, useState } from "react";
 import { checkAuthState } from "@/utils/auth";
+import { GiFeather } from "react-icons/gi";
+import { MdMenuBook } from "react-icons/md";
 
 export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -79,13 +81,23 @@ export default function Navbar() {
     { href: "/store", label: "Store", icon: FaStore },
     { href: "/garden", label: "Garden", icon: FaSeedling },
     { href: "/baith", label: "Baith", icon: FaBook }, // New Baith link added
+    {
+      href: "https://qaseedaburda.com",
+      label: "Qaseeda Burdah",
+      icon: GiFeather,
+    },
+    {
+      href: "https://www.dalailalkhayrat.com/",
+      label: "Dala'il Al Khayrat",
+      icon: MdMenuBook,
+    },
     { href: "/leaderboard", label: "Leaderboard", icon: FaChartLine },
     { href: "/contact-us", label: "Contact", icon: FaEnvelope },
   ];
 
   return (
     <Box bg={bgColor} boxShadow="sm" position="sticky" top="0" zIndex="sticky">
-      <Container maxW="container.xl">
+      <Container maxW="container.xxl">
         <Flex h={16} alignItems="center" justifyContent="space-between">
           <Flex alignItems="center">
             <Text
