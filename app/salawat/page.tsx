@@ -11,7 +11,6 @@ import {
   useTheme,
   VStack,
   HStack,
-  Divider,
   Spinner,
   Flex,
   IconButton,
@@ -34,9 +33,21 @@ import {
   useColorModeValue,
   Container,
   SimpleGrid,
+  Collapse,
+  List,
+  ListItem,
+  ListIcon,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { InfoIcon, EditIcon, SearchIcon, StarIcon } from "@chakra-ui/icons";
+import {
+  InfoIcon,
+  EditIcon,
+  SearchIcon,
+  StarIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  CheckIcon,
+} from "@chakra-ui/icons";
 import { BsPinFill, BsPin } from "react-icons/bs";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase"; // Adjust the import path as needed
@@ -56,6 +67,7 @@ interface SalawatData {
   pinned?: boolean; // Add pinned property
   target?: number; // Add target property
   progress?: number; // Add progress property
+  benefits?: string[];
 }
 
 const tourSteps: Step[] = [
@@ -93,6 +105,9 @@ const tourSteps: Step[] = [
 
 export default function HomePage() {
   const { user } = useAuth();
+  const [openBenefits, setOpenBenefits] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const [salawatList, setSalawatList] = useState<SalawatData[]>([]);
   const [filteredSalawatList, setFilteredSalawatList] = useState<SalawatData[]>(
     []
@@ -304,6 +319,14 @@ export default function HomePage() {
     }
   };
 
+  const toggleBenefits = (salawatId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setOpenBenefits((prev) => ({
+      ...prev,
+      [salawatId]: !prev[salawatId],
+    }));
+  };
+
   return (
     <Box bg={bgColor} minHeight="100vh">
       <Joyride
@@ -500,6 +523,39 @@ export default function HomePage() {
                             </VStack>
                           )}
                         </Box>
+                      )}
+                      {salawat.benefits && salawat.benefits.length > 0 && (
+                        <VStack align="stretch" mt={4}>
+                          <Button
+                            onClick={(e) => toggleBenefits(salawat.id, e)}
+                            variant="ghost"
+                            rightIcon={
+                              openBenefits[salawat.id] ? (
+                                <ChevronUpIcon />
+                              ) : (
+                                <ChevronDownIcon />
+                              )
+                            }
+                            size="sm"
+                          >
+                            {openBenefits[salawat.id]
+                              ? "Hide Benefits"
+                              : "Show Benefits"}
+                          </Button>
+                          <Collapse
+                            in={openBenefits[salawat.id]}
+                            animateOpacity
+                          >
+                            <List spacing={2} mt={2}>
+                              {salawat.benefits.map((benefit, index) => (
+                                <ListItem key={index}>
+                                  <ListIcon as={CheckIcon} color="green.500" />
+                                  {benefit}
+                                </ListItem>
+                              ))}
+                            </List>
+                          </Collapse>
+                        </VStack>
                       )}
                       <HStack justify="flex-end" spacing={2}>
                         {isLoggedIn && (
