@@ -428,7 +428,7 @@ export default function HomePage() {
                 const progressPercentage =
                   target > 0 ? (progress / target) * 100 : 0;
                 const firstLineArabic = salawat.lines[0]?.arabic || "";
-                debugger;
+
                 return (
                   <Box
                     key={salawat.id}
